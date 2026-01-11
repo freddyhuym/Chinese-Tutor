@@ -23,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/chinese_calligraphy_ink_texture_background.png";
 import { type Language, getTranslations } from "@/lib/i18n";
+import { Link } from "wouter";
 
 const flashcards = [
   { character: "你好", pinyin: "nǐ hǎo", meaning: "Hello", meaningZh: "問候語" },
@@ -363,9 +364,9 @@ export default function Home() {
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-home">{t.nav.home}</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter1">{t.nav.chapter1}</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">{t.nav.chapter2}</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">{t.nav.chapter3}</a>
+              <Link href="/chapter1" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter1">{t.nav.chapter1}</Link>
+              <Link href="/chapter2" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">{t.nav.chapter2}</Link>
+              <Link href="/chapter3" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">{t.nav.chapter3}</Link>
             </nav>
             <div className="flex items-center gap-3">
               <Button 
@@ -537,70 +538,93 @@ export default function Home() {
               </div>
             </Card>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="mt-8 text-center"
+          >
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="gap-2"
+              onClick={() => {
+                const whySection = document.getElementById('why-choose-us');
+                if (whySection) {
+                  whySection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              data-testid="button-why-choose-us"
+            >
+              {t.howToUse.whyChooseUs}
+              <ChevronRight className="w-5 h-5" />
+            </Button>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-20 bg-muted/30">
+      <section id="why-choose-us" className="py-20 bg-muted/30 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Target,
-                title: t.features.personalized.title,
-                description: t.features.personalized.description,
-                color: "bg-primary/10 text-primary"
-              },
-              {
-                icon: Trophy,
-                title: t.features.gamified.title,
-                description: t.features.gamified.description,
-                color: "bg-jade/10 text-jade"
-              },
-              {
-                icon: Volume2,
-                title: t.features.pronunciation.title,
-                description: t.features.pronunciation.description,
-                color: "bg-gold/10 text-gold"
-              }
-            ].map((feature, index) => (
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0.7 }}
+            whileInView={{ opacity: 1, scale: 1.02 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">{t.whyChooseUs.title}</h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+              {t.whyChooseUs.description}
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {t.whyChooseUs.reasons.map((reason, index) => (
               <motion.div
-                key={feature.title}
+                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-8 h-full card-hover bg-card">
-                  <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6`}>
-                    <feature.icon className="w-7 h-7" />
+                <Card className="p-6 h-full card-hover bg-card border-2 border-border/50 hover:border-jade/30 transition-colors">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-jade/10 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="w-6 h-6 text-jade" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold font-serif-chinese mb-2">{reason.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{reason.description}</p>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold font-serif-chinese mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
                 </Card>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-16 text-center"
           >
-            <span className="text-8xl font-chinese block mb-6">开始学习</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese mb-4">
-              {t.cta.title}
-            </h2>
+            <span className="text-6xl font-chinese block mb-6">开始学习</span>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              {t.cta.description}
+              {t.whyChooseUs.startLearningDesc}
             </p>
-            <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" data-testid="button-cta">
-              {t.cta.button}
-              <ArrowRight className="w-5 h-5" />
-            </Button>
+            <Link href="/chapter1">
+              <Button 
+                size="lg" 
+                className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" 
+                data-testid="button-start-chapter1"
+              >
+                {t.whyChooseUs.startLearning}
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

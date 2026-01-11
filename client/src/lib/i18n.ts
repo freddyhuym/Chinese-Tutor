@@ -53,7 +53,32 @@ export const translations = {
         }
       ],
       tip: "小提示",
-      tipContent: "建議每天花15-20分鐘學習，持續練習是掌握中文的關鍵！"
+      tipContent: "建議每天花15-20分鐘學習，持續練習是掌握中文的關鍵！",
+      whyChooseUs: "為什麼選擇我們"
+    },
+    whyChooseUs: {
+      title: "為什麼選擇我們",
+      description: "我們致力於提供最優質的中文學習體驗",
+      reasons: [
+        {
+          title: "專業師資團隊",
+          description: "我們的教師都是經驗豐富的中文母語者，具有多年的教學經驗。"
+        },
+        {
+          title: "互動式學習",
+          description: "透過遊戲化的學習方式，讓您在輕鬆愉快的環境中學習中文。"
+        },
+        {
+          title: "彈性學習時間",
+          description: "隨時隨地都能學習，按照自己的步調掌握中文。"
+        },
+        {
+          title: "完整課程體系",
+          description: "從基礎到進階，系統化的課程設計幫助您循序漸進地提升中文能力。"
+        }
+      ],
+      startLearning: "開始學習",
+      startLearningDesc: "準備好了嗎？立即開始您的中文學習之旅！"
     },
     flashcard: {
       title: "每日練習",
@@ -159,7 +184,32 @@ export const translations = {
         }
       ],
       tip: "Pro Tip",
-      tipContent: "We recommend spending 15-20 minutes daily on learning. Consistent practice is the key to mastering Chinese!"
+      tipContent: "We recommend spending 15-20 minutes daily on learning. Consistent practice is the key to mastering Chinese!",
+      whyChooseUs: "Why Choose Us"
+    },
+    whyChooseUs: {
+      title: "Why Choose Us",
+      description: "We are committed to providing the best Chinese learning experience",
+      reasons: [
+        {
+          title: "Professional Teaching Team",
+          description: "Our teachers are experienced native Chinese speakers with years of teaching experience."
+        },
+        {
+          title: "Interactive Learning",
+          description: "Learn Chinese in a fun and engaging way through gamified learning methods."
+        },
+        {
+          title: "Flexible Learning Schedule",
+          description: "Learn anytime, anywhere, and master Chinese at your own pace."
+        },
+        {
+          title: "Complete Curriculum",
+          description: "From beginner to advanced, our systematic course design helps you improve step by step."
+        }
+      ],
+      startLearning: "Start Learning",
+      startLearningDesc: "Ready to begin? Start your Chinese learning journey now!"
     },
     flashcard: {
       title: "Daily Practice",
