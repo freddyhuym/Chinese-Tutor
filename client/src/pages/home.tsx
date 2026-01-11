@@ -22,6 +22,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/chinese_calligraphy_ink_texture_background.png";
+import chineseCulturalBg from "@assets/generated_images/chinese_cultural_floral_background.png";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
 
@@ -628,7 +629,7 @@ export default function Home() {
             </h2>
           </motion.div>
 
-          <div className="space-y-8 max-w-3xl mx-auto mb-20">
+          <div className="space-y-8 max-w-3xl mx-auto">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -648,7 +649,18 @@ export default function Home() {
               {t.whyChooseUs.paragraph2}
             </motion.p>
           </div>
+        </div>
+      </section>
 
+      {/* Start Learning Section */}
+      <section id="start-learning" className="py-24 scroll-mt-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${chineseCulturalBg})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50" />
+        
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -656,7 +668,7 @@ export default function Home() {
             transition={{ delay: 0.3 }}
             className="text-center"
           >
-            <span className="text-7xl md:text-8xl font-chinese block mb-6">开始学习</span>
+            <span className="text-7xl md:text-8xl font-chinese block mb-6 drop-shadow-sm">开始学习</span>
             <h3 className="text-2xl md:text-3xl font-bold font-serif-chinese mb-4">
               {t.cta.title}
             </h3>
