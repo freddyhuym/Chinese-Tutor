@@ -488,35 +488,55 @@ export default function Home() {
             viewport={{ once: false }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">{t.tools.title}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">{t.howToUse.title}</h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              {t.tools.description}
+              {t.howToUse.description}
             </p>
           </motion.div>
 
-          <Tabs defaultValue="flashcards" className="w-full">
-            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4 mb-8">
-              <TabsTrigger value="flashcards" data-testid="tab-flashcards">{t.tools.flashcards}</TabsTrigger>
-              <TabsTrigger value="tones" data-testid="tab-tones">{t.tools.tones}</TabsTrigger>
-              <TabsTrigger value="writing" data-testid="tab-writing">{t.tools.writing}</TabsTrigger>
-              <TabsTrigger value="lessons" data-testid="tab-lessons">{t.tools.lessons}</TabsTrigger>
-            </TabsList>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {t.howToUse.steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="p-6 h-full card-hover bg-card border-2 border-border/50 hover:border-primary/30 transition-colors">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-xl font-bold text-primary">{index + 1}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold font-serif-chinese mb-2">{step.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
 
-            <div className="max-w-xl mx-auto">
-              <TabsContent value="flashcards" className="mt-0">
-                <FlashcardSection lang={lang} />
-              </TabsContent>
-              <TabsContent value="tones" className="mt-0">
-                <TonesSection lang={lang} />
-              </TabsContent>
-              <TabsContent value="writing" className="mt-0">
-                <CharacterPractice lang={lang} />
-              </TabsContent>
-              <TabsContent value="lessons" className="mt-0">
-                <LessonsSection lang={lang} />
-              </TabsContent>
-            </div>
-          </Tabs>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-10 max-w-2xl mx-auto"
+          >
+            <Card className="p-6 bg-gradient-to-r from-jade/10 to-primary/10 border-jade/30">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-jade/20 flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-5 h-5 text-jade" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-jade mb-1">{t.howToUse.tip}</h4>
+                  <p className="text-muted-foreground">{t.howToUse.tipContent}</p>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
         </div>
       </section>
 

@@ -31,6 +31,30 @@ export const translations = {
       writing: "書寫",
       lessons: "課程",
     },
+    howToUse: {
+      title: "如何使用本教材",
+      description: "跟著以下步驟，輕鬆開始您的中文學習之旅",
+      steps: [
+        {
+          title: "選擇章節",
+          description: "從導覽列選擇您想學習的章節，每個章節都有不同的主題和難度。"
+        },
+        {
+          title: "觀看教學影片",
+          description: "每個章節都包含詳細的教學影片，幫助您理解發音和語法。"
+        },
+        {
+          title: "練習互動題目",
+          description: "完成每個章節後的練習題，鞏固您所學的內容。"
+        },
+        {
+          title: "追蹤學習進度",
+          description: "查看您的學習進度，確保您沒有遺漏任何重要內容。"
+        }
+      ],
+      tip: "小提示",
+      tipContent: "建議每天花15-20分鐘學習，持續練習是掌握中文的關鍵！"
+    },
     flashcard: {
       title: "每日練習",
       subtitle: "點擊翻轉查看意思",
@@ -112,6 +136,30 @@ export const translations = {
       tones: "Tones",
       writing: "Writing",
       lessons: "Lessons",
+    },
+    howToUse: {
+      title: "How to Use This Course",
+      description: "Follow these steps to start your Chinese learning journey",
+      steps: [
+        {
+          title: "Choose a Chapter",
+          description: "Select a chapter from the navigation bar. Each chapter has different topics and difficulty levels."
+        },
+        {
+          title: "Watch Tutorial Videos",
+          description: "Each chapter includes detailed tutorial videos to help you understand pronunciation and grammar."
+        },
+        {
+          title: "Practice Interactive Exercises",
+          description: "Complete the practice exercises after each chapter to reinforce what you've learned."
+        },
+        {
+          title: "Track Your Progress",
+          description: "Monitor your learning progress to ensure you haven't missed any important content."
+        }
+      ],
+      tip: "Pro Tip",
+      tipContent: "We recommend spending 15-20 minutes daily on learning. Consistent practice is the key to mastering Chinese!"
     },
     flashcard: {
       title: "Daily Practice",
