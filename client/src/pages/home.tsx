@@ -565,54 +565,96 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="why-choose-us" className="py-20 bg-muted/30 scroll-mt-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="why-choose-us" className="py-24 scroll-mt-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-rose-100/30" />
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(30)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-primary/40 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0.2, 0.8, 0.2],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={`star-${i}`}
+              className="absolute"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0.3, 1, 0.3],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            >
+              <Sparkles className="w-3 h-3 text-primary/30" />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1.02 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.4 }}
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">{t.whyChooseUs.title}</h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              {t.whyChooseUs.description}
-            </p>
+            <h2 className="text-2xl md:text-3xl font-semibold font-serif-chinese leading-relaxed text-foreground whitespace-pre-line">
+              {t.whyChooseUs.title}
+            </h2>
           </motion.div>
 
-          <div className="space-y-8 max-w-3xl mx-auto">
-            {t.whyChooseUs.reasons.map((reason, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <h3 className="text-xl font-semibold font-serif-chinese mb-2 text-foreground">
-                  {reason.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {reason.description}
-                </p>
-              </motion.div>
-            ))}
+          <div className="space-y-8 max-w-3xl mx-auto mb-20">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-muted-foreground leading-loose text-justify indent-8"
+            >
+              {t.whyChooseUs.paragraph1}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-muted-foreground leading-loose text-justify indent-8"
+            >
+              {t.whyChooseUs.paragraph2}
+            </motion.p>
           </div>
-        </div>
-      </section>
 
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-center"
           >
-            <span className="text-8xl font-chinese block mb-6">开始学习</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese mb-4">
+            <span className="text-7xl md:text-8xl font-chinese block mb-6">开始学习</span>
+            <h3 className="text-2xl md:text-3xl font-bold font-serif-chinese mb-4">
               {t.cta.title}
-            </h2>
+            </h3>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
               {t.cta.description}
             </p>

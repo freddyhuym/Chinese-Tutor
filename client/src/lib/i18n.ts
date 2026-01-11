@@ -57,26 +57,9 @@ export const translations = {
       whyChooseUs: "為什麼選擇我們"
     },
     whyChooseUs: {
-      title: "為什麼選擇我們",
-      description: "我們致力於提供最優質的中文學習體驗",
-      reasons: [
-        {
-          title: "專業師資團隊",
-          description: "我們的教師都是經驗豐富的中文母語者，具有多年的教學經驗。"
-        },
-        {
-          title: "互動式學習",
-          description: "透過遊戲化的學習方式，讓您在輕鬆愉快的環境中學習中文。"
-        },
-        {
-          title: "彈性學習時間",
-          description: "隨時隨地都能學習，按照自己的步調掌握中文。"
-        },
-        {
-          title: "完整課程體系",
-          description: "從基礎到進階，系統化的課程設計幫助您循序漸進地提升中文能力。"
-        }
-      ],
+      title: "學習中文不僅是掌握一門語言，\n更是開啟一扇通往東方文化的大門。\n讓我們陪伴您踏上這段精彩的學習旅程。",
+      paragraph1: "在這個教材中，我們深信每個人都能夠學好中文。我們的使命不僅僅是提供優質的語言課程，更是要幫助您建立對中文的信心與熱愛。從基礎發音到日常對話的練習，我們的專業團隊都會細心設計每一個學習環節，並以循序漸進的方式為基礎，為您量身打造最適合的學習方案。",
+      paragraph2: "我們採用互動式的教學方法與技術，結合豐富的多媒體內容，確保每一次學習都能達到最佳效果。無論是想要掌握基本的問候語、提升閱讀能力，或是追求流利的口語表達，我們都能為您提供完整、有效、且符合您個人需求的解決方案。讓學習中文成為您生活中的自然呈現，而非遙不可及的夢想。",
       startLearning: "開始學習",
       startLearningDesc: "準備好了嗎？立即開始您的中文學習之旅！"
     },
@@ -188,26 +171,9 @@ export const translations = {
       whyChooseUs: "Why Choose Us"
     },
     whyChooseUs: {
-      title: "Why Choose Us",
-      description: "We are committed to providing the best Chinese learning experience",
-      reasons: [
-        {
-          title: "Professional Teaching Team",
-          description: "Our teachers are experienced native Chinese speakers with years of teaching experience."
-        },
-        {
-          title: "Interactive Learning",
-          description: "Learn Chinese in a fun and engaging way through gamified learning methods."
-        },
-        {
-          title: "Flexible Learning Schedule",
-          description: "Learn anytime, anywhere, and master Chinese at your own pace."
-        },
-        {
-          title: "Complete Curriculum",
-          description: "From beginner to advanced, our systematic course design helps you improve step by step."
-        }
-      ],
+      title: "Learning Chinese is not just about mastering a language,\nbut opening a door to Eastern culture.\nLet us accompany you on this exciting learning journey.",
+      paragraph1: "In this course, we believe that everyone can learn Chinese well. Our mission is not only to provide quality language courses, but also to help you build confidence and passion for Chinese. From basic pronunciation to daily conversation practice, our professional team carefully designs every learning module, using a step-by-step approach to create the most suitable learning plan for you.",
+      paragraph2: "We use interactive teaching methods and technology, combined with rich multimedia content, to ensure that every learning session achieves the best results. Whether you want to master basic greetings, improve reading skills, or pursue fluent oral expression, we can provide you with a complete, effective solution that meets your individual needs. Let learning Chinese become a natural part of your life, not an unattainable dream.",
       startLearning: "Start Learning",
       startLearningDesc: "Ready to begin? Start your Chinese learning journey now!"
     },
