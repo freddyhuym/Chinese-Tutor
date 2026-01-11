@@ -569,14 +569,14 @@ export default function Home() {
         <div 
           className="absolute inset-0" 
           style={{ 
-            background: 'linear-gradient(135deg, rgb(232, 244, 243) 0%, rgb(217, 237, 235) 30%, rgb(197, 227, 224) 60%, rgb(181, 219, 216) 100%)' 
+            background: 'linear-gradient(135deg, rgb(255, 245, 245) 0%, rgb(255, 235, 235) 30%, rgb(255, 220, 220) 60%, rgb(255, 210, 210) 100%)' 
           }} 
         />
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(30)].map((_, i) => (
+          {[...Array(50)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1.5 h-1.5 bg-white/60 rounded-full shadow-sm"
+              className="absolute w-1.5 h-1.5 bg-primary/30 rounded-full shadow-sm"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -592,7 +592,7 @@ export default function Home() {
               }}
             />
           ))}
-          {[...Array(15)].map((_, i) => (
+          {[...Array(25)].map((_, i) => (
             <motion.div
               key={`star-${i}`}
               className="absolute"
@@ -610,7 +610,7 @@ export default function Home() {
                 delay: Math.random() * 2,
               }}
             >
-              <Sparkles className="w-4 h-4 text-white/50" />
+              <Sparkles className="w-4 h-4 text-primary/40" />
             </motion.div>
           ))}
         </div>
