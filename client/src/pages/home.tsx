@@ -566,7 +566,7 @@ export default function Home() {
       </section>
 
       <section id="why-choose-us" className="py-20 bg-muted/30 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="text-center mb-12"
             initial={{ opacity: 0.7 }}
@@ -580,7 +580,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="space-y-8 max-w-3xl mx-auto">
             {t.whyChooseUs.reasons.map((reason, index) => (
               <motion.div
                 key={index}
@@ -588,40 +588,41 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
+                className="text-center"
               >
-                <Card className="p-6 h-full card-hover bg-card border-2 border-border/50 hover:border-jade/30 transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-jade/10 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="w-6 h-6 text-jade" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold font-serif-chinese mb-2">{reason.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{reason.description}</p>
-                    </div>
-                  </div>
-                </Card>
+                <h3 className="text-xl font-semibold font-serif-chinese mb-2 text-foreground">
+                  {reason.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {reason.description}
+                </p>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
+      <section className="py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-16 text-center"
           >
-            <span className="text-6xl font-chinese block mb-6">开始学习</span>
+            <span className="text-8xl font-chinese block mb-6">开始学习</span>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese mb-4">
+              {t.cta.title}
+            </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              {t.whyChooseUs.startLearningDesc}
+              {t.cta.description}
             </p>
             <Link href="/chapter1">
               <Button 
                 size="lg" 
                 className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" 
-                data-testid="button-start-chapter1"
+                data-testid="button-cta"
               >
-                {t.whyChooseUs.startLearning}
+                {t.cta.button}
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
