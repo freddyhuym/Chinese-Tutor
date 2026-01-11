@@ -13,7 +13,8 @@ import {
   Star,
   ArrowRight,
   Play,
-  CheckCircle2
+  CheckCircle2,
+  Languages
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -21,37 +22,42 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/chinese_calligraphy_ink_texture_background.png";
+import { type Language, getTranslations } from "@/lib/i18n";
 
 const flashcards = [
-  { character: "你好", pinyin: "nǐ hǎo", meaning: "Hello", audio: true },
-  { character: "谢谢", pinyin: "xiè xiè", meaning: "Thank you", audio: true },
-  { character: "再见", pinyin: "zài jiàn", meaning: "Goodbye", audio: true },
-  { character: "学习", pinyin: "xué xí", meaning: "To study", audio: true },
-  { character: "中文", pinyin: "zhōng wén", meaning: "Chinese", audio: true },
+  { character: "你好", pinyin: "nǐ hǎo", meaning: "Hello", meaningZh: "問候語" },
+  { character: "谢谢", pinyin: "xiè xiè", meaning: "Thank you", meaningZh: "感謝" },
+  { character: "再见", pinyin: "zài jiàn", meaning: "Goodbye", meaningZh: "告別" },
+  { character: "学习", pinyin: "xué xí", meaning: "To study", meaningZh: "學習" },
+  { character: "中文", pinyin: "zhōng wén", meaning: "Chinese", meaningZh: "中國語言" },
 ];
 
-const lessons = [
-  { id: 1, title: "Basic Greetings", characters: 12, duration: "15 min", progress: 100, completed: true },
-  { id: 2, title: "Numbers 1-10", characters: 10, duration: "12 min", progress: 75, completed: false },
-  { id: 3, title: "Family Members", characters: 15, duration: "20 min", progress: 30, completed: false },
-  { id: 4, title: "Colors & Shapes", characters: 14, duration: "18 min", progress: 0, completed: false },
-  { id: 5, title: "Food & Drinks", characters: 20, duration: "25 min", progress: 0, completed: false },
+const lessonsData = {
+  en: [
+    { id: 1, title: "Basic Greetings", characters: 12, duration: "15 min", progress: 100, completed: true },
+    { id: 2, title: "Numbers 1-10", characters: 10, duration: "12 min", progress: 75, completed: false },
+    { id: 3, title: "Family Members", characters: 15, duration: "20 min", progress: 30, completed: false },
+    { id: 4, title: "Colors & Shapes", characters: 14, duration: "18 min", progress: 0, completed: false },
+    { id: 5, title: "Food & Drinks", characters: 20, duration: "25 min", progress: 0, completed: false },
+  ],
+  zh: [
+    { id: 1, title: "基本問候", characters: 12, duration: "15 分鐘", progress: 100, completed: true },
+    { id: 2, title: "數字 1-10", characters: 10, duration: "12 分鐘", progress: 75, completed: false },
+    { id: 3, title: "家庭成員", characters: 15, duration: "20 分鐘", progress: 30, completed: false },
+    { id: 4, title: "顏色與形狀", characters: 14, duration: "18 分鐘", progress: 0, completed: false },
+    { id: 5, title: "食物與飲料", characters: 20, duration: "25 分鐘", progress: 0, completed: false },
+  ],
+};
+
+const tonesData = [
+  { tone: 1, mark: "ā", example: "mā (妈) - mother", exampleZh: "mā (媽) - 媽媽" },
+  { tone: 2, mark: "á", example: "má (麻) - hemp", exampleZh: "má (麻) - 麻" },
+  { tone: 3, mark: "ǎ", example: "mǎ (马) - horse", exampleZh: "mǎ (馬) - 馬" },
+  { tone: 4, mark: "à", example: "mà (骂) - scold", exampleZh: "mà (罵) - 罵" },
 ];
 
-const tones = [
-  { tone: 1, mark: "ā", name: "High level", description: "High and flat, like singing a note", example: "mā (妈) - mother" },
-  { tone: 2, mark: "á", name: "Rising", description: "Rising up, like asking 'what?'", example: "má (麻) - hemp" },
-  { tone: 3, mark: "ǎ", name: "Falling-rising", description: "Dips down then rises", example: "mǎ (马) - horse" },
-  { tone: 4, mark: "à", name: "Falling", description: "Sharp drop, like saying 'no!'", example: "mà (骂) - scold" },
-];
-
-const stats = [
-  { label: "Characters Learned", value: "156", icon: BookOpen, color: "text-vermillion" },
-  { label: "Day Streak", value: "12", icon: Zap, color: "text-gold" },
-  { label: "XP Earned", value: "2,450", icon: Star, color: "text-jade" },
-];
-
-function FlashcardSection() {
+function FlashcardSection({ lang }: { lang: Language }) {
+  const t = getTranslations(lang);
   const [currentCard, setCurrentCard] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -68,8 +74,8 @@ function FlashcardSection() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-semibold font-serif-chinese">Daily Practice</h3>
-          <p className="text-muted-foreground text-sm mt-1">Tap to reveal meaning</p>
+          <h3 className="text-xl font-semibold font-serif-chinese">{t.flashcard.title}</h3>
+          <p className="text-muted-foreground text-sm mt-1">{t.flashcard.subtitle}</p>
         </div>
         <Badge variant="secondary" className="gap-1">
           <Sparkles className="w-3 h-3" />
@@ -109,7 +115,9 @@ function FlashcardSection() {
               ) : (
                 <div className="text-center space-y-3">
                   <span className="text-5xl font-chinese text-muted-foreground/50">{card.character}</span>
-                  <span className="block text-2xl font-semibold text-foreground">{card.meaning}</span>
+                  <span className="block text-2xl font-semibold text-foreground">
+                    {lang === "zh" ? card.meaningZh : card.meaning}
+                  </span>
                   <span className="text-primary">{card.pinyin}</span>
                 </div>
               )}
@@ -126,14 +134,14 @@ function FlashcardSection() {
           data-testid="button-reset"
         >
           <RotateCcw className="w-4 h-4" />
-          Reset
+          {t.flashcard.reset}
         </Button>
         <Button 
           className="flex-1 gap-2 bg-primary hover:bg-primary/90"
           onClick={nextCard}
           data-testid="button-next-card"
         >
-          Next
+          {t.flashcard.next}
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
@@ -141,18 +149,21 @@ function FlashcardSection() {
   );
 }
 
-function TonesSection() {
+function TonesSection({ lang }: { lang: Language }) {
+  const t = getTranslations(lang);
   const [activeTone, setActiveTone] = useState(0);
+
+  const toneTranslations = [t.tones.tone1, t.tones.tone2, t.tones.tone3, t.tones.tone4];
 
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-xl font-semibold font-serif-chinese">Master the Tones</h3>
-        <p className="text-muted-foreground text-sm mt-1">Chinese has 4 main tones that change meaning</p>
+        <h3 className="text-xl font-semibold font-serif-chinese">{t.tones.title}</h3>
+        <p className="text-muted-foreground text-sm mt-1">{t.tones.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-4 gap-2">
-        {tones.map((tone, index) => (
+        {tonesData.map((tone, index) => (
           <button
             key={tone.tone}
             onClick={() => setActiveTone(index)}
@@ -164,7 +175,9 @@ function TonesSection() {
             data-testid={`tone-button-${tone.tone}`}
           >
             <span className="text-3xl font-serif block">{tone.mark}</span>
-            <span className="text-xs mt-1 block opacity-80">Tone {tone.tone}</span>
+            <span className="text-xs mt-1 block opacity-80">
+              {lang === "zh" ? `第${tone.tone}聲` : `Tone ${tone.tone}`}
+            </span>
           </button>
         ))}
       </div>
@@ -179,16 +192,18 @@ function TonesSection() {
         >
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-2xl font-serif text-primary">{tones[activeTone].mark}</span>
+              <span className="text-2xl font-serif text-primary">{tonesData[activeTone].mark}</span>
             </div>
             <div>
-              <h4 className="font-semibold">{tones[activeTone].name}</h4>
-              <p className="text-sm text-muted-foreground">{tones[activeTone].description}</p>
+              <h4 className="font-semibold">{toneTranslations[activeTone].name}</h4>
+              <p className="text-sm text-muted-foreground">{toneTranslations[activeTone].description}</p>
             </div>
           </div>
           <div className="flex items-center gap-2 pt-2 border-t border-border/50">
             <Play className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">{tones[activeTone].example}</span>
+            <span className="text-sm font-medium">
+              {lang === "zh" ? tonesData[activeTone].exampleZh : tonesData[activeTone].example}
+            </span>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -196,16 +211,19 @@ function TonesSection() {
   );
 }
 
-function LessonsSection() {
+function LessonsSection({ lang }: { lang: Language }) {
+  const t = getTranslations(lang);
+  const lessons = lessonsData[lang];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-semibold font-serif-chinese">Learning Path</h3>
-          <p className="text-muted-foreground text-sm mt-1">Structured lessons for beginners</p>
+          <h3 className="text-xl font-semibold font-serif-chinese">{t.lessons.title}</h3>
+          <p className="text-muted-foreground text-sm mt-1">{t.lessons.subtitle}</p>
         </div>
         <Button variant="ghost" size="sm" className="gap-1 text-primary" data-testid="button-view-all">
-          View All <ArrowRight className="w-4 h-4" />
+          {t.lessons.viewAll} <ArrowRight className="w-4 h-4" />
         </Button>
       </div>
 
@@ -245,11 +263,11 @@ function LessonsSection() {
                   <div className="flex items-center gap-2">
                     <h4 className="font-medium truncate">{lesson.title}</h4>
                     {lesson.progress > 0 && lesson.progress < 100 && (
-                      <Badge variant="secondary" className="text-xs">In Progress</Badge>
+                      <Badge variant="secondary" className="text-xs">{t.lessons.inProgress}</Badge>
                     )}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {lesson.characters} characters · {lesson.duration}
+                    {lesson.characters} {t.lessons.characters} · {lesson.duration}
                   </p>
                   {lesson.progress > 0 && !lesson.completed && (
                     <Progress value={lesson.progress} className="h-1.5 mt-2" />
@@ -265,7 +283,8 @@ function LessonsSection() {
   );
 }
 
-function CharacterPractice() {
+function CharacterPractice({ lang }: { lang: Language }) {
+  const t = getTranslations(lang);
   const [strokeIndex, setStrokeIndex] = useState(0);
   const character = "学";
   const totalStrokes = 8;
@@ -273,8 +292,8 @@ function CharacterPractice() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-xl font-semibold font-serif-chinese">Character Writing</h3>
-        <p className="text-muted-foreground text-sm mt-1">Practice stroke order</p>
+        <h3 className="text-xl font-semibold font-serif-chinese">{t.writing.title}</h3>
+        <p className="text-muted-foreground text-sm mt-1">{t.writing.subtitle}</p>
       </div>
 
       <Card className="p-8 bg-gradient-to-br from-card to-muted/30 relative overflow-hidden">
@@ -288,7 +307,9 @@ function CharacterPractice() {
           <span className="text-[140px] font-chinese text-foreground/90 select-none">{character}</span>
         </div>
         <div className="flex items-center justify-center gap-4 mt-4">
-          <span className="text-sm text-muted-foreground">Stroke {strokeIndex + 1} of {totalStrokes}</span>
+          <span className="text-sm text-muted-foreground">
+            {t.writing.stroke} {strokeIndex + 1} {t.writing.of} {totalStrokes}
+          </span>
         </div>
       </Card>
 
@@ -300,14 +321,14 @@ function CharacterPractice() {
           data-testid="button-restart-stroke"
         >
           <RotateCcw className="w-4 h-4 mr-2" />
-          Restart
+          {t.writing.restart}
         </Button>
         <Button 
           className="flex-1 bg-jade hover:bg-jade/90 text-white"
           onClick={() => setStrokeIndex((prev) => Math.min(prev + 1, totalStrokes - 1))}
           data-testid="button-next-stroke"
         >
-          Next Stroke
+          {t.writing.nextStroke}
           <ChevronRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
@@ -316,6 +337,19 @@ function CharacterPractice() {
 }
 
 export default function Home() {
+  const [lang, setLang] = useState<Language>("zh");
+  const t = getTranslations(lang);
+
+  const toggleLang = () => {
+    setLang(prev => prev === "zh" ? "en" : "zh");
+  };
+
+  const statsData = [
+    { label: t.stats.charactersLearned, value: "156", icon: BookOpen, color: "text-vermillion" },
+    { label: t.stats.dayStreak, value: "12", icon: Zap, color: "text-gold" },
+    { label: t.stats.xpEarned, value: "2,450", icon: Star, color: "text-jade" },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -328,13 +362,23 @@ export default function Home() {
               <span className="text-xl font-semibold font-serif-chinese">HanYu</span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-home">首頁</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter1">第一章</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">第二章</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">第三章</a>
+              <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-home">{t.nav.home}</a>
+              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter1">{t.nav.chapter1}</a>
+              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">{t.nav.chapter2}</a>
+              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">{t.nav.chapter3}</a>
             </nav>
             <div className="flex items-center gap-3">
-              <Button size="sm" className="bg-primary hover:bg-primary/90" data-testid="button-signup">Get Started</Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="gap-2"
+                onClick={toggleLang}
+                data-testid="button-lang-toggle"
+              >
+                <Languages className="w-4 h-4" />
+                {lang === "zh" ? "EN" : "中文"}
+              </Button>
+              <Button size="sm" className="bg-primary hover:bg-primary/90" data-testid="button-signup">{t.nav.getStarted}</Button>
             </div>
           </div>
         </div>
@@ -360,20 +404,20 @@ export default function Home() {
             >
               <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 gap-1">
                 <Sparkles className="w-3 h-3" />
-                Interactive Learning
+                {t.hero.badge}
               </Badge>
               <h1 className="text-5xl md:text-7xl font-bold font-serif-chinese tracking-tight">
-                Learn <span className="text-gradient-vermillion">Chinese</span>
+                {t.hero.title1} <span className="text-gradient-vermillion">{t.hero.title2}</span>
                 <br />
-                <span className="font-chinese text-6xl md:text-8xl">一步一步</span>
+                <span className="font-chinese text-6xl md:text-8xl">{t.hero.subtitle}</span>
               </h1>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                Master Mandarin with interactive flashcards, tone practice, and stroke-by-stroke character writing. 
-                <span className="text-foreground font-medium"> Your journey starts here.</span>
+                {t.hero.description}
+                <span className="text-foreground font-medium"> {t.hero.descriptionHighlight}</span>
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" data-testid="button-start-learning">
-                  Start Learning
+                  {t.hero.startLearning}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </div>
@@ -403,7 +447,7 @@ export default function Home() {
       <section className="py-12 border-y border-border bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {stats.map((stat, index) => (
+            {statsData.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
@@ -428,32 +472,32 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">Interactive Learning Tools</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">{t.tools.title}</h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to master Mandarin Chinese, all in one place
+              {t.tools.description}
             </p>
           </div>
 
           <Tabs defaultValue="flashcards" className="w-full">
             <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4 mb-8">
-              <TabsTrigger value="flashcards" data-testid="tab-flashcards">Flashcards</TabsTrigger>
-              <TabsTrigger value="tones" data-testid="tab-tones">Tones</TabsTrigger>
-              <TabsTrigger value="writing" data-testid="tab-writing">Writing</TabsTrigger>
-              <TabsTrigger value="lessons" data-testid="tab-lessons">Lessons</TabsTrigger>
+              <TabsTrigger value="flashcards" data-testid="tab-flashcards">{t.tools.flashcards}</TabsTrigger>
+              <TabsTrigger value="tones" data-testid="tab-tones">{t.tools.tones}</TabsTrigger>
+              <TabsTrigger value="writing" data-testid="tab-writing">{t.tools.writing}</TabsTrigger>
+              <TabsTrigger value="lessons" data-testid="tab-lessons">{t.tools.lessons}</TabsTrigger>
             </TabsList>
 
             <div className="max-w-xl mx-auto">
               <TabsContent value="flashcards" className="mt-0">
-                <FlashcardSection />
+                <FlashcardSection lang={lang} />
               </TabsContent>
               <TabsContent value="tones" className="mt-0">
-                <TonesSection />
+                <TonesSection lang={lang} />
               </TabsContent>
               <TabsContent value="writing" className="mt-0">
-                <CharacterPractice />
+                <CharacterPractice lang={lang} />
               </TabsContent>
               <TabsContent value="lessons" className="mt-0">
-                <LessonsSection />
+                <LessonsSection lang={lang} />
               </TabsContent>
             </div>
           </Tabs>
@@ -466,20 +510,20 @@ export default function Home() {
             {[
               {
                 icon: Target,
-                title: "Personalized Learning",
-                description: "AI-powered curriculum that adapts to your pace and learning style",
+                title: t.features.personalized.title,
+                description: t.features.personalized.description,
                 color: "bg-primary/10 text-primary"
               },
               {
                 icon: Trophy,
-                title: "Gamified Progress",
-                description: "Earn XP, maintain streaks, and unlock achievements as you learn",
+                title: t.features.gamified.title,
+                description: t.features.gamified.description,
                 color: "bg-jade/10 text-jade"
               },
               {
                 icon: Volume2,
-                title: "Native Pronunciation",
-                description: "Audio from native speakers helps perfect your tones and accent",
+                title: t.features.pronunciation.title,
+                description: t.features.pronunciation.description,
                 color: "bg-gold/10 text-gold"
               }
             ].map((feature, index) => (
@@ -512,13 +556,13 @@ export default function Home() {
           >
             <span className="text-8xl font-chinese block mb-6">开始学习</span>
             <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese mb-4">
-              Ready to start your Chinese journey?
+              {t.cta.title}
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              Join thousands of learners who are mastering Mandarin the fun and effective way.
+              {t.cta.description}
             </p>
             <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" data-testid="button-cta">
-              Start Learning Free
+              {t.cta.button}
               <ArrowRight className="w-5 h-5" />
             </Button>
           </motion.div>
@@ -535,7 +579,7 @@ export default function Home() {
               <span className="font-semibold font-serif-chinese">HanYu</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2026 HanYu. Learn Chinese with love.
+              {t.footer.copyright}
             </p>
           </div>
         </div>
