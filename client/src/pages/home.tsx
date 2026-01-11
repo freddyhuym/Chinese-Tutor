@@ -416,7 +416,17 @@ export default function Home() {
                 <span className="text-foreground font-medium"> {t.hero.descriptionHighlight}</span>
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" data-testid="button-start-learning">
+                <Button 
+                  size="lg" 
+                  className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" 
+                  data-testid="button-start-learning"
+                  onClick={() => {
+                    const toolsSection = document.getElementById('tools-section');
+                    if (toolsSection) {
+                      toolsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
                   {t.hero.startLearning}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
@@ -469,14 +479,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section id="tools-section" className="py-20 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0.7 }}
+            whileInView={{ opacity: 1, scale: 1.02 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.4 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">{t.tools.title}</h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
               {t.tools.description}
             </p>
-          </div>
+          </motion.div>
 
           <Tabs defaultValue="flashcards" className="w-full">
             <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4 mb-8">

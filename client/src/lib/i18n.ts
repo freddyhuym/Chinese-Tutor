@@ -16,7 +16,7 @@ export const translations = {
       subtitle: "一步一步",
       description: "透過互動式閃卡、聲調練習和筆順教學來精通中文。",
       descriptionHighlight: "您的學習之旅從這裡開始。",
-      startLearning: "開始學習",
+      startLearning: "教材使用教學",
     },
     stats: {
       charactersLearned: "已學習字符",
@@ -98,7 +98,7 @@ export const translations = {
       subtitle: "一步一步",
       description: "Master Mandarin with interactive flashcards, tone practice, and stroke-by-stroke character writing.",
       descriptionHighlight: "Your journey starts here.",
-      startLearning: "Start Learning",
+      startLearning: "How to Use",
     },
     stats: {
       charactersLearned: "Characters Learned",
