@@ -22,7 +22,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/chinese_calligraphy_ink_texture_background.png";
-import chineseCulturalBg from "@assets/generated_images/misty_mountains_pink_gradient_background.png";
+import chineseCulturalBg from "@assets/generated_images/light_calligraphy_border_background.png";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
 
@@ -668,7 +668,7 @@ export default function Home() {
             transition={{ delay: 0.3 }}
             className="text-center"
           >
-            <span className="text-7xl md:text-8xl font-chinese block mb-6 drop-shadow-sm">开始学习</span>
+            <span className="text-7xl md:text-8xl font-chinese block mb-6 drop-shadow-sm">開始學習</span>
             <h3 className="text-2xl md:text-3xl font-bold font-serif-chinese mb-4">
               {t.cta.title}
             </h3>
