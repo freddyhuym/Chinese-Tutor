@@ -328,17 +328,12 @@ export default function Home() {
               <span className="text-xl font-semibold font-serif-chinese">HanYu</span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
-              <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-learn">Learn</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-practice">Practice</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-characters">Characters</a>
-              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-community">Community</a>
+              <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-home">首頁</a>
+              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter1">第一章</a>
+              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">第二章</a>
+              <a href="#" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">第三章</a>
             </nav>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="gap-2" data-testid="button-streak">
-                <Zap className="w-4 h-4 text-gold" />
-                <span className="font-semibold">12</span>
-              </Button>
-              <Button variant="outline" size="sm" data-testid="button-login">Sign In</Button>
               <Button size="sm" className="bg-primary hover:bg-primary/90" data-testid="button-signup">Get Started</Button>
             </div>
           </div>
@@ -378,12 +373,8 @@ export default function Home() {
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" data-testid="button-start-learning">
-                  Start Learning Free
+                  Start Learning
                   <ArrowRight className="w-5 h-5" />
-                </Button>
-                <Button size="lg" variant="outline" className="gap-2" data-testid="button-demo">
-                  <Play className="w-5 h-5" />
-                  Watch Demo
                 </Button>
               </div>
             </motion.div>
