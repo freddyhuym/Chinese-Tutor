@@ -668,7 +668,6 @@ export default function Home() {
             transition={{ delay: 0.3 }}
             className="text-center"
           >
-            <span className="text-7xl md:text-8xl font-chinese block mb-6 drop-shadow-sm">開始學習</span>
             <h3 className="text-2xl md:text-3xl font-bold font-serif-chinese mb-4">
               {t.cta.title}
             </h3>
