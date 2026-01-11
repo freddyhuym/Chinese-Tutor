@@ -22,7 +22,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/chinese_calligraphy_ink_texture_background.png";
-import chineseCulturalBg from "@assets/generated_images/dense_calligraphy_frame_clear_center.png";
+import chineseCulturalBg from "@assets/generated_images/chinese_landscape_ink_painting_background.png";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
 
