@@ -566,12 +566,17 @@ export default function Home() {
       </section>
 
       <section id="why-choose-us" className="py-24 scroll-mt-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-rose-100/30" />
+        <div 
+          className="absolute inset-0" 
+          style={{ 
+            background: 'linear-gradient(135deg, rgb(232, 244, 243) 0%, rgb(217, 237, 235) 30%, rgb(197, 227, 224) 60%, rgb(181, 219, 216) 100%)' 
+          }} 
+        />
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-primary/40 rounded-full"
+              className="absolute w-1.5 h-1.5 bg-white/60 rounded-full shadow-sm"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -605,7 +610,7 @@ export default function Home() {
                 delay: Math.random() * 2,
               }}
             >
-              <Sparkles className="w-3 h-3 text-primary/30" />
+              <Sparkles className="w-4 h-4 text-white/50" />
             </motion.div>
           ))}
         </div>
