@@ -404,23 +404,24 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 gap-1">
-                <Sparkles className="w-3 h-3" />
-                {t.hero.badge}
-              </Badge>
-              <h1 className="text-5xl md:text-7xl font-bold font-serif-chinese tracking-tight">
-                {t.hero.title1} <span className="text-gradient-vermillion">{t.hero.title2}</span>
-                <br />
-                <span className="font-chinese text-6xl md:text-8xl">{t.hero.subtitle}</span>
+              <h1 className="text-4xl md:text-6xl font-bold font-serif-chinese tracking-tight mb-8 text-foreground">
+                大家好！
               </h1>
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                {t.hero.description}
-                <span className="text-foreground font-medium"> {t.hero.descriptionHighlight}</span>
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="space-y-4 text-xl md:text-3xl font-serif-chinese text-muted-foreground leading-relaxed">
+                <p>我叫 王貓貓。</p>
+                <p>我學中文 三個多月了。</p>
+                <p>這是我 第一次來臺灣。</p>
+                <p>我對這次的旅程 很期待！</p>
+                <p className="text-foreground font-bold pt-4">
+                  跟我一起 來臺灣，<br/>
+                  一起學中文 吧
+                </p>
+              </div>
+              
+              <div className="mt-10 flex flex-wrap gap-4">
                 <Button 
                   size="lg" 
-                  className="gap-2 bg-primary hover:bg-primary/90 shadow-lg" 
+                  className="gap-2 bg-primary hover:bg-primary/90 shadow-lg text-lg px-8 py-6" 
                   data-testid="button-start-learning"
                   onClick={() => {
                     const toolsSection = document.getElementById('tools-section');
