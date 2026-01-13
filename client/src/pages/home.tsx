@@ -422,15 +422,15 @@ export default function Home() {
                 <Button 
                   size="lg" 
                   className="gap-2 bg-primary hover:bg-primary/90 shadow-lg text-lg px-8 py-6" 
-                  data-testid="button-start-learning"
+                  data-testid="button-about-course"
                   onClick={() => {
-                    const toolsSection = document.getElementById('tools-section');
-                    if (toolsSection) {
-                      toolsSection.scrollIntoView({ behavior: 'smooth' });
+                    const aboutSection = document.getElementById('about-section');
+                    if (aboutSection) {
+                      aboutSection.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
                 >
-                  {t.hero.startLearning}
+                  關於本教材
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </div>
@@ -440,28 +440,44 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-12 border-y border-border bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {statsData.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
+      <section id="about-section" className="py-24 border-y border-border bg-muted/30 scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese mb-8">適合對象與程度</h2>
+            <div className="space-y-6 text-lg md:text-xl text-muted-foreground leading-relaxed font-serif-chinese">
+              <p>
+                本教材專為 <span className="text-foreground font-semibold">學習中文三個月以上</span> 的學習者設計
+              </p>
+              <p>
+                難度相當於 <span className="text-jade font-bold">TCBL 第二級</span> 程度
+              </p>
+              <p>
+                無論您是自學還是參與課程，這都是您 <span className="text-foreground font-semibold">課堂之外的最佳補充教材</span>
+              </p>
+            </div>
+
+            <div className="mt-12">
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="gap-2 text-lg px-8 py-6"
+                onClick={() => {
+                  const toolsSection = document.getElementById('tools-section');
+                  if (toolsSection) {
+                    toolsSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
-                <Card className="p-6 flex items-center gap-4 bg-card/50 backdrop-blur-sm">
-                  <div className={`w-14 h-14 rounded-2xl bg-background flex items-center justify-center ${stat.color}`}>
-                    <stat.icon className="w-7 h-7" />
-                  </div>
-                  <div>
-                    <p className="text-3xl font-bold font-serif-chinese">{stat.value}</p>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+                探索學習工具
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
