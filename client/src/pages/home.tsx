@@ -437,23 +437,6 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="hidden lg:block absolute right-8 top-1/2 -translate-y-1/2"
-          >
-            <div className="relative">
-              <div className="text-[200px] font-chinese text-primary/10 select-none animate-float">
-                学
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-primary/5 backdrop-blur-sm flex items-center justify-center">
-                  <Heart className="w-12 h-12 text-primary" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
