@@ -6,9 +6,7 @@ import {
   BookOpen,
   Play,
   CheckCircle2,
-  MessageSquare,
-  Heart,
-  Send
+  Heart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -268,67 +266,68 @@ export default function Chapter1() {
                 )}
               </div>
               
-              <div className="h-[500px] overflow-y-auto p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
-                {chatState.messages.map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex justify-start mb-4"
-                  >
-                    <div className="flex items-end gap-3 max-w-[90%] flex-row">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm ${
-                        msg.sender === 'reddy' 
-                          ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500/20' 
-                          : 'bg-pink-100 text-pink-700 ring-2 ring-pink-500/20'
-                      }`}>
-                        {msg.sender === 'reddy' ? 'R' : '雨'}
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground ml-1">
-                           {msg.sender === 'reddy' ? content.chat.reddy : content.chat.xiaoyu}
-                        </span>
-                        <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed ${
+              <div className="h-[700px] overflow-y-auto p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
+                {chatState.messages.map((msg, index) => (
+                  <div key={`msg-${msg.id}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex justify-start mb-4"
+                    >
+                      <div className="flex items-end gap-3 max-w-[90%] flex-row">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm ${
                           msg.sender === 'reddy' 
-                            ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
-                            : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                            ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500/20' 
+                            : 'bg-pink-100 text-pink-700 ring-2 ring-pink-500/20'
                         }`}>
-                          {msg.text}
+                          {msg.sender === 'reddy' ? 'R' : '雨'}
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <span className="text-xs text-muted-foreground ml-1">
+                             {msg.sender === 'reddy' ? content.chat.reddy : content.chat.xiaoyu}
+                          </span>
+                          <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed ${
+                            msg.sender === 'reddy' 
+                              ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
+                              : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                          }`}>
+                            {msg.text}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+
+                    {/* Show choices after message 6 */}
+                    {index === 5 && (
+                      <div className="ml-14 my-6 space-y-3 bg-slate-50/50 p-4 rounded-xl border border-dashed border-border/60">
+                         <p className="text-sm font-medium text-muted-foreground mb-2">請選擇瑞迪的回答：</p>
+                         {CHOICES.map((choice) => (
+                          <button
+                            key={choice.id}
+                            onClick={() => handleChoice(choice.id)}
+                            className={`w-full p-4 text-left shadow-sm transition-all rounded-xl border-2 ${
+                               chatState.completed && chatState.messages.find(m => m.text === choice.text)
+                                ? 'bg-primary/5 border-primary ring-2 ring-primary/20'
+                                : 'bg-white border-border'
+                            }`}
+                          >
+                            <span className="flex items-center gap-4">
+                              <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                                chatState.completed && chatState.messages.find(m => m.text === choice.text)
+                                  ? 'bg-primary text-white'
+                                  : 'bg-slate-100 text-slate-500'
+                              }`}>
+                                {choice.id}
+                              </span>
+                              <span className="font-medium text-lg text-foreground">{choice.text}</span>
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
                 
-                {(
-                  <div className="pt-6 space-y-4 border-t border-border/50 mt-6 bg-slate-50/80 p-4 rounded-xl">
-                    <p className="text-center text-base font-medium text-muted-foreground mb-2">請選擇回答 (可隨時切換)：</p>
-                    {CHOICES.map((choice) => (
-                      <motion.button
-                        key={choice.id}
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                        onClick={() => handleChoice(choice.id)}
-                        className={`w-full p-5 text-left shadow-sm transition-all group rounded-xl border-2 ${
-                           chatState.completed && chatState.messages.find(m => m.text === choice.text)
-                            ? 'bg-primary/5 border-primary ring-2 ring-primary/20'
-                            : 'bg-white hover:bg-slate-50 border-border hover:border-primary/50'
-                        }`}
-                      >
-                        <span className="flex items-center gap-4">
-                          <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                            chatState.completed && chatState.messages.find(m => m.text === choice.text)
-                              ? 'bg-primary text-white'
-                              : 'bg-slate-100 text-slate-500 group-hover:bg-primary/10 group-hover:text-primary'
-                          }`}>
-                            {choice.id}
-                          </span>
-                          <span className="font-medium text-lg text-foreground">{choice.text}</span>
-                        </span>
-                      </motion.button>
-                    ))}
-                  </div>
-                )}
                 <div ref={chatEndRef} />
               </div>
             </Card>
