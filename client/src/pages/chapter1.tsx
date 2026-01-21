@@ -403,61 +403,71 @@ export default function Chapter1() {
                              {msg.sender === 'reddy' ? content.chat.reddy : content.chat.xiaoyu}
                           </span>
                           
-                          <div className="flex items-end gap-2">
-                             {/* Action Buttons - Placed to the left of bubble */}
-                            <div className="flex flex-col gap-1 self-end mb-1">
-                               <Button
-                                variant="ghost"
-                                size="icon"
-                                className={`h-8 w-8 rounded-full hover:bg-primary/10 ${messageStates[msg.id]?.showEn ? 'text-primary bg-primary/5' : 'text-slate-400'}`}
-                                onClick={() => toggleMessageEn(msg.id)}
-                                title="顯示英文"
-                              >
-                                <Languages className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className={`h-8 w-8 rounded-full hover:bg-primary/10 ${messageStates[msg.id]?.showPinyin ? 'text-primary bg-primary/5' : 'text-slate-400'}`}
-                                onClick={() => toggleMessagePinyin(msg.id)}
-                                title="顯示拼音"
-                              >
-                                <Type className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 rounded-full hover:bg-primary/10 text-slate-400 hover:text-primary"
-                                onClick={() => playAudio(msg.text, msg.sender === 'reddy')}
-                                title="播放語音"
-                              >
-                                <Volume2 className="w-4 h-4" />
-                              </Button>
-                            </div>
-
+                          <div className="flex flex-col gap-2 max-w-[85%]">
                              {/* Message Bubble */}
-                            <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed relative group ${
+                            <div className={`p-5 rounded-2xl text-lg shadow-sm leading-relaxed relative group transition-all duration-200 ${
                               msg.sender === 'reddy' 
-                                ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
-                                : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                                ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none hover:shadow-md hover:border-blue-200' 
+                                : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none hover:shadow-md hover:border-primary/20'
                             }`}>
                               <div className="space-y-2">
                                 {/* Pinyin Display */}
                                 {messageStates[msg.id]?.showPinyin && (
-                                  <p className="text-sm text-primary/80 font-medium mb-1 border-b border-primary/10 pb-1">
+                                  <p className="text-base text-primary font-medium mb-1 border-b border-primary/10 pb-1 font-serif-chinese">
                                     {msg.pinyin}
                                   </p>
                                 )}
                                 
-                                <p>{msg.text}</p>
+                                <p className="font-medium">{msg.text}</p>
                                 
                                 {/* English Display */}
                                 {messageStates[msg.id]?.showEn && (
-                                  <p className="text-sm text-muted-foreground mt-2 pt-2 border-t border-slate-200/60">
+                                  <p className="text-base text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
                                     {msg.en}
                                   </p>
                                 )}
                               </div>
+                            </div>
+
+                            {/* Action Buttons - Horizontal Row below bubble */}
+                            <div className="flex items-center gap-1 ml-1">
+                               <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`h-8 px-2 rounded-full gap-1.5 text-xs font-medium transition-colors ${
+                                  messageStates[msg.id]?.showEn 
+                                    ? 'bg-primary/10 text-primary hover:bg-primary/20' 
+                                    : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100'
+                                }`}
+                                onClick={() => toggleMessageEn(msg.id)}
+                              >
+                                <Languages className="w-3.5 h-3.5" />
+                                <span>翻譯</span>
+                              </Button>
+                              <div className="w-px h-3 bg-slate-200" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className={`h-8 px-2 rounded-full gap-1.5 text-xs font-medium transition-colors ${
+                                  messageStates[msg.id]?.showPinyin 
+                                    ? 'bg-primary/10 text-primary hover:bg-primary/20' 
+                                    : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100'
+                                }`}
+                                onClick={() => toggleMessagePinyin(msg.id)}
+                              >
+                                <Type className="w-3.5 h-3.5" />
+                                <span>拼音</span>
+                              </Button>
+                              <div className="w-px h-3 bg-slate-200" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 px-2 rounded-full gap-1.5 text-xs font-medium text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
+                                onClick={() => playAudio(msg.text, msg.sender === 'reddy')}
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                                <span>朗讀</span>
+                              </Button>
                             </div>
                           </div>
                         </div>
