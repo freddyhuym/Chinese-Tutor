@@ -404,33 +404,8 @@ export default function Chapter1() {
                           </span>
                           
                           <div className="flex items-end gap-2">
-                             {/* Message Bubble */}
-                            <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed relative group ${
-                              msg.sender === 'reddy' 
-                                ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
-                                : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
-                            }`}>
-                              <div className="space-y-2">
-                                {/* Pinyin Display */}
-                                {messageStates[msg.id]?.showPinyin && (
-                                  <p className="text-sm text-primary/80 font-medium mb-1 border-b border-primary/10 pb-1">
-                                    {msg.pinyin}
-                                  </p>
-                                )}
-                                
-                                <p>{msg.text}</p>
-                                
-                                {/* English Display */}
-                                {messageStates[msg.id]?.showEn && (
-                                  <p className="text-sm text-muted-foreground mt-2 pt-2 border-t border-slate-200/60">
-                                    {msg.en}
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Action Buttons - Placed to the right of bubble */}
-                            <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity self-end mb-1">
+                             {/* Action Buttons - Placed to the left of bubble */}
+                            <div className="flex flex-col gap-1 self-end mb-1">
                                <Button
                                 variant="ghost"
                                 size="icon"
@@ -458,6 +433,31 @@ export default function Chapter1() {
                               >
                                 <Volume2 className="w-4 h-4" />
                               </Button>
+                            </div>
+
+                             {/* Message Bubble */}
+                            <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed relative group ${
+                              msg.sender === 'reddy' 
+                                ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
+                                : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                            }`}>
+                              <div className="space-y-2">
+                                {/* Pinyin Display */}
+                                {messageStates[msg.id]?.showPinyin && (
+                                  <p className="text-sm text-primary/80 font-medium mb-1 border-b border-primary/10 pb-1">
+                                    {msg.pinyin}
+                                  </p>
+                                )}
+                                
+                                <p>{msg.text}</p>
+                                
+                                {/* English Display */}
+                                {messageStates[msg.id]?.showEn && (
+                                  <p className="text-sm text-muted-foreground mt-2 pt-2 border-t border-slate-200/60">
+                                    {msg.en}
+                                  </p>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
