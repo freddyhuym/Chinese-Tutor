@@ -116,6 +116,26 @@ export default function Chapter1() {
             </p>
           </div>
 
+          <div className="mb-12">
+            <Card className="p-8 bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
+                    {/* @ts-ignore */}
+                    {t.chapter1Page?.background.title}
+                  </h2>
+                  <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
+                    {/* @ts-ignore */}
+                    {t.chapter1Page?.background.content}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
           <div className="space-y-4 mb-12">
             {content.sections.map((section, index) => (
               <motion.div

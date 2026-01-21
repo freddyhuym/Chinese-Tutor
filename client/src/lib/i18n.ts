@@ -128,6 +128,12 @@ export const translations = {
       description: "加入數千名學習者，以有趣且有效的方式掌握中文。",
       button: "開始學習",
     },
+    chapter1Page: {
+      background: {
+        title: "背景故事",
+        content: "瑞迪是一位剛來台灣的美國人。\n他在一個交朋友的 Facebook 社團裡認識了小雨。\n\n瑞迪想先跟小雨聊天，慢慢認識她，\n之後一起吃飯、一起看電影。\n\n兩個月之後，他希望可以跟小雨一起到象山，\n在看風景的時候向小雨告白。\n\n他會不會成功，就要靠你來幫助他。\n在幫助瑞迪的過程中，你也可以學習跟台灣女生約會時\n常用的中文，讓我們一起學習吧。"
+      }
+    },
     footer: {
       copyright: "© 2026 HanYu. 用愛學中文。",
     },
@@ -258,6 +264,12 @@ export const translations = {
       title: "Ready to start your Chinese journey?",
       description: "Join thousands of learners who are mastering Mandarin the fun and effective way.",
       button: "Start Learning",
+    },
+    chapter1Page: {
+      background: {
+        title: "Background Story",
+        content: "Reddy is an American who has just arrived in Taiwan.\nHe met Xiao Yu in a Facebook group for making friends.\n\nReddy wants to chat with Xiao Yu first to get to know her slowly,\nthen have meals and watch movies together.\n\nTwo months later, he hopes to go to Elephant Mountain with Xiao Yu\nand confess his feelings to her while enjoying the scenery.\n\nWhether he succeeds or not depends on your help.\nIn the process of helping Reddy, you can also learn the Chinese commonly used\nwhen dating Taiwanese girls. Let's learn together!"
+      }
     },
     footer: {
       copyright: "© 2026 HanYu. Learn Chinese with love.",
