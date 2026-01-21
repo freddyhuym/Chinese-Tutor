@@ -138,8 +138,10 @@ export default function Chapter1() {
     const choice = CHOICES.find(c => c.id === choiceId);
     if (!choice) return;
 
+    // Reset messages to initial state then append new choice
+    // allow re-selecting
     const newMessages: Message[] = [
-      ...chatState.messages,
+      ...INITIAL_CHAT_STATE.messages,
       { id: Date.now(), sender: 'reddy', text: choice.text },
       { id: Date.now() + 1, sender: 'xiaoyu', text: choice.response }
     ];
@@ -272,41 +274,56 @@ export default function Chapter1() {
                     key={msg.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`flex ${msg.sender === 'reddy' ? 'justify-end' : 'justify-start'}`}
+                    className="flex justify-start mb-4"
                   >
-                    <div className={`flex items-end gap-2 max-w-[80%] ${msg.sender === 'reddy' ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                        msg.sender === 'reddy' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'
+                    <div className="flex items-end gap-3 max-w-[90%] flex-row">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm ${
+                        msg.sender === 'reddy' 
+                          ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500/20' 
+                          : 'bg-pink-100 text-pink-700 ring-2 ring-pink-500/20'
                       }`}>
                         {msg.sender === 'reddy' ? 'R' : '雨'}
                       </div>
-                      <div className={`p-3 rounded-2xl text-sm md:text-base ${
-                        msg.sender === 'reddy' 
-                          ? 'bg-blue-500 text-white rounded-tr-none' 
-                          : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none shadow-sm'
-                      }`}>
-                        {msg.text}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground ml-1">
+                           {msg.sender === 'reddy' ? content.chat.reddy : content.chat.xiaoyu}
+                        </span>
+                        <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed ${
+                          msg.sender === 'reddy' 
+                            ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
+                            : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                        }`}>
+                          {msg.text}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
                 ))}
                 
-                {!chatState.completed && (
-                  <div className="pt-4 space-y-3">
-                    <p className="text-center text-sm text-muted-foreground mb-2">請選擇回答：</p>
+                {(
+                  <div className="pt-6 space-y-4 border-t border-border/50 mt-6 bg-slate-50/80 p-4 rounded-xl">
+                    <p className="text-center text-base font-medium text-muted-foreground mb-2">請選擇回答 (可隨時切換)：</p>
                     {CHOICES.map((choice) => (
                       <motion.button
                         key={choice.id}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
                         onClick={() => handleChoice(choice.id)}
-                        className="w-full p-4 bg-white dark:bg-slate-800 border-2 border-primary/20 hover:border-primary rounded-xl text-left shadow-sm transition-colors group"
+                        className={`w-full p-5 text-left shadow-sm transition-all group rounded-xl border-2 ${
+                           chatState.completed && chatState.messages.find(m => m.text === choice.text)
+                            ? 'bg-primary/5 border-primary ring-2 ring-primary/20'
+                            : 'bg-white hover:bg-slate-50 border-border hover:border-primary/50'
+                        }`}
                       >
-                        <span className="flex items-center gap-3">
-                          <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span className="flex items-center gap-4">
+                          <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                            chatState.completed && chatState.messages.find(m => m.text === choice.text)
+                              ? 'bg-primary text-white'
+                              : 'bg-slate-100 text-slate-500 group-hover:bg-primary/10 group-hover:text-primary'
+                          }`}>
                             {choice.id}
                           </span>
-                          <span className="font-medium text-foreground">{choice.text}</span>
+                          <span className="font-medium text-lg text-foreground">{choice.text}</span>
                         </span>
                       </motion.button>
                     ))}
@@ -314,24 +331,7 @@ export default function Chapter1() {
                 )}
                 <div ref={chatEndRef} />
               </div>
-
-              {/* Affinity Meter */}
-              <div className="absolute bottom-6 right-6">
-                 <motion.div 
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg backdrop-blur-md border ${
-                    chatState.affinity === 'green' 
-                      ? 'bg-jade/10 border-jade/30 text-jade' 
-                      : 'bg-red-500/10 border-red-500/30 text-red-500'
-                  }`}
-                  animate={{
-                    scale: chatState.completed ? [1, 1.2, 1] : 1
-                  }}
-                 >
-                   <Heart className={`w-5 h-5 ${chatState.affinity === 'green' ? 'fill-jade' : 'fill-red-500'}`} />
-                   <span className="font-bold text-sm whitespace-nowrap">{content.chat.affinity}</span>
-                 </motion.div>
-              </div>
-             </Card>
+            </Card>
           </div>
 
           <div className="space-y-4 mb-12">
@@ -386,6 +386,39 @@ export default function Chapter1() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Affinity Meter - Fixed at bottom right */}
+      <AnimatePresence>
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
+            chatState.affinity === 'green' 
+              ? 'bg-jade/90 border-jade text-white shadow-jade/20' 
+              : 'bg-red-500/90 border-red-500 text-white shadow-red-500/20'
+          }`}
+        >
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <Heart className={`w-6 h-6 fill-current`} />
+          </motion.div>
+          <div className="flex flex-col">
+             <span className="font-bold text-base whitespace-nowrap">{content.chat.affinity}</span>
+             <span className="text-xs opacity-90 font-medium">
+               {chatState.affinity === 'green' ? '心情很好' : '心情普通'}
+             </span>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
