@@ -118,10 +118,12 @@ export default function Chapter1() {
 
   useEffect(() => {
     localStorage.setItem('chapter1_chat_state', JSON.stringify(chatState));
-    // Scroll to bottom when messages update
-    setTimeout(() => {
-      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
+    // Only scroll to bottom on initial load or if we are not completed
+    if (!chatState.completed) {
+      setTimeout(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
   }, [chatState]);
 
   const toggleLang = () => {
