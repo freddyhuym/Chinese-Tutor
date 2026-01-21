@@ -365,6 +365,7 @@ export default function Home() {
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-home">{t.nav.home}</a>
+              <Link href="/philosophy" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-philosophy">{t.nav.philosophy}</Link>
               <Link href="/chapter1" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter1">{t.nav.chapter1}</Link>
               <Link href="/chapter2" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">{t.nav.chapter2}</Link>
               <Link href="/chapter3" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">{t.nav.chapter3}</Link>

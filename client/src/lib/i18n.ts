@@ -4,10 +4,27 @@ export const translations = {
   zh: {
     nav: {
       home: "首頁",
+      philosophy: "編寫理念",
       chapter1: "第一章",
       chapter2: "第二章",
       chapter3: "第三章",
       getStarted: "開始學習",
+    },
+    philosophy: {
+      title: "編寫理念",
+      subtitle: "以學習者為中心的數位華語教材設計",
+      section1: {
+        title: "符合 TBCL 標準與真實語料應用",
+        content: "臺灣華語文能力基準為漢字、生詞與語法點提供明確的等級分級標準，有助於教材編寫者在內容設計過程中掌握語言難度與學習目標。本教材在課文與對話完成後，透過教材編輯輔助系統檢視生詞與語法點在 TBCL 中之分布情形，其中生詞等級多落在 TBCL 1.5 至 2.5 級，語法點則主要集中於 TBCL 2 至 3 級，整體難度符合第二級學習者之理解與使用能力。\n\n此外，教材內容亦參考華語語料庫中之常見詞彙搭配與實際語言使用情境，作為語言自然度與真實性的參照依據，使教材不僅符合能力基準要求，也貼近真實語言使用狀況，提升學習者在實際溝通中的可遷移性。"
+      },
+      section2: {
+        title: "數位教材形式對華語教材編寫與學習體驗之優勢",
+        content: "相較於傳統紙本教材，本數位教材可在既有課文架構下，彈性呈現多元學習內容。教材編寫者可依教學設計需求，於相同主題中延伸不同情境與語言使用方式，並透過數位平台呈現，使教材內容更具層次與廣度。\n\n在教材設計過程中，編寫者可先以核心課文與語言重點為主軸，再逐步延伸補充內容與替代說法，形成具結構性的數位教材模組。此種設計方式不僅有助於教材後續擴充與更新，也能因應不同學習者程度與學習節奏進行彈性調整，提升教材實際使用效益。"
+      },
+      section3: {
+        title: "分支式章節設計與多模態互動於數位華語教材之實踐",
+        content: "本教材每一章節皆設計多條分支學習路徑，學習者可依不同選擇進入不同對話發展與語言表現情境，在相同主題下接觸多樣化的說話方式與表達策略。此分支式設計不僅增加教材內容的廣度，也提升學習歷程的趣味性與參與感。\n\n此外，部分語法點結合語音辨識與動畫呈現方式，讓學習者透過實際朗讀與互動操作，觀察不同語法形式在語意與語用功能上的差異。透過視覺、聽覺與語言輸出之整合，協助學習者更直觀地理解語法功能，並促進語言理解與產出能力的發展。整體而言，本教材嘗試建構一套以能力基準為依據、以數位互動為特色的華語教材編寫模式，展現數位教材於華語教學上的應用潛力。"
+      }
     },
     hero: {
       badge: "互動學習",
@@ -118,10 +135,27 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
+      philosophy: "Philosophy",
       chapter1: "Chapter 1",
       chapter2: "Chapter 2",
       chapter3: "Chapter 3",
       getStarted: "Get Started",
+    },
+    philosophy: {
+      title: "Teaching Philosophy",
+      subtitle: "Learner-Centered Digital Chinese Material Design",
+      section1: {
+        title: "Alignment with TBCL Standards and Authentic Corpus Application",
+        content: "The Taiwan Benchmarks for the Chinese Language (TBCL) provide clear grading standards for characters, vocabulary, and grammar points, helping material developers control language difficulty and learning objectives during the content design process. After completing the texts and dialogues, this material uses an editing support system to examine the distribution of vocabulary and grammar points within the TBCL framework. The vocabulary levels mostly fall between TBCL 1.5 to 2.5, and grammar points are concentrated between TBCL 2 to 3, making the overall difficulty suitable for Level 2 learners' comprehension and usage abilities.\n\nIn addition, the content references common collocations and actual language usage contexts from Chinese corpora as a basis for naturalness and authenticity. This ensures that the material not only meets benchmark requirements but also reflects real-life language usage, enhancing learners' transferability in actual communication."
+      },
+      section2: {
+        title: "Advantages of Digital Formats for Chinese Material Development and Learning Experience",
+        content: "Compared to traditional printed materials, this digital material can flexibly present diverse learning content within the existing text structure. Developers can extend different contexts and language usages within the same theme according to instructional design needs and present them through a digital platform, adding depth and breadth to the content.\n\nIn the design process, developers can focus on core texts and language points as the main axis, then gradually extend supplementary content and alternative expressions to form structured digital material modules. This design approach not only facilitates future expansion and updates but also allows for flexible adjustments based on different learner levels and paces, enhancing the practical effectiveness of the material."
+      },
+      section3: {
+        title: "Implementation of Branching Chapter Design and Multimodal Interaction",
+        content: "Each chapter of this material is designed with multiple branching learning paths. Learners can choose different options to enter different dialogue developments and language expression contexts, encountering diverse ways of speaking and expression strategies under the same theme. This branching design not only increases the breadth of the content but also enhances the fun and engagement of the learning process.\n\nFurthermore, some grammar points are combined with speech recognition and animation, allowing learners to observe differences in semantic and pragmatic functions of different grammatical forms through actual reading and interactive operations. Through the integration of visual, auditory, and language output, this assists learners in intuitively understanding grammatical functions and promoting the development of language comprehension and production abilities. Overall, this material attempts to construct a Chinese material development model based on competency benchmarks and characterized by digital interaction, demonstrating the potential of digital materials in Chinese language teaching."
+      }
     },
     hero: {
       badge: "Interactive Learning",
