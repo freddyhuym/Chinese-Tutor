@@ -11,7 +11,8 @@ import {
   Type,
   List,
   Mic,
-  MicOff
+  MicOff,
+  RotateCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -253,6 +254,13 @@ function SpeakingPractice({
     }
   };
 
+  const resetPractice = () => {
+    setIsListening(false);
+    setTranscript("");
+    setMatchState(0);
+    setError(null);
+  };
+
   return (
     <div className="mt-6 pt-6 border-t border-dashed border-border/50">
       <div className="flex items-center gap-2 mb-4">
@@ -321,27 +329,39 @@ function SpeakingPractice({
       </div>
 
       <div className="flex flex-col items-center gap-3">
-        <Button
-          size="lg"
-          className={`rounded-full px-8 transition-all duration-300 ${
-            isListening 
-              ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-              : 'bg-primary hover:bg-primary/90'
-          }`}
-          onClick={toggleListening}
-        >
-          {isListening ? (
-            <>
-              <MicOff className="w-5 h-5 mr-2" />
-              停止錄音 Stop
-            </>
-          ) : (
-             <>
-              <Mic className="w-5 h-5 mr-2" />
-              開始練習 Start
-            </>
-          )}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            size="lg"
+            className={`rounded-full px-8 transition-all duration-300 ${
+              isListening 
+                ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                : 'bg-primary hover:bg-primary/90'
+            }`}
+            onClick={toggleListening}
+          >
+            {isListening ? (
+              <>
+                <MicOff className="w-5 h-5 mr-2" />
+                停止錄音 Stop
+              </>
+            ) : (
+              <>
+                <Mic className="w-5 h-5 mr-2" />
+                開始練習 Start
+              </>
+            )}
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full px-6 gap-2"
+            onClick={resetPractice}
+          >
+            <RotateCcw className="w-5 h-5" />
+            重新開始 Reset
+          </Button>
+        </div>
 
         {transcript && (
            <div className="text-center p-3 rounded-lg bg-slate-50 border border-border/50 max-w-md w-full">
