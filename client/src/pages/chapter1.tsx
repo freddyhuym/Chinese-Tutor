@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ChevronLeft,
   Languages,
   BookOpen,
   Play,
-  CheckCircle2
+  CheckCircle2,
+  MessageSquare,
+  Heart,
+  Send
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,7 +29,14 @@ const chapterContent = {
       { title: "常用問候語", duration: "10 分鐘", completed: false },
     ],
     comingSoon: "內容即將推出",
-    comingSoonDesc: "我們正在努力準備精彩的學習內容，敬請期待！"
+    comingSoonDesc: "我們正在努力準備精彩的學習內容，敬請期待！",
+    chat: {
+      title: "對話練習：初次聊天",
+      subtitle: "選擇正確的回答來提升好感度！",
+      reddy: "瑞迪",
+      xiaoyu: "小雨",
+      affinity: "小雨的好感度"
+    }
   },
   en: {
     title: "Chapter 1",
@@ -40,15 +50,81 @@ const chapterContent = {
       { title: "Common Greetings", duration: "10 min", completed: false },
     ],
     comingSoon: "Coming Soon",
-    comingSoonDesc: "We are working hard to prepare exciting learning content. Stay tuned!"
+    comingSoonDesc: "We are working hard to prepare exciting learning content. Stay tuned!",
+    chat: {
+      title: "Dialogue Practice: First Chat",
+      subtitle: "Choose the right answer to increase affinity!",
+      reddy: "Reddy",
+      xiaoyu: "Xiao Yu",
+      affinity: "Xiao Yu's Affinity"
+    }
   }
 };
+
+type Message = {
+  id: number;
+  sender: 'reddy' | 'xiaoyu';
+  text: string;
+  isChoice?: boolean;
+};
+
+type ChatState = {
+  messages: Message[];
+  step: number;
+  affinity: 'green' | 'red';
+  completed: boolean;
+};
+
+const INITIAL_CHAT_STATE: ChatState = {
+  messages: [
+    { id: 1, sender: 'reddy', text: '你好，我是瑞迪，美國人，我會說一點中文' },
+    { id: 2, sender: 'xiaoyu', text: '哈囉，我是小雨' },
+    { id: 3, sender: 'reddy', text: '我剛來台灣，想認識新朋友' },
+    { id: 4, sender: 'xiaoyu', text: '好啊，我在學習英文' },
+    { id: 5, sender: 'reddy', text: '我正在學習中文，也想多練習' },
+    { id: 6, sender: 'xiaoyu', text: '你為什麼學中文？' },
+  ],
+  step: 0,
+  affinity: 'green',
+  completed: false
+};
+
+const CHOICES = [
+  { 
+    id: 1, 
+    text: '因為我覺得中文很簡單', 
+    response: '哇，你很厲害！', 
+    affinityChange: 'red' as const 
+  },
+  { 
+    id: 2, 
+    text: '因為我喜歡台灣文化，很有意思', 
+    response: '哇，你很特別', 
+    affinityChange: 'green' as const 
+  }
+];
 
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const t = getTranslations(lang);
   const content = chapterContent[lang];
+
+  // Chat state management with persistence
+  const [chatState, setChatState] = useState<ChatState>(() => {
+    const saved = localStorage.getItem('chapter1_chat_state');
+    return saved ? JSON.parse(saved) : INITIAL_CHAT_STATE;
+  });
+
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('chapter1_chat_state', JSON.stringify(chatState));
+    // Scroll to bottom when messages update
+    setTimeout(() => {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [chatState]);
 
   const toggleLang = () => {
     setLang(prev => prev === "zh" ? "en" : "zh");
@@ -57,6 +133,28 @@ export default function Chapter1() {
   const currentStoryContent = showStoryTranslation 
     ? translations.en.chapter1Page?.background 
     : translations.zh.chapter1Page?.background;
+
+  const handleChoice = (choiceId: number) => {
+    const choice = CHOICES.find(c => c.id === choiceId);
+    if (!choice) return;
+
+    const newMessages: Message[] = [
+      ...chatState.messages,
+      { id: Date.now(), sender: 'reddy', text: choice.text },
+      { id: Date.now() + 1, sender: 'xiaoyu', text: choice.response }
+    ];
+
+    setChatState(prev => ({
+      ...prev,
+      messages: newMessages,
+      affinity: choice.affinityChange,
+      completed: true
+    }));
+  };
+
+  const resetChat = () => {
+    setChatState(INITIAL_CHAT_STATE);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -151,6 +249,89 @@ export default function Chapter1() {
                 </div>
               </div>
             </Card>
+          </div>
+
+          {/* Chat Interface */}
+          <div className="mb-12 relative">
+             <Card className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900">
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-lg font-serif-chinese">{content.chat.title}</h3>
+                  <p className="text-sm text-muted-foreground">{content.chat.subtitle}</p>
+                </div>
+                {chatState.completed && (
+                  <Button variant="ghost" size="sm" onClick={resetChat}>
+                    重新開始
+                  </Button>
+                )}
+              </div>
+              
+              <div className="h-[500px] overflow-y-auto p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
+                {chatState.messages.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`flex ${msg.sender === 'reddy' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div className={`flex items-end gap-2 max-w-[80%] ${msg.sender === 'reddy' ? 'flex-row-reverse' : 'flex-row'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                        msg.sender === 'reddy' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'
+                      }`}>
+                        {msg.sender === 'reddy' ? 'R' : '雨'}
+                      </div>
+                      <div className={`p-3 rounded-2xl text-sm md:text-base ${
+                        msg.sender === 'reddy' 
+                          ? 'bg-blue-500 text-white rounded-tr-none' 
+                          : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none shadow-sm'
+                      }`}>
+                        {msg.text}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+                
+                {!chatState.completed && (
+                  <div className="pt-4 space-y-3">
+                    <p className="text-center text-sm text-muted-foreground mb-2">請選擇回答：</p>
+                    {CHOICES.map((choice) => (
+                      <motion.button
+                        key={choice.id}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleChoice(choice.id)}
+                        className="w-full p-4 bg-white dark:bg-slate-800 border-2 border-primary/20 hover:border-primary rounded-xl text-left shadow-sm transition-colors group"
+                      >
+                        <span className="flex items-center gap-3">
+                          <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            {choice.id}
+                          </span>
+                          <span className="font-medium text-foreground">{choice.text}</span>
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
+                )}
+                <div ref={chatEndRef} />
+              </div>
+
+              {/* Affinity Meter */}
+              <div className="absolute bottom-6 right-6">
+                 <motion.div 
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg backdrop-blur-md border ${
+                    chatState.affinity === 'green' 
+                      ? 'bg-jade/10 border-jade/30 text-jade' 
+                      : 'bg-red-500/10 border-red-500/30 text-red-500'
+                  }`}
+                  animate={{
+                    scale: chatState.completed ? [1, 1.2, 1] : 1
+                  }}
+                 >
+                   <Heart className={`w-5 h-5 ${chatState.affinity === 'green' ? 'fill-jade' : 'fill-red-500'}`} />
+                   <span className="font-bold text-sm whitespace-nowrap">{content.chat.affinity}</span>
+                 </motion.div>
+              </div>
+             </Card>
           </div>
 
           <div className="space-y-4 mb-12">
