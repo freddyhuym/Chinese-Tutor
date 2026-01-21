@@ -197,19 +197,30 @@ function SpeakingPractice({
       recognition.lang = 'zh-TW';
 
       recognition.onresult = (event: any) => {
-        let currentTranscript = "";
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          currentTranscript += event.results[i][0].transcript;
+        let sessionTranscript = "";
+        for (let i = 0; i < event.results.length; ++i) {
+          sessionTranscript += event.results[i][0].transcript;
         }
         
-        setTranscript(currentTranscript);
+        setTranscript(sessionTranscript);
         
-        // Check for matches
-        if (currentTranscript.includes("你是老師") && currentTranscript.includes("我也是老師")) {
-          setMatchState(2);
-        } else if (currentTranscript.includes("你是老師")) {
-          setMatchState(1);
-        }
+        setMatchState(prev => {
+          if (prev === 2) return 2;
+          
+          const hasPart1 = sessionTranscript.includes("你是老師");
+          const hasPart2 = sessionTranscript.includes("我也是老師");
+          
+          if (hasPart1 && hasPart2) {
+            return 2;
+          } else if (hasPart1) {
+            return 1;
+          } else if (prev === 1 && hasPart2) {
+             // If we already matched part 1 previously, and now see part 2
+             return 2;
+          }
+          
+          return prev;
+        });
       };
 
       recognition.onerror = (event: any) => {
