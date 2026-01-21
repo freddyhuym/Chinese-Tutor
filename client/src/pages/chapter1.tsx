@@ -9,13 +9,19 @@ import {
   Heart,
   Volume2,
   Type,
-  List
+  List,
+  Mic,
+  MicOff
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { type Language, getTranslations, translations } from "@/lib/i18n";
 import { Link } from "wouter";
+// @ts-ignore
+import casualManImage from '@assets/generated_images/asian_man_in_casual_clothes.png';
+// @ts-ignore
+import teacherManImage from '@assets/generated_images/asian_male_teacher_illustration.png';
 
 const chapterContent = {
   zh: {
@@ -157,6 +163,177 @@ const GRAMMAR_POINTS: GrammarPoint[] = [
     ]
   }
 ];
+
+function SpeakingPractice({ 
+  casualImage, 
+  teacherImage 
+}: { 
+  casualImage: string; 
+  teacherImage: string; 
+}) {
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [matchState, setMatchState] = useState<0 | 1 | 2>(0);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let recognition: any = null;
+
+    if (isListening) {
+      if ('webkitSpeechRecognition' in window) {
+        // @ts-ignore
+        recognition = new window.webkitSpeechRecognition();
+      } else if ('SpeechRecognition' in window) {
+        // @ts-ignore
+        recognition = new window.SpeechRecognition();
+      } else {
+        setError("Your browser does not support speech recognition.");
+        setIsListening(false);
+        return;
+      }
+
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'zh-TW';
+
+      recognition.onresult = (event: any) => {
+        let currentTranscript = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          currentTranscript += event.results[i][0].transcript;
+        }
+        
+        setTranscript(currentTranscript);
+        
+        // Check for matches
+        if (currentTranscript.includes("你是老師") && currentTranscript.includes("我也是老師")) {
+          setMatchState(2);
+        } else if (currentTranscript.includes("你是老師")) {
+          setMatchState(1);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error("Speech recognition error", event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    }
+
+    return () => {
+      if (recognition) {
+        recognition.stop();
+      }
+    };
+  }, [isListening]);
+
+  const toggleListening = () => {
+    if (isListening) {
+      setIsListening(false);
+    } else {
+      setTranscript("");
+      setMatchState(0);
+      setIsListening(true);
+      setError(null);
+    }
+  };
+
+  return (
+    <div className="mt-6 pt-6 border-t border-dashed border-border/50">
+      <div className="flex items-center gap-2 mb-4">
+        <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5">
+          <Mic className="w-3 h-3 mr-1" />
+          口語練習 Speaking Practice
+        </Badge>
+        <span className="text-sm text-muted-foreground">請跟著唸：</span>
+        <span className="text-sm font-bold font-serif-chinese">你是老師，我也是老師</span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        {/* Left Image: Changes on "你是老師" */}
+        <div className="relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
+           <AnimatePresence mode="wait">
+            <motion.img
+              key={matchState >= 1 ? "teacher1" : "casual1"}
+              src={matchState >= 1 ? teacherImage : casualImage}
+              alt="Person 1"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full h-full object-contain p-4"
+            />
+          </AnimatePresence>
+          <div className="absolute bottom-2 left-0 right-0 text-center">
+            <span className={`text-xs font-bold px-2 py-1 rounded-full ${matchState >= 1 ? 'bg-jade text-white' : 'bg-slate-200 text-slate-500'}`}>
+              你是老師
+            </span>
+          </div>
+        </div>
+
+        {/* Right Image: Changes on "我也是老師" */}
+        <div className="relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
+           <AnimatePresence mode="wait">
+            <motion.img
+              key={matchState >= 2 ? "teacher2" : "casual2"}
+              src={matchState >= 2 ? teacherImage : casualImage}
+              alt="Person 2"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full h-full object-contain p-4"
+            />
+          </AnimatePresence>
+           <div className="absolute bottom-2 left-0 right-0 text-center">
+            <span className={`text-xs font-bold px-2 py-1 rounded-full ${matchState >= 2 ? 'bg-jade text-white' : 'bg-slate-200 text-slate-500'}`}>
+              我也是老師
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center gap-3">
+        <Button
+          size="lg"
+          className={`rounded-full px-8 transition-all duration-300 ${
+            isListening 
+              ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+              : 'bg-primary hover:bg-primary/90'
+          }`}
+          onClick={toggleListening}
+        >
+          {isListening ? (
+            <>
+              <MicOff className="w-5 h-5 mr-2" />
+              停止錄音 Stop
+            </>
+          ) : (
+             <>
+              <Mic className="w-5 h-5 mr-2" />
+              開始練習 Start
+            </>
+          )}
+        </Button>
+
+        {transcript && (
+           <div className="text-center p-3 rounded-lg bg-slate-50 border border-border/50 max-w-md w-full">
+            <p className="text-xs text-muted-foreground mb-1">已偵測 Detected:</p>
+            <p className="font-serif-chinese text-lg font-medium text-slate-800">{transcript}</p>
+           </div>
+        )}
+        
+        {error && (
+          <p className="text-xs text-red-500">{error}</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function GrammarPointCard({ point, playAudio }: { point: GrammarPoint, playAudio: (text: string, isMale: boolean) => void }) {
   const [showFunctionEn, setShowFunctionEn] = useState(false);
@@ -316,6 +493,14 @@ function GrammarPointCard({ point, playAudio }: { point: GrammarPoint, playAudio
             ))}
           </div>
         </div>
+
+        {/* Speaking Practice for '也' (ID 3) */}
+        {point.id === 3 && (
+          <SpeakingPractice 
+            casualImage={casualManImage} 
+            teacherImage={teacherManImage} 
+          />
+        )}
       </div>
     </Card>
   );
