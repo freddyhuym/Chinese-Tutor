@@ -266,44 +266,56 @@ function SpeakingPractice({
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         {/* Left Image: Changes on "你是老師" */}
-        <div className="relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
-           <AnimatePresence mode="wait">
-            <motion.img
-              key={matchState >= 1 ? "teacher1" : "casual1"}
-              src={matchState >= 1 ? teacherImage : casualImage}
-              alt="Person 1"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="w-full h-full object-contain p-4"
-            />
-          </AnimatePresence>
-          <div className="absolute bottom-2 left-0 right-0 text-center">
-            <span className={`text-xs font-bold px-2 py-1 rounded-full ${matchState >= 1 ? 'bg-jade text-white' : 'bg-slate-200 text-slate-500'}`}>
-              你是老師
-            </span>
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-full relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={matchState >= 1 ? "teacher1" : "casual1"}
+                src={matchState >= 1 ? teacherImage : casualImage}
+                alt="Person 1"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full h-full object-contain p-4"
+              />
+            </AnimatePresence>
+            <div className="absolute bottom-2 left-0 right-0 text-center">
+              <span className={`text-xs font-bold px-2 py-1 rounded-full ${matchState >= 1 ? 'bg-jade text-white' : 'bg-slate-200 text-slate-500'}`}>
+                你是老師
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="font-bold text-lg font-serif-chinese">你</span>
+            <span className="text-sm text-muted-foreground">You</span>
           </div>
         </div>
 
         {/* Right Image: Changes on "我也是老師" */}
-        <div className="relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
-           <AnimatePresence mode="wait">
-            <motion.img
-              key={matchState >= 2 ? "teacher2" : "casual2"}
-              src={matchState >= 2 ? teacherImage : casualImage}
-              alt="Person 2"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="w-full h-full object-contain p-4"
-            />
-          </AnimatePresence>
-           <div className="absolute bottom-2 left-0 right-0 text-center">
-            <span className={`text-xs font-bold px-2 py-1 rounded-full ${matchState >= 2 ? 'bg-jade text-white' : 'bg-slate-200 text-slate-500'}`}>
-              我也是老師
-            </span>
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-full relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={matchState >= 2 ? "teacher2" : "casual2"}
+                src={matchState >= 2 ? teacherImage : casualImage}
+                alt="Person 2"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full h-full object-contain p-4"
+              />
+            </AnimatePresence>
+             <div className="absolute bottom-2 left-0 right-0 text-center">
+              <span className={`text-xs font-bold px-2 py-1 rounded-full ${matchState >= 2 ? 'bg-jade text-white' : 'bg-slate-200 text-slate-500'}`}>
+                我也是老師
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="font-bold text-lg font-serif-chinese">我</span>
+            <span className="text-sm text-muted-foreground">Me</span>
           </div>
         </div>
       </div>
