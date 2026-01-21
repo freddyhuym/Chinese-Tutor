@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { type Language, getTranslations } from "@/lib/i18n";
+import { type Language, getTranslations, translations } from "@/lib/i18n";
 import { Link } from "wouter";
 
 const chapterContent = {
@@ -46,12 +46,17 @@ const chapterContent = {
 
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
+  const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const t = getTranslations(lang);
   const content = chapterContent[lang];
 
   const toggleLang = () => {
     setLang(prev => prev === "zh" ? "en" : "zh");
   };
+
+  const currentStoryContent = showStoryTranslation 
+    ? translations.en.chapter1Page?.background 
+    : translations.zh.chapter1Page?.background;
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,7 +122,18 @@ export default function Chapter1() {
           </div>
 
           <div className="mb-12">
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-sm">
+            <Card className="p-8 bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-sm relative">
+              <div className="absolute top-4 right-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                  onClick={() => setShowStoryTranslation(!showStoryTranslation)}
+                >
+                  <Languages className="w-4 h-4" />
+                  {showStoryTranslation ? "顯示原文" : "English Translation"}
+                </Button>
+              </div>
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
                   <BookOpen className="w-5 h-5 text-primary" />
@@ -125,11 +141,11 @@ export default function Chapter1() {
                 <div>
                   <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
                     {/* @ts-ignore */}
-                    {t.chapter1Page?.background.title}
+                    {currentStoryContent?.title}
                   </h2>
                   <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
                     {/* @ts-ignore */}
-                    {t.chapter1Page?.background.content}
+                    {currentStoryContent?.content}
                   </p>
                 </div>
               </div>
