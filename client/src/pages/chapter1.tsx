@@ -268,7 +268,7 @@ export default function Chapter1() {
                 )}
               </div>
               
-              <div className="h-[700px] overflow-y-auto p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
+              <div className="overflow-visible p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
                 {chatState.messages.map((msg, index) => (
                   <div key={`msg-${msg.id}`}>
                     <motion.div
