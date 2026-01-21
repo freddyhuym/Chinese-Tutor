@@ -8,7 +8,8 @@ import {
   CheckCircle2,
   Heart,
   Volume2,
-  Type
+  Type,
+  List
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -36,6 +37,17 @@ const chapterContent = {
       reddy: "瑞迪",
       xiaoyu: "小雨",
       affinity: "小雨的好感度"
+    },
+    vocabulary: {
+      title: "生詞列表",
+      subtitle: "本章重點單字",
+      columns: {
+        word: "生詞",
+        pinyin: "拼音",
+        english: "英文翻譯",
+        partOfSpeech: "詞類",
+        tbcl: "TBCL"
+      }
     }
   },
   en: {
@@ -57,6 +69,17 @@ const chapterContent = {
       reddy: "Reddy",
       xiaoyu: "Xiao Yu",
       affinity: "Xiao Yu's Affinity"
+    },
+    vocabulary: {
+      title: "Vocabulary List",
+      subtitle: "Key words for this chapter",
+      columns: {
+        word: "Word",
+        pinyin: "Pinyin",
+        english: "Meaning",
+        partOfSpeech: "POS",
+        tbcl: "TBCL"
+      }
     }
   }
 };
@@ -84,6 +107,36 @@ type MessageState = {
     showPinyin: boolean;
   }
 };
+
+type VocabWord = {
+  traditional: string;
+  simplified: string;
+  pinyin: string;
+  english: string;
+  partOfSpeech: string;
+  tbcl: string;
+};
+
+const VOCABULARY_LIST: VocabWord[] = [
+  { traditional: '學習', simplified: '学习', pinyin: 'xuéxí', english: 'to learn', partOfSpeech: 'V', tbcl: '1' },
+  { traditional: '因為', simplified: '因为', pinyin: 'yīnwèi', english: 'because', partOfSpeech: 'Conj', tbcl: '2' },
+  { traditional: '哇', simplified: '哇', pinyin: 'wa', english: 'wow', partOfSpeech: 'Int', tbcl: '1' },
+  { traditional: '想', simplified: '想', pinyin: 'xiǎng', english: 'to want / to think', partOfSpeech: 'V/Aux', tbcl: '1' },
+  { traditional: '為什麼', simplified: '为什么', pinyin: 'wèishéme', english: 'why', partOfSpeech: 'Adv', tbcl: '1' },
+  { traditional: '一點', simplified: '一点', pinyin: 'yīdiǎn', english: 'a little', partOfSpeech: 'N', tbcl: '2' },
+  { traditional: '在', simplified: '在', pinyin: 'zài', english: 'at / in / on (progressive)', partOfSpeech: 'Prep/Adv', tbcl: '1' },
+  { traditional: '覺得', simplified: '觉得', pinyin: 'juédé', english: 'to feel / to think', partOfSpeech: 'V', tbcl: '2' },
+  { traditional: '剛', simplified: '刚', pinyin: 'gāng', english: 'just', partOfSpeech: 'Adv', tbcl: '2' },
+  { traditional: '文化', simplified: '文化', pinyin: 'wénhuà', english: 'culture', partOfSpeech: 'N', tbcl: '2' },
+  { traditional: '啊', simplified: '啊', pinyin: 'a', english: '(particle)', partOfSpeech: 'Part', tbcl: '1' },
+  { traditional: '聊天', simplified: '聊天', pinyin: 'liáotiān', english: 'to chat', partOfSpeech: 'V-sep', tbcl: '2' },
+  { traditional: '練習', simplified: '练习', pinyin: 'liànxí', english: 'to practice', partOfSpeech: 'V', tbcl: '2' },
+  { traditional: '特別', simplified: '特别', pinyin: 'tèbié', english: 'special', partOfSpeech: 'Vs', tbcl: '2' },
+  { traditional: '簡單', simplified: '简单', pinyin: 'jiǎndān', english: 'simple', partOfSpeech: 'Vs', tbcl: '2' },
+  { traditional: '認識', simplified: '认识', pinyin: 'rènshì', english: 'to know / to recognize', partOfSpeech: 'V', tbcl: '1' },
+  { traditional: '有意思', simplified: '有意思', pinyin: 'yǒuyìsi', english: 'interesting', partOfSpeech: 'Vs', tbcl: '2' },
+  { traditional: '厲害', simplified: '厉害', pinyin: 'lìhài', english: 'amazing / severe', partOfSpeech: 'Vs', tbcl: '2' },
+];
 
 const INITIAL_CHAT_STATE: ChatState = {
   messages: [
@@ -509,6 +562,68 @@ export default function Chapter1() {
                 ))}
                 
                 <div ref={chatEndRef} />
+              </div>
+            </Card>
+          </div>
+
+          {/* Vocabulary List */}
+          <div className="mb-12">
+            <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                  <List className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg font-serif-chinese">{content.vocabulary.title}</h3>
+                  <p className="text-sm text-muted-foreground">{content.vocabulary.subtitle}</p>
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50/50 border-b border-border">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[100px] border-r border-border/50">{content.vocabulary.columns.word}</th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[100px] border-r border-border/50">{content.vocabulary.columns.pinyin}</th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[30%] min-w-[200px] border-r border-border/50">{content.vocabulary.columns.english}</th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[10%] min-w-[80px] border-r border-border/50 text-center">{content.vocabulary.columns.partOfSpeech}</th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[10%] min-w-[80px] border-r border-border/50 text-center">{content.vocabulary.columns.tbcl}</th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[100px] text-center"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {VOCABULARY_LIST.map((word, index) => (
+                      <tr key={index} className="border-b border-border/50 hover:bg-slate-50/50 transition-colors group">
+                        <td className="p-4 border-r border-border/50">
+                          <div className="flex flex-col">
+                            <span className="font-bold text-lg font-serif-chinese text-slate-800">{word.traditional}</span>
+                            <span className="text-sm text-muted-foreground font-serif-chinese">{word.simplified}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 border-r border-border/50 font-medium text-primary">{word.pinyin}</td>
+                        <td className="p-4 border-r border-border/50 text-slate-600">{word.english}</td>
+                        <td className="p-4 border-r border-border/50 text-center">
+                          <Badge variant="secondary" className="font-normal text-xs">{word.partOfSpeech}</Badge>
+                        </td>
+                        <td className="p-4 border-r border-border/50 text-center">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                            {word.tbcl}
+                          </span>
+                        </td>
+                        <td className="p-4 text-center">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="opacity-50 group-hover:opacity-100 transition-opacity hover:bg-primary/10 hover:text-primary gap-2"
+                            onClick={() => playAudio(word.traditional, true)}
+                          >
+                            <Volume2 className="w-4 h-4" />
+                            <span className="text-xs">播放</span>
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </Card>
           </div>
