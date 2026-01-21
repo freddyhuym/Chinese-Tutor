@@ -6,7 +6,9 @@ import {
   BookOpen,
   Play,
   CheckCircle2,
-  Heart
+  Heart,
+  Volume2,
+  Type
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -63,6 +65,8 @@ type Message = {
   id: number;
   sender: 'reddy' | 'xiaoyu';
   text: string;
+  en: string;
+  pinyin: string;
   isChoice?: boolean;
 };
 
@@ -73,14 +77,58 @@ type ChatState = {
   completed: boolean;
 };
 
+// Track which features are enabled for each message
+type MessageState = {
+  [key: number]: {
+    showEn: boolean;
+    showPinyin: boolean;
+  }
+};
+
 const INITIAL_CHAT_STATE: ChatState = {
   messages: [
-    { id: 1, sender: 'reddy', text: '你好，我是瑞迪，美國人，我會說一點中文' },
-    { id: 2, sender: 'xiaoyu', text: '哈囉，我是小雨' },
-    { id: 3, sender: 'reddy', text: '我剛來台灣，想認識新朋友' },
-    { id: 4, sender: 'xiaoyu', text: '好啊，我在學習英文' },
-    { id: 5, sender: 'reddy', text: '我正在學習中文，也想多練習' },
-    { id: 6, sender: 'xiaoyu', text: '你為什麼學中文？' },
+    { 
+      id: 1, 
+      sender: 'reddy', 
+      text: '你好，我是瑞迪，美國人，我會說一點中文',
+      en: 'Hello, I am Reddy, an American. I can speak a little Chinese.',
+      pinyin: 'Nǐ hǎo, wǒ shì Ruìdí, Měiguó rén, wǒ huì shuō yīdiǎn Zhōngwén.'
+    },
+    { 
+      id: 2, 
+      sender: 'xiaoyu', 
+      text: '哈囉，我是小雨',
+      en: 'Hello, I am Xiao Yu.',
+      pinyin: 'Hālō, wǒ shì Xiǎoyǔ.'
+    },
+    { 
+      id: 3, 
+      sender: 'reddy', 
+      text: '我剛來台灣，想認識新朋友',
+      en: 'I just arrived in Taiwan and want to meet new friends.',
+      pinyin: 'Wǒ gāng lái Táiwān, xiǎng rènshì xīn péngyǒu.'
+    },
+    { 
+      id: 4, 
+      sender: 'xiaoyu', 
+      text: '好啊，我在學習英文',
+      en: 'Sure, I am learning English.',
+      pinyin: 'Hǎo a, wǒ zài xuéxí Yīngwén.'
+    },
+    { 
+      id: 5, 
+      sender: 'reddy', 
+      text: '我正在學習中文，也想多練習',
+      en: 'I am learning Chinese and also want to practice more.',
+      pinyin: 'Wǒ zhèngzài xuéxí Zhōngwén, yě xiǎng duō liànxí.'
+    },
+    { 
+      id: 6, 
+      sender: 'xiaoyu', 
+      text: '你為什麼學中文？',
+      en: 'Why are you learning Chinese?',
+      pinyin: 'Nǐ wèishéme xué Zhōngwén?'
+    },
   ],
   step: 0,
   affinity: 'green',
@@ -90,14 +138,22 @@ const INITIAL_CHAT_STATE: ChatState = {
 const CHOICES = [
   { 
     id: 1, 
-    text: '因為我覺得中文很簡單', 
-    response: '哇，你很厲害！', 
+    text: '因為我覺得中文很簡單',
+    en: 'Because I think Chinese is very simple.',
+    pinyin: 'Yīnwèi wǒ juédé Zhōngwén hěn jiǎndān.',
+    response: '哇，你很厲害！',
+    responseEn: 'Wow, you are amazing!',
+    responsePinyin: 'Wa, nǐ hěn lìhài!',
     affinityChange: 'red' as const 
   },
   { 
     id: 2, 
-    text: '因為我喜歡台灣文化，很有意思', 
-    response: '哇，你很特別', 
+    text: '因為我喜歡台灣文化，很有意思',
+    en: 'Because I like Taiwanese culture, it is very interesting.',
+    pinyin: 'Yīnwèi wǒ xǐhuān Táiwān wénhuà, hěn yǒuyìsi.',
+    response: '哇，你很特別',
+    responseEn: 'Wow, you are very special.',
+    responsePinyin: 'Wa, nǐ hěn tèbié.',
     affinityChange: 'green' as const 
   }
 ];
@@ -105,6 +161,7 @@ const CHOICES = [
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
+  const [messageStates, setMessageStates] = useState<MessageState>({});
   const t = getTranslations(lang);
   const content = chapterContent[lang];
 
@@ -130,6 +187,49 @@ export default function Chapter1() {
     setLang(prev => prev === "zh" ? "en" : "zh");
   };
 
+  const toggleMessageEn = (id: number) => {
+    setMessageStates(prev => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showEn: !prev[id]?.showEn
+      }
+    }));
+  };
+
+  const toggleMessagePinyin = (id: number) => {
+    setMessageStates(prev => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showPinyin: !prev[id]?.showPinyin
+      }
+    }));
+  };
+
+  const playAudio = (text: string, isMale: boolean) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Stop any current speech
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-TW';
+      
+      // Try to find a suitable voice
+      const voices = window.speechSynthesis.getVoices();
+      
+      // Simple logic to try and vary voices, though browser support varies greatly
+      // We can use pitch to simulate gender differences if multiple voices aren't available
+      if (isMale) {
+        utterance.pitch = 0.8;
+        utterance.rate = 0.9;
+      } else {
+        utterance.pitch = 1.2;
+        utterance.rate = 1.0;
+      }
+
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   const currentStoryContent = showStoryTranslation 
     ? translations.en.chapter1Page?.background 
     : translations.zh.chapter1Page?.background;
@@ -142,8 +242,20 @@ export default function Chapter1() {
     // allow re-selecting
     const newMessages: Message[] = [
       ...INITIAL_CHAT_STATE.messages,
-      { id: Date.now(), sender: 'reddy', text: choice.text },
-      { id: Date.now() + 1, sender: 'xiaoyu', text: choice.response }
+      { 
+        id: Date.now(), 
+        sender: 'reddy', 
+        text: choice.text,
+        en: choice.en,
+        pinyin: choice.pinyin
+      },
+      { 
+        id: Date.now() + 1, 
+        sender: 'xiaoyu', 
+        text: choice.response,
+        en: choice.responseEn,
+        pinyin: choice.responsePinyin
+      }
     ];
 
     setChatState(prev => ({
@@ -156,6 +268,7 @@ export default function Chapter1() {
 
   const resetChat = () => {
     setChatState(INITIAL_CHAT_STATE);
+    setMessageStates({});
   };
 
   return (
@@ -276,24 +389,76 @@ export default function Chapter1() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex justify-start mb-4"
                     >
-                      <div className="flex items-end gap-3 max-w-[90%] flex-row">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm ${
+                      <div className="flex items-start gap-3 max-w-[90%] flex-row">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm mt-8 ${
                           msg.sender === 'reddy' 
                             ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500/20' 
                             : 'bg-pink-100 text-pink-700 ring-2 ring-pink-500/20'
                         }`}>
                           {msg.sender === 'reddy' ? 'R' : '雨'}
                         </div>
-                        <div className="flex flex-col gap-1">
+                        
+                        <div className="flex flex-col gap-1 w-full">
                           <span className="text-xs text-muted-foreground ml-1">
                              {msg.sender === 'reddy' ? content.chat.reddy : content.chat.xiaoyu}
                           </span>
-                          <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed ${
-                            msg.sender === 'reddy' 
-                              ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
-                              : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
-                          }`}>
-                            {msg.text}
+                          
+                          <div className="flex items-end gap-2">
+                             {/* Message Bubble */}
+                            <div className={`p-4 rounded-2xl text-lg shadow-sm leading-relaxed relative group ${
+                              msg.sender === 'reddy' 
+                                ? 'bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none' 
+                                : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                            }`}>
+                              <div className="space-y-2">
+                                {/* Pinyin Display */}
+                                {messageStates[msg.id]?.showPinyin && (
+                                  <p className="text-sm text-primary/80 font-medium mb-1 border-b border-primary/10 pb-1">
+                                    {msg.pinyin}
+                                  </p>
+                                )}
+                                
+                                <p>{msg.text}</p>
+                                
+                                {/* English Display */}
+                                {messageStates[msg.id]?.showEn && (
+                                  <p className="text-sm text-muted-foreground mt-2 pt-2 border-t border-slate-200/60">
+                                    {msg.en}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Action Buttons - Placed to the right of bubble */}
+                            <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity self-end mb-1">
+                               <Button
+                                variant="ghost"
+                                size="icon"
+                                className={`h-8 w-8 rounded-full hover:bg-primary/10 ${messageStates[msg.id]?.showEn ? 'text-primary bg-primary/5' : 'text-slate-400'}`}
+                                onClick={() => toggleMessageEn(msg.id)}
+                                title="顯示英文"
+                              >
+                                <Languages className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className={`h-8 w-8 rounded-full hover:bg-primary/10 ${messageStates[msg.id]?.showPinyin ? 'text-primary bg-primary/5' : 'text-slate-400'}`}
+                                onClick={() => toggleMessagePinyin(msg.id)}
+                                title="顯示拼音"
+                              >
+                                <Type className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 rounded-full hover:bg-primary/10 text-slate-400 hover:text-primary"
+                                onClick={() => playAudio(msg.text, msg.sender === 'reddy')}
+                                title="播放語音"
+                              >
+                                <Volume2 className="w-4 h-4" />
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -321,7 +486,10 @@ export default function Chapter1() {
                               }`}>
                                 {choice.id}
                               </span>
-                              <span className="font-medium text-lg text-foreground">{choice.text}</span>
+                              <div className="flex flex-col gap-1">
+                                <span className="font-medium text-lg text-foreground">{choice.text}</span>
+                                <span className="text-sm text-muted-foreground">{choice.en}</span>
+                              </div>
                             </span>
                           </button>
                         ))}
