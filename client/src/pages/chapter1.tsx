@@ -48,6 +48,10 @@ const chapterContent = {
         partOfSpeech: "詞類",
         tbcl: "TBCL"
       }
+    },
+    grammar: {
+      title: "語法點",
+      subtitle: "重點語法解析"
     }
   },
   en: {
@@ -80,9 +84,242 @@ const chapterContent = {
         partOfSpeech: "POS",
         tbcl: "TBCL"
       }
+    },
+    grammar: {
+      title: "Grammar Points",
+      subtitle: "Key Grammar Explanations"
     }
   }
 };
+
+type GrammarExample = {
+  zh: string;
+  pinyin: string;
+  en: string;
+};
+
+type GrammarPoint = {
+  id: number;
+  title: string;
+  function: { zh: string; en: string };
+  structure: { zh: string; en: string };
+  explanation: { zh: string; en: string };
+  examples: GrammarExample[];
+};
+
+const GRAMMAR_POINTS: GrammarPoint[] = [
+  {
+    id: 1,
+    title: '想',
+    function: { zh: '表示想要做某件事。', en: 'Indicates a desire to do something.' },
+    structure: { zh: '主語 + 想 + 動詞', en: 'Subject + Want (Xiang) + Verb' },
+    explanation: { zh: '用來說現在的想法或計畫。', en: 'Used to express current thoughts or plans.' },
+    examples: [
+      { zh: '我想學中文。', pinyin: 'Wǒ xiǎng xué Zhōngwén.', en: 'I want to learn Chinese.' },
+      { zh: '我想吃飯。', pinyin: 'Wǒ xiǎng chīfàn.', en: 'I want to eat.' },
+      { zh: '我想看電影。', pinyin: 'Wǒ xiǎng kàn diànyǐng.', en: 'I want to watch a movie.' }
+    ]
+  },
+  {
+    id: 2,
+    title: '一點',
+    function: { zh: '表示數量或程度很少。', en: 'Indicates a very small quantity or degree.' },
+    structure: { zh: '1️⃣ 動詞 + 一點\n2️⃣ 一點 + 名詞', en: '1. Verb + a little\n2. A little + Noun' },
+    explanation: { zh: '用來說「不多」。', en: 'Used to say "not much".' },
+    examples: [
+      { zh: '我說一點中文。', pinyin: 'Wǒ shuō yīdiǎn Zhōngwén.', en: 'I speak a little Chinese.' },
+      { zh: '我想喝一點水。', pinyin: 'Wǒ xiǎng hē yīdiǎn shuǐ.', en: 'I want to drink a little water.' },
+      { zh: '你要不要吃一點飯？', pinyin: 'Nǐ yào bù yào chī yīdiǎn fàn?', en: 'Do you want to eat a little rice?' }
+    ]
+  },
+  {
+    id: 3,
+    title: '也',
+    function: { zh: '表示一樣、同樣。', en: 'Indicates sameness or similarity.' },
+    structure: { zh: '主語 + 也 + 動詞', en: 'Subject + Also (Ye) + Verb' },
+    explanation: { zh: '表示「我跟你一樣」。', en: 'Indicates "I am the same as you".' },
+    examples: [
+      { zh: '我喜歡爸爸，也喜歡媽媽。', pinyin: 'Wǒ xǐhuān bàba, yě xǐhuān māma.', en: 'I like dad, and I also like mom.' },
+      { zh: '他學中文，我也學中文。', pinyin: 'Tā xué Zhōngwén, wǒ yě xué Zhōngwén.', en: 'He learns Chinese, I also learn Chinese.' },
+      { zh: '她要去，我也要去。', pinyin: 'Tā yào qù, wǒ yě yào qù.', en: 'She is going, I am also going.' }
+    ]
+  },
+  {
+    id: 4,
+    title: '在 / 正在',
+    function: { zh: '表示現在正在做的事。', en: 'Indicates an action currently in progress.' },
+    structure: { zh: '1️⃣ 主語 + 在 + 動詞\n2️⃣ 主語 + 正在 + 動詞', en: '1. Subject + Zai + Verb\n2. Subject + Zhengzai + Verb' },
+    explanation: { zh: '兩個都表示「現在做」，\n「在」比較口語，「正在」比較完整。', en: 'Both indicate "doing now". "Zai" is more colloquial, while "Zhengzai" is more complete/formal.' },
+    examples: [
+      { zh: '我在學中文。', pinyin: 'Wǒ zài xué Zhōngwén.', en: 'I am learning Chinese.' },
+      { zh: '我正在吃飯。', pinyin: 'Wǒ zhèngzài chīfàn.', en: 'I am eating.' },
+      { zh: '她在看書。', pinyin: 'Tā zài kànshū.', en: 'She is reading a book.' }
+    ]
+  }
+];
+
+function GrammarPointCard({ point, playAudio }: { point: GrammarPoint, playAudio: (text: string, isMale: boolean) => void }) {
+  const [showFunctionEn, setShowFunctionEn] = useState(false);
+  const [showStructureEn, setShowStructureEn] = useState(false);
+  const [showExplanationEn, setShowExplanationEn] = useState(false);
+  const [exampleStates, setExampleStates] = useState<{ [key: number]: { showPinyin: boolean, showEn: boolean } }>({});
+
+  const toggleExample = (index: number, type: 'pinyin' | 'en') => {
+    setExampleStates(prev => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        showPinyin: type === 'pinyin' ? !prev[index]?.showPinyin : prev[index]?.showPinyin,
+        showEn: type === 'en' ? !prev[index]?.showEn : prev[index]?.showEn,
+      }
+    }));
+  };
+
+  return (
+    <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900 mb-6">
+      <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">
+            {point.id}
+          </div>
+          <h3 className="font-bold text-xl font-serif-chinese text-primary">{point.title}</h3>
+        </div>
+      </div>
+      
+      <div className="p-6 space-y-6">
+        {/* Function */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">功能 Function</h4>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-6 text-xs gap-1 text-primary"
+              onClick={() => setShowFunctionEn(!showFunctionEn)}
+            >
+              <Languages className="w-3 h-3" />
+              English
+            </Button>
+          </div>
+          <p className="text-lg font-medium">{point.function.zh}</p>
+          {showFunctionEn && (
+            <motion.p 
+              initial={{ opacity: 0, height: 0 }} 
+              animate={{ opacity: 1, height: 'auto' }}
+              className="text-slate-500 text-sm"
+            >
+              {point.function.en}
+            </motion.p>
+          )}
+        </div>
+
+        {/* Structure */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">結構 Structure</h4>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-6 text-xs gap-1 text-primary"
+              onClick={() => setShowStructureEn(!showStructureEn)}
+            >
+              <Languages className="w-3 h-3" />
+              English
+            </Button>
+          </div>
+          <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 font-mono text-base whitespace-pre-line text-slate-700">
+            {point.structure.zh}
+          </div>
+          {showStructureEn && (
+            <motion.p 
+              initial={{ opacity: 0, height: 0 }} 
+              animate={{ opacity: 1, height: 'auto' }}
+              className="text-slate-500 text-sm whitespace-pre-line"
+            >
+              {point.structure.en}
+            </motion.p>
+          )}
+        </div>
+
+        {/* Explanation */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">解釋 Explanation</h4>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-6 text-xs gap-1 text-primary"
+              onClick={() => setShowExplanationEn(!showExplanationEn)}
+            >
+              <Languages className="w-3 h-3" />
+              English
+            </Button>
+          </div>
+          <p className="text-base whitespace-pre-line leading-relaxed">{point.explanation.zh}</p>
+          {showExplanationEn && (
+            <motion.p 
+              initial={{ opacity: 0, height: 0 }} 
+              animate={{ opacity: 1, height: 'auto' }}
+              className="text-slate-500 text-sm whitespace-pre-line mt-1"
+            >
+              {point.explanation.en}
+            </motion.p>
+          )}
+        </div>
+
+        {/* Examples */}
+        <div className="space-y-4 pt-4 border-t border-border/50">
+          <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">例句 Examples (TBCL Level 1)</h4>
+          <div className="grid gap-3">
+            {point.examples.map((ex, idx) => (
+              <div key={idx} className="bg-slate-50/50 p-4 rounded-xl border border-border/50 hover:border-primary/20 transition-colors">
+                <div className="flex flex-col gap-2">
+                  {exampleStates[idx]?.showPinyin && (
+                    <p className="text-sm text-primary font-medium font-serif-chinese">{ex.pinyin}</p>
+                  )}
+                  <p className="text-lg font-medium text-slate-800">{ex.zh}</p>
+                  {exampleStates[idx]?.showEn && (
+                    <p className="text-sm text-slate-500">{ex.en}</p>
+                  )}
+                </div>
+                
+                <div className="flex items-center gap-2 mt-3 pt-3 border-t border-dashed border-border/50">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`h-7 px-2 text-xs gap-1.5 ${exampleStates[idx]?.showPinyin ? 'bg-primary/10 text-primary' : 'text-slate-500'}`}
+                    onClick={() => toggleExample(idx, 'pinyin')}
+                  >
+                    <Type className="w-3 h-3" />
+                    拼音
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`h-7 px-2 text-xs gap-1.5 ${exampleStates[idx]?.showEn ? 'bg-primary/10 text-primary' : 'text-slate-500'}`}
+                    onClick={() => toggleExample(idx, 'en')}
+                  >
+                    <Languages className="w-3 h-3" />
+                    英文
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 px-2 text-xs gap-1.5 text-slate-500 hover:text-primary"
+                    onClick={() => playAudio(ex.zh, true)}
+                  >
+                    <Volume2 className="w-3 h-3" />
+                    朗讀
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 type Message = {
   id: number;
@@ -626,6 +863,23 @@ export default function Chapter1() {
                 </table>
               </div>
             </Card>
+          </div>
+
+          {/* Grammar Points Section */}
+          <div className="mb-12">
+            <div className="mb-6">
+              <Badge className="mb-2 bg-primary/10 text-primary border-primary/20">
+                <BookOpen className="w-3 h-3 mr-1" />
+                {content.grammar.title}
+              </Badge>
+              <h2 className="text-3xl font-bold font-serif-chinese">
+                {content.grammar.subtitle}
+              </h2>
+            </div>
+            
+            {GRAMMAR_POINTS.map((point) => (
+              <GrammarPointCard key={point.id} point={point} playAudio={playAudio} />
+            ))}
           </div>
 
           <div className="space-y-4 mb-12">
