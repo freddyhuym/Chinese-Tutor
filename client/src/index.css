@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -94,6 +95,7 @@
   --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-serif: 'Noto Serif SC', serif;
   --font-chinese: 'Ma Shan Zheng', cursive;
+  --font-display: 'Playfair Display', serif;
   --font-mono: Menlo, monospace;
   --radius: .75rem;
   
@@ -172,6 +174,10 @@
   
   .font-serif-chinese {
     font-family: var(--font-serif);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
   }
   
   .text-gradient-vermillion {
