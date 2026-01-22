@@ -43,11 +43,7 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l-rose-100">
-                <SheetHeader>
-                  <SheetTitle className="font-display text-left mb-8 text-3xl italic text-slate-800">
-                    Menu
-                  </SheetTitle>
-                </SheetHeader>
+                <div className="mt-8"></div>
                 <nav className="flex flex-col gap-6 pl-2">
                   {menuItems.map((item) => (
                     <Link key={item.href} href={item.href}>
