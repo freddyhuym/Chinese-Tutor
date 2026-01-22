@@ -136,7 +136,7 @@ export const translations = {
       }
     },
     footer: {
-      copyright: "© 2026 HanYu. 用愛學中文。",
+      copyright: "© 2026 Let’s Speak Chinese: Dating Edition. 用愛學中文。",
     },
   },
   en: {
@@ -274,7 +274,7 @@ export const translations = {
       }
     },
     footer: {
-      copyright: "© 2026 HanYu. Learn Chinese with love.",
+      copyright: "© 2026 Let’s Speak Chinese: Dating Edition. Learn Chinese with love.",
     },
   },
 };

@@ -24,7 +24,7 @@ export default function Philosophy() {
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                 <span className="text-xl font-chinese text-primary-foreground">漢</span>
               </div>
-              <span className="text-xl font-semibold font-serif-chinese">HanYu</span>
+              <span className="text-xl font-semibold font-serif-chinese">Let’s Speak Chinese: Dating Edition</span>
             </Link>
             <nav className="hidden md:flex items-center gap-8">
               <Link href="/" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-home">{t.nav.home}</Link>

@@ -361,7 +361,7 @@ export default function Home() {
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                 <span className="text-xl font-chinese text-primary-foreground">漢</span>
               </div>
-              <span className="text-xl font-semibold font-serif-chinese">HanYu</span>
+              <span className="text-xl font-semibold font-serif-chinese">Let’s Speak Chinese: Dating Edition</span>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-home">{t.nav.home}</a>

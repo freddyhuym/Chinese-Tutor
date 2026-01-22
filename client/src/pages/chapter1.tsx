@@ -800,7 +800,7 @@ export default function Chapter1() {
                   <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                     <span className="text-xl font-chinese text-primary-foreground">漢</span>
                   </div>
-                  <span className="text-xl font-semibold font-serif-chinese">HanYu</span>
+                  <span className="text-xl font-semibold font-serif-chinese">Let’s Speak Chinese: Dating Edition</span>
                 </div>
               </Link>
             </div>
