@@ -23,27 +23,22 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-100 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex flex-col gap-1">
-          {/* Top Row: English Title - Elegant & Sophisticated */}
-          <div className="flex items-baseline gap-2">
-             <span className="text-3xl md:text-4xl font-display font-bold italic tracking-tight text-slate-900 drop-shadow-sm">
-                Let’s Speak Chinese
-             </span>
-             <span className="text-lg md:text-xl font-display text-rose-500 font-medium tracking-wide">
-                Dating Edition
+          {/* Top Row: English Title - Elegant & Unified */}
+          <div className="py-1">
+             <span className="text-3xl md:text-4xl font-display font-bold italic tracking-tight text-slate-900 drop-shadow-sm leading-tight">
+                Let’s Speak Chinese: <span className="text-rose-600">Dating Edition</span>
              </span>
           </div>
 
-          {/* Bottom Row: Chinese Badge + Menu - Soft & Modern */}
-          <div className="flex items-center justify-between mt-1">
-            <div className="px-3 py-1.5 rounded-full bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-100 inline-flex items-center justify-center">
-               <span className="text-sm md:text-base font-bold font-chinese text-rose-600 whitespace-nowrap tracking-widest">
-                 說中文吧：約會篇
-               </span>
-            </div>
+          {/* Bottom Row: Chinese Text + Menu - Minimalist & refined */}
+          <div className="flex items-center justify-between mt-1 pl-1">
+            <span className="text-base md:text-lg font-bold font-chinese text-rose-500/90 tracking-[0.2em] relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-12 after:h-[2px] after:bg-rose-200">
+               說中文吧：約會篇
+            </span>
 
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10 text-slate-600 hover:text-rose-500 hover:bg-rose-50 rounded-full transition-colors">
+                <Button variant="ghost" size="icon" className="h-10 w-10 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-all duration-300">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
