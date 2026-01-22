@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import appLogo from "@/assets/generated_images/app_logo.png";
 import { type Language, getTranslations, translations } from "@/lib/i18n";
 import { Link } from "wouter";
+import { Header } from "@/components/Header";
 // @ts-ignore
 import casualManImage from '@assets/generated_images/asian_man_in_casual_clothes.png';
 // @ts-ignore
@@ -792,42 +793,7 @@ export default function Chapter1() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <Link href="/">
-                <div className="flex items-center gap-3 cursor-pointer">
-                  <img src={appLogo} alt="Logo" className="w-10 h-10 object-contain" />
-                  <div className="px-3 py-2 rounded-xl bg-primary flex items-center justify-center">
-                    <span className="text-sm font-bold font-chinese text-primary-foreground whitespace-nowrap">說中文吧：約會篇</span>
-                  </div>
-                  <span className="text-xl font-semibold font-serif-chinese hidden xl:inline-block">Let’s Speak Chinese: Dating Edition</span>
-                </div>
-              </Link>
-            </div>
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-home">{t.nav.home}</Link>
-              <Link href="/philosophy" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-philosophy">{t.nav.philosophy}</Link>
-              <a href="#" className="text-sm font-medium brush-underline text-foreground" data-testid="nav-chapter1">{t.nav.chapter1}</a>
-              <Link href="/chapter2" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter2">{t.nav.chapter2}</Link>
-              <Link href="/chapter3" className="text-sm font-medium brush-underline text-muted-foreground hover:text-foreground transition-colors" data-testid="nav-chapter3">{t.nav.chapter3}</Link>
-            </nav>
-            <div className="flex items-center gap-3">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="gap-2"
-                onClick={toggleLang}
-                data-testid="button-lang-toggle"
-              >
-                <Languages className="w-4 h-4" />
-                {lang === "zh" ? "EN" : "中文"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
