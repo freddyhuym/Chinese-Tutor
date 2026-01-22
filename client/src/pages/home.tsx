@@ -648,6 +648,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Duplicate of Hero Section */}
+      <section className="relative overflow-hidden min-h-[100vh] flex items-center justify-center bg-black/10">
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${heroBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
+          <div className="flex flex-col items-start gap-8 max-w-2xl">
+            
+            {/* Text Section */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-white drop-shadow-lg"
+            >
+              <h1 className="text-4xl md:text-6xl font-bold font-serif-chinese tracking-tight mb-6 leading-tight">
+                 {/* @ts-ignore */}
+                {t.hero.randyIntro.split('\n')[0]}
+              </h1>
+              
+              <div className="space-y-4 text-lg md:text-2xl font-serif-chinese text-slate-100/90 leading-relaxed whitespace-pre-line text-shadow-sm">
+                 {/* @ts-ignore */}
+                 {t.hero.randyIntro.split('\n').slice(1).join('\n')}
+              </div>
+              
+              <div className="mt-10">
+                <Link href="/chapter1">
+                  <Button 
+                    size="lg" 
+                    className="gap-3 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 text-xl px-10 py-7 rounded-full transition-all hover:scale-105" 
+                    data-testid="button-start-learning-bottom"
+                  >
+                    {t.hero.startLearning}
+                    <ArrowRight className="w-6 h-6" />
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+            
+          </div>
+        </div>
+      </section>
+
       {/* Start Learning Section */}
       <section id="start-learning" className="py-24 scroll-mt-20 relative overflow-hidden">
         <div 
