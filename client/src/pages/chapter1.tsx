@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import appLogo from "@/assets/generated_images/app_logo.png";
 import { type Language, getTranslations, translations } from "@/lib/i18n";
 import { Link } from "wouter";
 // @ts-ignore
@@ -797,10 +798,11 @@ export default function Chapter1() {
             <div className="flex items-center gap-3">
               <Link href="/">
                 <div className="flex items-center gap-3 cursor-pointer">
-                  <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                    <span className="text-xl font-chinese text-primary-foreground">漢</span>
+                  <img src={appLogo} alt="Logo" className="w-10 h-10 object-contain" />
+                  <div className="px-3 py-2 rounded-xl bg-primary flex items-center justify-center">
+                    <span className="text-sm font-bold font-chinese text-primary-foreground whitespace-nowrap">說中文吧：約會篇</span>
                   </div>
-                  <span className="text-xl font-semibold font-serif-chinese">Let’s Speak Chinese: Dating Edition</span>
+                  <span className="text-xl font-semibold font-serif-chinese hidden xl:inline-block">Let’s Speak Chinese: Dating Edition</span>
                 </div>
               </Link>
             </div>
@@ -1151,10 +1153,11 @@ export default function Chapter1() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-sm font-chinese text-primary-foreground">漢</span>
+              <img src={appLogo} alt="Logo" className="w-8 h-8 rounded-lg bg-white/90 p-1" />
+              <div className="px-2 py-1 rounded-lg bg-primary flex items-center justify-center">
+                <span className="text-xs font-bold font-chinese text-primary-foreground">說中文吧：約會篇</span>
               </div>
-              <span className="font-semibold font-serif-chinese">HanYu</span>
+              <span className="font-semibold font-serif-chinese">Let’s Speak Chinese: Dating Edition</span>
             </div>
             <p className="text-sm text-muted-foreground">
               {t.footer.copyright}
