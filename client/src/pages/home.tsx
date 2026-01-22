@@ -21,10 +21,8 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import heroBackground from "@assets/generated_images/taiwan_landscape_watercolor_background.png";
+import heroBackground from "@/assets/generated_images/handsome_reddy_taipei_hero.png";
 import chineseCulturalBg from "@assets/generated_images/light_chinese_lanterns_architecture_background.png";
-// @ts-ignore
-import randyHeroVideo from "@/assets/generated_images/randy_waving.mp4";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
 
@@ -389,79 +387,50 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center bg-background">
+      <section className="relative overflow-hidden min-h-[100vh] flex items-center justify-center bg-black/10">
         <div 
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${heroBackground})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
-          <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
+          <div className="flex flex-col items-start gap-8 max-w-2xl">
             
             {/* Text Section */}
-            <div className="flex-1 w-full max-w-2xl z-10 order-2 md:order-1">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-6 md:p-12 rounded-[2rem] shadow-2xl border-2 border-primary/10 relative -mt-12 md:mt-0"
-              >
-                 {/* Speech Bubble Arrow - Hidden on mobile, shown on desktop pointing right */}
-                <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-8 bg-white/90 dark:bg-slate-900/90 border-t-2 border-r-2 border-primary/10 transform rotate-45" />
-                
-                {/* Mobile Arrow - Pointing up */}
-                 <div className="md:hidden absolute -top-4 left-1/2 w-8 h-8 bg-white/90 dark:bg-slate-900/90 border-t-2 border-l-2 border-primary/10 transform rotate-45 -translate-x-1/2" />
-
-                <h1 className="text-2xl md:text-5xl font-bold font-serif-chinese tracking-tight mb-4 md:mb-6 text-primary">
-                   {/* @ts-ignore */}
-                  {t.hero.randyIntro.split('\n')[0]}
-                </h1>
-                
-                <div className="space-y-2 md:space-y-3 text-base md:text-2xl font-serif-chinese text-slate-700 dark:text-slate-300 leading-relaxed md:leading-loose whitespace-pre-line">
-                   {/* @ts-ignore */}
-                   {t.hero.randyIntro.split('\n').slice(1).join('\n')}
-                </div>
-                
-                <div className="mt-6 md:mt-10">
-                  <Link href="/chapter1">
-                    <Button 
-                      size="lg" 
-                      className="gap-3 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 text-lg md:text-xl px-8 md:px-10 py-6 md:py-7 rounded-full w-full md:w-auto transition-all hover:scale-105" 
-                      data-testid="button-start-learning"
-                    >
-                      {t.hero.startLearning}
-                      <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Video Section */}
-            <div className="flex-1 flex justify-center md:justify-start w-full max-w-lg md:max-w-none relative z-0 order-1 md:order-2">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, x: 30 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative w-full aspect-[3/4] md:aspect-auto flex justify-center items-end"
-              >
-                <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full transform translate-y-10 scale-75" />
-                <video 
-                  src={randyHeroVideo} 
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="relative z-10 w-auto h-full max-h-[500px] md:max-h-[700px] object-cover rounded-3xl md:rounded-none mask-image-bottom"
-                  style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
-                />
-              </motion.div>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-white drop-shadow-lg"
+            >
+              <h1 className="text-4xl md:text-6xl font-bold font-serif-chinese tracking-tight mb-6 leading-tight">
+                 {/* @ts-ignore */}
+                {t.hero.randyIntro.split('\n')[0]}
+              </h1>
+              
+              <div className="space-y-4 text-lg md:text-2xl font-serif-chinese text-slate-100/90 leading-relaxed whitespace-pre-line text-shadow-sm">
+                 {/* @ts-ignore */}
+                 {t.hero.randyIntro.split('\n').slice(1).join('\n')}
+              </div>
+              
+              <div className="mt-10">
+                <Link href="/chapter1">
+                  <Button 
+                    size="lg" 
+                    className="gap-3 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 text-xl px-10 py-7 rounded-full transition-all hover:scale-105" 
+                    data-testid="button-start-learning"
+                  >
+                    {t.hero.startLearning}
+                    <ArrowRight className="w-6 h-6" />
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
             
           </div>
         </div>
