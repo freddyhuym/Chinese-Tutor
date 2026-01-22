@@ -24,9 +24,9 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col gap-3">
           {/* Top Row: English Title */}
-          <div>
-             <span className="text-xl md:text-2xl font-semibold font-serif-chinese tracking-wide">
-                Let’s Speak Chinese: Dating Edition
+          <div className="py-1">
+             <span className="text-2xl md:text-3xl font-bold font-serif italic tracking-wide text-primary drop-shadow-sm">
+                Let’s Speak Chinese: <span className="text-foreground/80 not-italic font-medium">Dating Edition</span>
              </span>
           </div>
 
