@@ -25,7 +25,7 @@ export function Header() {
         <div className="flex flex-col gap-1">
           {/* Top Row: English Title - Elegant & Unified */}
           <div className="py-1">
-             <span className="text-3xl md:text-4xl font-display font-bold italic tracking-tight text-slate-900 drop-shadow-sm leading-tight">
+             <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold italic tracking-tight text-slate-900 drop-shadow-sm leading-tight whitespace-nowrap">
                 Let’s Speak Chinese: <span className="text-rose-600">Dating Edition</span>
              </span>
           </div>
