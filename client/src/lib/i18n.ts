@@ -33,7 +33,8 @@ export const translations = {
       subtitle: "一步一步",
       description: "透過互動式閃卡、聲調練習和筆順教學來精通中文。",
       descriptionHighlight: "您的學習之旅從這裡開始。",
-      startLearning: "教材使用教學",
+      randyIntro: "大家好！\n我叫 Randy（瑞迪）。\n我是 美國人，剛來台灣。\n我學中文 三個多月了，\n現在住在 台北。\n我喜歡認識新朋友，\n也想多了解 台灣的生活。\n這一次，我遇到了一個特別的人。\n你願意 跟我一起學中文，\n幫助我一步一步認識她嗎？",
+      startLearning: "開始學習",
     },
     stats: {
       charactersLearned: "已學習字符",
@@ -170,7 +171,8 @@ export const translations = {
       subtitle: "一步一步",
       description: "Master Mandarin with interactive flashcards, tone practice, and stroke-by-stroke character writing.",
       descriptionHighlight: "Your journey starts here.",
-      startLearning: "How to Use",
+      randyIntro: "Hello everyone!\nMy name is Randy.\nI am American and just arrived in Taiwan.\nI have been learning Chinese for over three months,\nand I currently live in Taipei.\nI like meeting new friends,\nand I also want to learn more about life in Taiwan.\nThis time, I met a special person.\nAre you willing to learn Chinese with me,\nand help me get to know her step by step?",
+      startLearning: "Start Learning",
     },
     stats: {
       charactersLearned: "Characters Learned",

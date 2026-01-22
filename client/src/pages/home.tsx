@@ -23,6 +23,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/taiwan_landscape_watercolor_background.png";
 import chineseCulturalBg from "@assets/generated_images/light_chinese_lanterns_architecture_background.png";
+// @ts-ignore
+import randyHeroImage from "@assets/generated_images/randy_hero.png";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
 
@@ -387,57 +389,77 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center bg-background">
         <div 
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `url(${heroBackground})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="text-4xl md:text-6xl font-bold font-serif-chinese tracking-tight mb-8 text-foreground">
-                大家好！
-              </h1>
-              <div className="space-y-4 text-xl md:text-3xl font-serif-chinese text-muted-foreground leading-relaxed">
-                <p>我叫 王貓貓。</p>
-                <p>我學中文 三個多月了。</p>
-                <p>這是我 第一次來臺灣。</p>
-                <p>我對這次的旅程 很期待！</p>
-                <p className="text-foreground font-bold pt-4">
-                  跟我一起 來臺灣，<br/>
-                  一起學中文 吧
-                </p>
-              </div>
-              
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Button 
-                  size="lg" 
-                  className="gap-2 bg-primary hover:bg-primary/90 shadow-lg text-lg px-8 py-6" 
-                  data-testid="button-about-course"
-                  onClick={() => {
-                    const aboutSection = document.getElementById('about-section');
-                    if (aboutSection) {
-                      aboutSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                >
-                  關於本教材
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </div>
-            </motion.div>
-          </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
+          <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16">
+            
+            {/* Text Section */}
+            <div className="flex-1 w-full max-w-2xl z-10">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-8 md:p-12 rounded-[2rem] shadow-2xl border-2 border-primary/10 relative"
+              >
+                 {/* Speech Bubble Arrow - Hidden on mobile, shown on desktop pointing right */}
+                <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-8 bg-white/90 dark:bg-slate-900/90 border-t-2 border-r-2 border-primary/10 transform rotate-45" />
+                
+                {/* Mobile Arrow - Pointing up */}
+                 <div className="md:hidden absolute -top-4 left-1/2 w-8 h-8 bg-white/90 dark:bg-slate-900/90 border-t-2 border-l-2 border-primary/10 transform rotate-45 -translate-x-1/2" />
 
+                <h1 className="text-3xl md:text-5xl font-bold font-serif-chinese tracking-tight mb-6 text-primary">
+                   {/* @ts-ignore */}
+                  {t.hero.randyIntro.split('\n')[0]}
+                </h1>
+                
+                <div className="space-y-3 text-lg md:text-2xl font-serif-chinese text-slate-700 dark:text-slate-300 leading-loose whitespace-pre-line">
+                   {/* @ts-ignore */}
+                   {t.hero.randyIntro.split('\n').slice(1).join('\n')}
+                </div>
+                
+                <div className="mt-10">
+                  <Link href="/chapter1">
+                    <Button 
+                      size="lg" 
+                      className="gap-3 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 text-xl px-10 py-7 rounded-full w-full md:w-auto transition-all hover:scale-105" 
+                      data-testid="button-start-learning"
+                    >
+                      {t.hero.startLearning}
+                      <ArrowRight className="w-6 h-6" />
+                    </Button>
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Image Section */}
+            <div className="flex-1 flex justify-center md:justify-start w-full max-w-lg md:max-w-none relative z-0">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, x: 30 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative w-full aspect-[4/5] md:aspect-auto flex justify-center"
+              >
+                <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full transform translate-y-10 scale-75" />
+                <img 
+                  src={randyHeroImage} 
+                  alt="Randy" 
+                  className="relative z-10 w-auto h-full max-h-[600px] object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700 ease-in-out"
+                />
+              </motion.div>
+            </div>
+            
+          </div>
         </div>
       </section>
 
