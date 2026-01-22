@@ -24,7 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import heroBackground from "@assets/generated_images/taiwan_landscape_watercolor_background.png";
 import chineseCulturalBg from "@assets/generated_images/light_chinese_lanterns_architecture_background.png";
 // @ts-ignore
-import randyHeroVideo from "@assets/generated_images/randy_waving.mp4";
+import randyHeroVideo from "@/assets/generated_images/randy_waving.mp4";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
 
