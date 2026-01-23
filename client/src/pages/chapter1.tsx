@@ -863,7 +863,7 @@ export default function Chapter1() {
           {/* Chat Interface */}
           <div className="mb-12 relative max-w-3xl mx-auto">
              {/* Floating Characters (Desktop only) */}
-             <div className="hidden lg:block fixed left-[5%] top-1/2 -translate-y-1/2 h-[500px] w-64 z-40 pointer-events-none">
+             <div className="hidden xl:block fixed left-[5%] top-1/2 -translate-y-1/2 h-[500px] w-64 z-40 pointer-events-none">
                  <img 
                    src={reddyFull} 
                    alt="Reddy Full Body" 
@@ -871,7 +871,7 @@ export default function Chapter1() {
                  />
              </div>
              
-             <div className="hidden lg:block fixed right-[5%] top-1/2 -translate-y-1/2 h-[500px] w-64 z-40 pointer-events-none">
+             <div className="hidden xl:block fixed right-[5%] top-1/2 -translate-y-1/2 h-[500px] w-64 z-40 pointer-events-none">
                  <img 
                    src={xiaoyuFull} 
                    alt="Xiao Yu Full Body" 
