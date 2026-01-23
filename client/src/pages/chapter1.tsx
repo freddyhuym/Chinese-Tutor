@@ -34,7 +34,7 @@ import reddyFull from '@/assets/generated_images/reddy_full.png';
 // @ts-ignore
 import xiaoyuFull from '@/assets/generated_images/xiaoyu_full.png';
 // @ts-ignore
-import chatBackground from '@/assets/generated_images/chat_background_phone_style.png';
+import chatBackground from '@/assets/generated_images/chat_background_no_clouds.png';
 
 const chapterContent = {
   zh: {
