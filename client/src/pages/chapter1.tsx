@@ -861,18 +861,17 @@ export default function Chapter1() {
           </div>
 
           {/* Chat Interface */}
-          <div className="mb-12 relative flex justify-center items-end gap-0 md:gap-4 lg:gap-8">
-            
+          <div className="mb-12 relative max-w-3xl mx-auto">
              {/* Left Full Body Image - Reddy (Hidden on mobile) */}
-             <div className="hidden md:block relative w-48 lg:w-64 h-[500px] flex-shrink-0 self-end -mb-8 z-10 pointer-events-none">
+             <div className="hidden lg:block absolute bottom-0 -left-64 h-[600px] w-64 z-0 pointer-events-none">
                  <img 
                    src={reddyFull} 
                    alt="Reddy Full Body" 
-                   className="w-full h-full object-contain object-bottom drop-shadow-xl transform translate-x-12"
+                   className="w-full h-full object-contain object-bottom drop-shadow-xl scale-110 origin-bottom-right"
                  />
              </div>
 
-             <Card className="flex-1 overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-20 relative max-w-2xl w-full">
+             <Card className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full">
               <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
                 <div>
                   <h3 className="font-bold text-lg font-serif-chinese">{content.chat.title}</h3>
@@ -1021,11 +1020,11 @@ export default function Chapter1() {
             </Card>
 
             {/* Right Full Body Image - Xiao Yu (Hidden on mobile) */}
-             <div className="hidden md:block relative w-48 lg:w-64 h-[500px] flex-shrink-0 self-end -mb-8 z-10 pointer-events-none">
+             <div className="hidden lg:block absolute bottom-0 -right-64 h-[550px] w-64 z-0 pointer-events-none">
                  <img 
                    src={xiaoyuFull} 
                    alt="Xiao Yu Full Body" 
-                   className="w-full h-full object-contain object-bottom drop-shadow-xl transform -translate-x-12"
+                   className="w-full h-full object-contain object-bottom drop-shadow-xl"
                  />
              </div>
           </div>
