@@ -618,35 +618,35 @@ const INITIAL_CHAT_STATE: ChatState = {
     { 
       id: 1, 
       sender: 'reddy', 
-      text: '你好，我是瑞迪，美國人，我會說一點中文',
+      text: '你好，我是瑞迪，美國人，我會說一點中文。',
       en: 'Hello, I am Reddy, an American. I can speak a little Chinese.',
       pinyin: 'Nǐ hǎo, wǒ shì Ruìdí, Měiguó rén, wǒ huì shuō yīdiǎn Zhōngwén.'
     },
     { 
       id: 2, 
       sender: 'xiaoyu', 
-      text: '哈囉，我是小雨',
+      text: '哈囉，我是小雨。',
       en: 'Hello, I am Xiao Yu.',
       pinyin: 'Hālō, wǒ shì Xiǎoyǔ.'
     },
     { 
       id: 3, 
       sender: 'reddy', 
-      text: '我剛來台灣，想認識新朋友',
+      text: '我剛來台灣，想認識新朋友。',
       en: 'I just arrived in Taiwan and want to meet new friends.',
       pinyin: 'Wǒ gāng lái Táiwān, xiǎng rènshì xīn péngyǒu.'
     },
     { 
       id: 4, 
       sender: 'xiaoyu', 
-      text: '好啊，我在學習英文',
+      text: '好啊，我在學習英文。',
       en: 'Sure, I am learning English.',
       pinyin: 'Hǎo a, wǒ zài xuéxí Yīngwén.'
     },
     { 
       id: 5, 
       sender: 'reddy', 
-      text: '我正在學習中文，也想多練習',
+      text: '我正在學習中文，也想多練習。',
       en: 'I am learning Chinese and also want to practice more.',
       pinyin: 'Wǒ zhèngzài xuéxí Zhōngwén, yě xiǎng duō liànxí.'
     },
@@ -666,7 +666,7 @@ const INITIAL_CHAT_STATE: ChatState = {
 const CHOICES = [
   { 
     id: 1, 
-    text: '因為我覺得中文很簡單',
+    text: '因為我覺得中文很簡單。',
     en: 'Because I think Chinese is very simple.',
     pinyin: 'Yīnwèi wǒ juédé Zhōngwén hěn jiǎndān.',
     response: '哇，你很厲害！',
@@ -676,10 +676,10 @@ const CHOICES = [
   },
   { 
     id: 2, 
-    text: '因為我喜歡台灣文化，很有意思',
+    text: '因為我喜歡台灣文化，很有意思。',
     en: 'Because I like Taiwanese culture, it is very interesting.',
     pinyin: 'Yīnwèi wǒ xǐhuān Táiwān wénhuà, hěn yǒuyìsi.',
-    response: '哇，你很特別',
+    response: '哇，你很特別。',
     responseEn: 'Wow, you are very special.',
     responsePinyin: 'Wa, nǐ hěn tèbié.',
     affinityChange: 'green' as const 
