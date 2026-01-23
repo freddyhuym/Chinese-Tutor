@@ -861,8 +861,18 @@ export default function Chapter1() {
           </div>
 
           {/* Chat Interface */}
-          <div className="mb-12 relative">
-             <Card className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900">
+          <div className="mb-12 relative flex justify-center items-end gap-0 md:gap-4 lg:gap-8">
+            
+             {/* Left Full Body Image - Reddy (Hidden on mobile) */}
+             <div className="hidden md:block relative w-48 lg:w-64 h-[500px] flex-shrink-0 self-end -mb-8 z-10 pointer-events-none">
+                 <img 
+                   src={reddyFull} 
+                   alt="Reddy Full Body" 
+                   className="w-full h-full object-contain object-bottom drop-shadow-xl transform translate-x-12"
+                 />
+             </div>
+
+             <Card className="flex-1 overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-20 relative max-w-2xl w-full">
               <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
                 <div>
                   <h3 className="font-bold text-lg font-serif-chinese">{content.chat.title}</h3>
@@ -875,7 +885,7 @@ export default function Chapter1() {
                 )}
               </div>
               
-              <div className="overflow-visible p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
+              <div className="overflow-visible p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative h-[600px] overflow-y-auto">
                 {chatState.messages.map((msg, index) => (
                   <div key={`msg-${msg.id}`}>
                     <motion.div
@@ -901,7 +911,7 @@ export default function Chapter1() {
                              {msg.sender === 'reddy' ? content.chat.reddy : content.chat.xiaoyu}
                           </span>
                           
-                          <div className="flex flex-col gap-2 max-w-[85%]">
+                          <div className="flex flex-col gap-2 max-w-[95%]">
                              {/* Message Bubble */}
                             <div className={`p-5 rounded-2xl text-lg shadow-sm leading-relaxed relative group transition-all duration-200 ${
                               msg.sender === 'reddy' 
@@ -1009,6 +1019,15 @@ export default function Chapter1() {
                 <div ref={chatEndRef} />
               </div>
             </Card>
+
+            {/* Right Full Body Image - Xiao Yu (Hidden on mobile) */}
+             <div className="hidden md:block relative w-48 lg:w-64 h-[500px] flex-shrink-0 self-end -mb-8 z-10 pointer-events-none">
+                 <img 
+                   src={xiaoyuFull} 
+                   alt="Xiao Yu Full Body" 
+                   className="w-full h-full object-contain object-bottom drop-shadow-xl transform -translate-x-12"
+                 />
+             </div>
           </div>
 
           {/* Vocabulary List */}
