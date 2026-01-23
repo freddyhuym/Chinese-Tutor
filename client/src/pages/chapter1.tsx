@@ -862,12 +862,20 @@ export default function Chapter1() {
 
           {/* Chat Interface */}
           <div className="mb-12 relative max-w-3xl mx-auto">
-             {/* Left Full Body Image - Reddy (Hidden on mobile) */}
-             <div className="hidden lg:block absolute bottom-0 -left-64 h-[600px] w-64 z-0 pointer-events-none">
+             {/* Floating Characters (Desktop only) */}
+             <div className="hidden lg:block fixed left-[5%] top-1/2 -translate-y-1/2 h-[500px] w-64 z-40 pointer-events-none">
                  <img 
                    src={reddyFull} 
                    alt="Reddy Full Body" 
-                   className="w-full h-full object-contain object-bottom drop-shadow-xl scale-110 origin-bottom-right"
+                   className="w-full h-full object-contain object-center drop-shadow-2xl scale-110"
+                 />
+             </div>
+             
+             <div className="hidden lg:block fixed right-[5%] top-1/2 -translate-y-1/2 h-[500px] w-64 z-40 pointer-events-none">
+                 <img 
+                   src={xiaoyuFull} 
+                   alt="Xiao Yu Full Body" 
+                   className="w-full h-full object-contain object-center drop-shadow-2xl"
                  />
              </div>
 
@@ -1020,13 +1028,6 @@ export default function Chapter1() {
             </Card>
 
             {/* Right Full Body Image - Xiao Yu (Hidden on mobile) */}
-             <div className="hidden lg:block absolute bottom-0 -right-64 h-[550px] w-64 z-0 pointer-events-none">
-                 <img 
-                   src={xiaoyuFull} 
-                   alt="Xiao Yu Full Body" 
-                   className="w-full h-full object-contain object-bottom drop-shadow-xl"
-                 />
-             </div>
           </div>
 
           {/* Vocabulary List */}
@@ -1168,7 +1169,7 @@ export default function Chapter1() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
+          className={`fixed bottom-8 right-8 z-[60] flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
             chatState.affinity === 'green' 
               ? 'bg-jade/90 border-jade text-white shadow-jade/20' 
               : 'bg-red-500/90 border-red-500 text-white shadow-red-500/20'
