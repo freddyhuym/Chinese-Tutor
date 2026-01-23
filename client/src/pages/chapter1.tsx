@@ -25,6 +25,10 @@ import { Header } from "@/components/Header";
 import casualManImage from '@assets/generated_images/asian_man_in_casual_clothes.png';
 // @ts-ignore
 import teacherManImage from '@assets/generated_images/asian_male_teacher_illustration.png';
+// @ts-ignore
+import reddyProfile from '@assets/generated_images/reddy_profile.png';
+// @ts-ignore
+import xiaoyuProfile from '@assets/generated_images/xiaoyu_profile.png';
 
 const chapterContent = {
   zh: {
@@ -875,13 +879,17 @@ export default function Chapter1() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex justify-start mb-4"
                     >
-                      <div className="flex items-start gap-3 max-w-[90%] flex-row">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm mt-8 ${
+                      <div className="flex items-start gap-4 max-w-[90%] flex-row">
+                        <div className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 shadow-md mt-8 border-2 ${
                           msg.sender === 'reddy' 
-                            ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500/20' 
-                            : 'bg-pink-100 text-pink-700 ring-2 ring-pink-500/20'
+                            ? 'border-blue-200' 
+                            : 'border-pink-200'
                         }`}>
-                          {msg.sender === 'reddy' ? 'R' : '雨'}
+                          <img 
+                            src={msg.sender === 'reddy' ? reddyProfile : xiaoyuProfile} 
+                            alt={msg.sender === 'reddy' ? 'Reddy' : 'Xiaoyu'}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         
                         <div className="flex flex-col gap-1 w-full">
