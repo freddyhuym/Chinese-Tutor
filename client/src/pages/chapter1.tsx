@@ -26,9 +26,9 @@ import casualManImage from '@assets/generated_images/asian_man_in_casual_clothes
 // @ts-ignore
 import teacherManImage from '@assets/generated_images/asian_male_teacher_illustration.png';
 // @ts-ignore
-import reddyProfile from '@assets/generated_images/reddy_profile.png';
+import reddyProfile from '@/assets/generated_images/reddy_profile.png';
 // @ts-ignore
-import xiaoyuProfile from '@assets/generated_images/xiaoyu_profile.png';
+import xiaoyuProfile from '@/assets/generated_images/xiaoyu_profile.png';
 
 const chapterContent = {
   zh: {
