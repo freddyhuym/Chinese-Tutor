@@ -33,6 +33,8 @@ import xiaoyuProfile from '@/assets/generated_images/xiaoyu_profile.png';
 import reddyFull from '@/assets/generated_images/reddy_full.png';
 // @ts-ignore
 import xiaoyuFull from '@/assets/generated_images/xiaoyu_full.png';
+// @ts-ignore
+import chatBackground from '@/assets/generated_images/chat_background_pink.png';
 
 const chapterContent = {
   zh: {
@@ -880,7 +882,11 @@ export default function Chapter1() {
              </div>
 
              <Card className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full">
-              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
+              <div 
+                className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${chatBackground})` }}
+              />
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
                 <div>
                   <h3 className="font-bold text-lg font-serif-chinese">{content.chat.title}</h3>
                   <p className="text-sm text-muted-foreground">{content.chat.subtitle}</p>
