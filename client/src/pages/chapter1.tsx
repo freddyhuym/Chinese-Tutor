@@ -29,6 +29,10 @@ import teacherManImage from '@assets/generated_images/asian_male_teacher_illustr
 import reddyProfile from '@/assets/generated_images/reddy_profile.png';
 // @ts-ignore
 import xiaoyuProfile from '@/assets/generated_images/xiaoyu_profile.png';
+// @ts-ignore
+import reddyFull from '@/assets/generated_images/reddy_full.png';
+// @ts-ignore
+import xiaoyuFull from '@/assets/generated_images/xiaoyu_full.png';
 
 const chapterContent = {
   zh: {
