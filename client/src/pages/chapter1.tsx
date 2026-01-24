@@ -705,8 +705,9 @@ export default function Chapter1() {
 
   useEffect(() => {
     localStorage.setItem('chapter1_chat_state', JSON.stringify(chatState));
-    // Only scroll to bottom on initial load or if we are not completed
-    if (!chatState.completed) {
+    // Only scroll to bottom if we are not completed and it's NOT the initial state (length > 2)
+    // This prevents scrolling when resetting to initial state
+    if (!chatState.completed && chatState.messages.length > 2) {
       setTimeout(() => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
