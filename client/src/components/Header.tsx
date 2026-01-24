@@ -13,7 +13,6 @@ export function Header() {
   const [location] = useLocation();
   const menuItems = [
     { href: "/", label: "首頁" },
-    { href: "/philosophy", label: "編寫理念" },
     { href: "/chapter1", label: "第一章" },
     { href: "/chapter2", label: "第二章" },
     { href: "/chapter3", label: "第三章" },

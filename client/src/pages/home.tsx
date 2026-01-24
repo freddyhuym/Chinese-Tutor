@@ -615,13 +615,13 @@ export default function Home() {
                 variant="outline"
                 className="gap-2 text-xl px-10 py-7 rounded-sm border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary h-16"
                 onClick={() => {
-                  const toolsSection = document.getElementById("tools-section");
-                  if (toolsSection) {
-                    toolsSection.scrollIntoView({ behavior: "smooth" });
+                  const philosophySection = document.getElementById("philosophy-section");
+                  if (philosophySection) {
+                    philosophySection.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
               >
-                探索學習工具
+                探索編寫理念
                 <ChevronRight className="w-5 h-5" />
               </Button>
             </div>
@@ -629,83 +629,84 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="tools-section" className="py-20 scroll-mt-20">
+      <section id="philosophy-section" className="py-20 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1.02 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.4 }}
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-serif-chinese">
-              {t.howToUse.title}
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              {t.howToUse.description}
+            <h1 className="text-4xl md:text-5xl font-bold font-serif-chinese mb-6 text-foreground">
+              {t.philosophy.title}
+            </h1>
+            <p className="text-xl text-muted-foreground font-serif-chinese max-w-3xl mx-auto">
+              {t.philosophy.subtitle}
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {t.howToUse.steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="p-6 h-full card-hover bg-card border-2 border-border/50 hover:border-primary/30 transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl font-bold text-primary">
-                        {index + 1}
-                      </span>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold font-serif-chinese mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+          <div className="space-y-16 max-w-5xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="prose prose-lg dark:prose-invert max-w-none"
+            >
+              <h2 className="text-2xl font-bold font-serif-chinese mb-6 flex items-center gap-3 text-jade">
+                <span className="w-8 h-8 rounded-full bg-jade/10 flex items-center justify-center text-sm">1</span>
+                {t.philosophy.section1.title}
+              </h2>
+              <div className="bg-card/50 rounded-2xl p-8 border border-border/50 backdrop-blur-sm shadow-sm">
+                <p className="leading-relaxed whitespace-pre-line text-muted-foreground font-serif-chinese text-lg">
+                  {t.philosophy.section1.content}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="prose prose-lg dark:prose-invert max-w-none"
+            >
+              <h2 className="text-2xl font-bold font-serif-chinese mb-6 flex items-center gap-3 text-vermillion">
+                <span className="w-8 h-8 rounded-full bg-vermillion/10 flex items-center justify-center text-sm">2</span>
+                {t.philosophy.section2.title}
+              </h2>
+              <div className="bg-card/50 rounded-2xl p-8 border border-border/50 backdrop-blur-sm shadow-sm">
+                <p className="leading-relaxed whitespace-pre-line text-muted-foreground font-serif-chinese text-lg">
+                  {t.philosophy.section2.content}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="prose prose-lg dark:prose-invert max-w-none"
+            >
+              <h2 className="text-2xl font-bold font-serif-chinese mb-6 flex items-center gap-3 text-gold">
+                <span className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-sm">3</span>
+                {t.philosophy.section3.title}
+              </h2>
+              <div className="bg-card/50 rounded-2xl p-8 border border-border/50 backdrop-blur-sm shadow-sm">
+                <p className="leading-relaxed whitespace-pre-line text-muted-foreground font-serif-chinese text-lg">
+                  {t.philosophy.section3.content}
+                </p>
+              </div>
+            </motion.div>
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-10 max-w-2xl mx-auto"
-          >
-            <Card className="p-6 bg-gradient-to-r from-jade/10 to-primary/10 border-jade/30">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-jade/20 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-5 h-5 text-jade" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-jade mb-1">
-                    {t.howToUse.tip}
-                  </h4>
-                  <p className="text-muted-foreground">
-                    {t.howToUse.tipContent}
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 text-center"
+            transition={{ delay: 0.3 }}
+            className="mt-16 text-center"
           >
             <Button
               size="lg"
@@ -863,7 +864,7 @@ export default function Home() {
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
               {t.cta.description}
             </p>
-            <Link href="/chapter1">
+            <Link href="/chapter1" onClick={() => window.scrollTo(0, 0)}>
               <Button
                 size="lg"
                 className="gap-2 bg-primary hover:bg-primary/90 shadow-lg rounded-sm text-xl px-10 py-7 h-16"
