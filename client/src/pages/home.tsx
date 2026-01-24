@@ -246,7 +246,7 @@ function FlashcardSection({ lang }: { lang: Language }) {
       <div className="flex gap-3">
         <Button
           variant="outline"
-          className="flex-1 gap-2 rounded-sm"
+          className="flex-1 gap-2 rounded-sm border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary h-12 text-lg"
           onClick={() => setCurrentCard(0)}
           data-testid="button-reset"
         >
@@ -254,7 +254,7 @@ function FlashcardSection({ lang }: { lang: Language }) {
           {t.flashcard.reset}
         </Button>
         <Button
-          className="flex-1 gap-2 bg-primary hover:bg-primary/90 rounded-sm"
+          className="flex-1 gap-2 bg-primary hover:bg-primary/90 rounded-sm h-12 text-lg"
           onClick={nextCard}
           data-testid="button-next-card"
         >
@@ -468,7 +468,7 @@ function CharacterPractice({ lang }: { lang: Language }) {
       <div className="flex gap-3">
         <Button
           variant="outline"
-          className="flex-1 rounded-sm"
+          className="flex-1 rounded-sm border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary h-12 text-lg"
           onClick={() => setStrokeIndex(0)}
           data-testid="button-restart-stroke"
         >
@@ -476,7 +476,7 @@ function CharacterPractice({ lang }: { lang: Language }) {
           {t.writing.restart}
         </Button>
         <Button
-          className="flex-1 bg-jade hover:bg-jade/90 text-white rounded-sm"
+          className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-sm h-12 text-lg"
           onClick={() =>
             setStrokeIndex((prev) => Math.min(prev + 1, totalStrokes - 1))
           }
@@ -556,7 +556,7 @@ export default function Home() {
               <div className="mt-10">
                   <Button
                     size="lg"
-                    className="gap-3 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 text-xl px-10 py-7 rounded-sm transition-all hover:scale-105"
+                    className="gap-3 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 text-xl px-10 py-7 rounded-sm transition-all hover:scale-105 h-16"
                     data-testid="button-course-intro"
                     onClick={() => {
                       const aboutSection = document.getElementById("about-section");
@@ -613,7 +613,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="gap-2 text-lg px-8 py-6 rounded-sm"
+                className="gap-2 text-xl px-10 py-7 rounded-sm border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary h-16"
                 onClick={() => {
                   const toolsSection = document.getElementById("tools-section");
                   if (toolsSection) {
@@ -710,7 +710,7 @@ export default function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="gap-2 rounded-sm"
+              className="gap-2 text-xl px-10 py-7 rounded-sm border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary h-16"
               onClick={() => {
                 const whySection = document.getElementById("why-choose-us");
                 if (whySection) {
@@ -823,7 +823,7 @@ export default function Home() {
           >
              <Button 
                size="lg" 
-               className="gap-2 bg-primary hover:bg-primary/90 shadow-lg text-lg px-8 py-6 rounded-sm"
+               className="gap-2 bg-primary hover:bg-primary/90 shadow-lg text-xl px-10 py-7 rounded-sm h-16"
                onClick={() => {
                  const startLearningSection = document.getElementById('start-learning');
                  if (startLearningSection) {
@@ -866,7 +866,7 @@ export default function Home() {
             <Link href="/chapter1">
               <Button
                 size="lg"
-                className="gap-2 bg-primary hover:bg-primary/90 shadow-lg rounded-sm"
+                className="gap-2 bg-primary hover:bg-primary/90 shadow-lg rounded-sm text-xl px-10 py-7 h-16"
                 data-testid="button-cta"
               >
                 {t.cta.button}
