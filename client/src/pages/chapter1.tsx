@@ -703,6 +703,11 @@ export default function Chapter1() {
 
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('chapter1_chat_state', JSON.stringify(chatState));
     // Only scroll to bottom if we are not completed and it's NOT the initial state (length > 2)
