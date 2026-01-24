@@ -370,7 +370,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
-          <div className="flex flex-col items-start gap-8 max-w-2xl">
+          <div className="flex flex-col items-start gap-8 max-w-lg">
             
             {/* Text Section */}
             <motion.div
