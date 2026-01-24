@@ -705,16 +705,26 @@ export default function Chapter1() {
 
   // Scroll to top on mount
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Force scroll to top on mount with a slight delay to ensure render is complete
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }, 10);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
     localStorage.setItem('chapter1_chat_state', JSON.stringify(chatState));
     // Only scroll to bottom if we are not completed and it's NOT the initial state (length > 2)
     // This prevents scrolling when resetting to initial state
+    // AND check if we have scrolled once already to avoid initial load scroll interference
     if (!chatState.completed && chatState.messages.length > 2) {
       setTimeout(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        // Only scroll if we are not at the top of the page
+        if (window.scrollY > 100) {
+           chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
       }, 100);
     }
   }, [chatState]);
