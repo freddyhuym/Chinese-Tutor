@@ -21,7 +21,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import heroBackground from "@/assets/generated_images/handsome_reddy_taipei_101_hero_v2.png";
+import heroBackground from "@/assets/generated_images/handsome_reddy_taipei_101_right_strong.png";
 import appLogo from "@/assets/generated_images/app_logo.png";
 import chineseCulturalBg from "@assets/generated_images/light_chinese_lanterns_architecture_background.png";
 import { type Language, getTranslations } from "@/lib/i18n";
@@ -380,13 +380,19 @@ export default function Home() {
               className="text-white drop-shadow-lg"
             >
               <h1 className="text-4xl md:text-6xl font-bold font-serif-chinese tracking-tight mb-6 leading-tight">
-                 {/* @ts-ignore */}
-                {t.hero.randyIntro.split('\n')[0]}
+                大家好！
               </h1>
               
               <div className="space-y-4 text-lg md:text-2xl font-serif-chinese text-slate-100/90 leading-relaxed whitespace-pre-line text-shadow-sm">
-                 {/* @ts-ignore */}
-                 {t.hero.randyIntro.split('\n').slice(1).join('\n')}
+                我叫 Randy（瑞迪）。
+                我是 美國人，剛來台灣。
+                我學中文 三個多月了，
+                現在住在 台北。
+                我喜歡認識新朋友，
+                也想多了解 台灣的生活。
+                這一次，我遇到了一個特別的人。
+                你願意 跟我一起學中文，
+                幫助我一步一步認識她嗎？
               </div>
               
               <div className="mt-10">
