@@ -709,7 +709,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "xuéxí",
     english: "to learn",
     partOfSpeech: "V",
-    tbcl: "1",
+    tbcl: "2",
   },
   {
     traditional: "因為",
@@ -717,7 +717,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "yīnwèi",
     english: "because",
     partOfSpeech: "Conj",
-    tbcl: "2",
+    tbcl: "1*",
   },
   {
     traditional: "哇",
@@ -725,15 +725,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "wa",
     english: "wow",
     partOfSpeech: "Ptc",
-    tbcl: "1",
-  },
-  {
-    traditional: "想",
-    simplified: "想",
-    pinyin: "xiǎng",
-    english: "to want / to think",
-    partOfSpeech: "Vaux",
-    tbcl: "1",
+    tbcl: "3",
   },
   {
     traditional: "為什麼",
@@ -741,23 +733,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "wèishéme",
     english: "why",
     partOfSpeech: "Adv",
-    tbcl: "1",
-  },
-  {
-    traditional: "一點",
-    simplified: "一点",
-    pinyin: "yīdiǎn",
-    english: "a little",
-    partOfSpeech: "M",
-    tbcl: "2",
-  },
-  {
-    traditional: "在",
-    simplified: "在",
-    pinyin: "zài",
-    english: "at / in / on (progressive)",
-    partOfSpeech: "Prep",
-    tbcl: "1",
+    tbcl: "1*",
   },
   {
     traditional: "覺得",
@@ -765,7 +741,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "juédé",
     english: "to feel / to think",
     partOfSpeech: "Vst",
-    tbcl: "2",
+    tbcl: "1*",
   },
   {
     traditional: "剛剛",
@@ -789,7 +765,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "a",
     english: "(particle)",
     partOfSpeech: "Ptc",
-    tbcl: "1",
+    tbcl: "2",
   },
   {
     traditional: "聊天",
@@ -812,7 +788,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "特别",
     pinyin: "tèbié",
     english: "special",
-    partOfSpeech: "Adv",
+    partOfSpeech: "Vs",
     tbcl: "2",
   },
   {
@@ -829,7 +805,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "rènshì",
     english: "to know / to recognize",
     partOfSpeech: "Vst",
-    tbcl: "1",
+    tbcl: "2",
   },
   {
     traditional: "有意思",
@@ -845,15 +821,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     pinyin: "lìhài",
     english: "amazing / severe",
     partOfSpeech: "Vs",
-    tbcl: "2",
-  },
-  {
-    traditional: "幫",
-    simplified: "帮",
-    pinyin: "bāng",
-    english: "to help",
-    partOfSpeech: "V",
-    tbcl: "1",
+    tbcl: "2*",
   },
 ];
 
@@ -1360,22 +1328,21 @@ export default function Chapter1() {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-slate-50/50 border-b border-border">
-                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[100px] border-r border-border/50">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-auto min-w-[80px] border-r border-border/50 whitespace-nowrap">
                         {content.vocabulary.columns.word}
                       </th>
-                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[100px] border-r border-border/50">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[150px] border-r border-border/50">
                         {content.vocabulary.columns.pinyin}
                       </th>
-                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[30%] min-w-[200px] border-r border-border/50">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[40%] min-w-[200px] border-r border-border/50">
                         {content.vocabulary.columns.english}
                       </th>
-                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[10%] min-w-[80px] border-r border-border/50 text-center">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] border-r border-border/50 text-center">
                         {content.vocabulary.columns.partOfSpeech}
                       </th>
-                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[10%] min-w-[80px] border-r border-border/50 text-center">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] text-center">
                         {content.vocabulary.columns.tbcl}
                       </th>
-                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[100px] text-center"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1384,7 +1351,7 @@ export default function Chapter1() {
                         key={index}
                         className="border-b border-border/50 hover:bg-slate-50/50 transition-colors group"
                       >
-                        <td className="p-4 border-r border-border/50">
+                        <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
                           <div className="flex flex-col">
                             <span className="font-bold text-lg font-serif-chinese text-slate-800">
                               {word.traditional}
@@ -1395,7 +1362,18 @@ export default function Chapter1() {
                           </div>
                         </td>
                         <td className="p-4 border-r border-border/50 font-medium text-primary">
-                          {word.pinyin}
+                          <div className="flex items-center gap-3">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                              onClick={() => playAudio(word.traditional, true)}
+                              title="播放"
+                            >
+                              <Volume2 className="w-4 h-4" />
+                            </Button>
+                            <span>{word.pinyin}</span>
+                          </div>
                         </td>
                         <td className="p-4 border-r border-border/50 text-slate-600">
                           {word.english}
@@ -1408,21 +1386,10 @@ export default function Chapter1() {
                             {word.partOfSpeech}
                           </Badge>
                         </td>
-                        <td className="p-4 border-r border-border/50 text-center">
+                        <td className="p-4 text-center">
                           <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
                             {word.tbcl}
                           </span>
-                        </td>
-                        <td className="p-4 text-center">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="opacity-50 group-hover:opacity-100 transition-opacity hover:bg-primary/10 hover:text-primary gap-2"
-                            onClick={() => playAudio(word.traditional, true)}
-                          >
-                            <Volume2 className="w-4 h-4" />
-                            <span className="text-xs">播放</span>
-                          </Button>
                         </td>
                       </tr>
                     ))}
