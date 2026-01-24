@@ -21,7 +21,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import heroBackground from "@/assets/generated_images/handsome_reddy_taipei_101_right_strong.png";
+import heroBackground from "@/assets/generated_images/handsome_reddy_taipei_101_hero.png";
 import appLogo from "@/assets/generated_images/app_logo.png";
 import chineseCulturalBg from "@assets/generated_images/light_chinese_lanterns_architecture_background.png";
 import { type Language, getTranslations } from "@/lib/i18n";
@@ -364,7 +364,7 @@ export default function Home() {
           style={{
             backgroundImage: `url(${heroBackground})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center 20%',
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
