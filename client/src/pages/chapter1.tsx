@@ -724,7 +724,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "哇",
     pinyin: "wa",
     english: "wow",
-    partOfSpeech: "Int",
+    partOfSpeech: "Ptc",
     tbcl: "1",
   },
   {
@@ -732,7 +732,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "想",
     pinyin: "xiǎng",
     english: "to want / to think",
-    partOfSpeech: "V/Aux",
+    partOfSpeech: "Vaux",
     tbcl: "1",
   },
   {
@@ -748,7 +748,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "一点",
     pinyin: "yīdiǎn",
     english: "a little",
-    partOfSpeech: "N",
+    partOfSpeech: "M",
     tbcl: "2",
   },
   {
@@ -756,7 +756,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "在",
     pinyin: "zài",
     english: "at / in / on (progressive)",
-    partOfSpeech: "Prep/Adv",
+    partOfSpeech: "Prep",
     tbcl: "1",
   },
   {
@@ -764,14 +764,14 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "觉得",
     pinyin: "juédé",
     english: "to feel / to think",
-    partOfSpeech: "V",
+    partOfSpeech: "Vst",
     tbcl: "2",
   },
   {
-    traditional: "剛",
-    simplified: "刚",
-    pinyin: "gāng",
-    english: "just",
+    traditional: "剛剛",
+    simplified: "刚刚",
+    pinyin: "gānggāng",
+    english: "just now",
     partOfSpeech: "Adv",
     tbcl: "2",
   },
@@ -788,7 +788,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "啊",
     pinyin: "a",
     english: "(particle)",
-    partOfSpeech: "Part",
+    partOfSpeech: "Ptc",
     tbcl: "1",
   },
   {
@@ -812,7 +812,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "特别",
     pinyin: "tèbié",
     english: "special",
-    partOfSpeech: "Vs",
+    partOfSpeech: "Adv",
     tbcl: "2",
   },
   {
@@ -828,7 +828,7 @@ const VOCABULARY_LIST: VocabWord[] = [
     simplified: "认识",
     pinyin: "rènshì",
     english: "to know / to recognize",
-    partOfSpeech: "V",
+    partOfSpeech: "Vst",
     tbcl: "1",
   },
   {
@@ -846,6 +846,14 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "amazing / severe",
     partOfSpeech: "Vs",
     tbcl: "2",
+  },
+  {
+    traditional: "幫",
+    simplified: "帮",
+    pinyin: "bāng",
+    english: "to help",
+    partOfSpeech: "V",
+    tbcl: "1",
   },
 ];
 
