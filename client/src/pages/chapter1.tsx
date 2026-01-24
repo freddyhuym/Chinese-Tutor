@@ -892,7 +892,12 @@ export default function Chapter1() {
                   <p className="text-sm text-muted-foreground">{content.chat.subtitle}</p>
                 </div>
                 {chatState.completed && (
-                  <Button variant="ghost" size="sm" onClick={resetChat}>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={resetChat}
+                    className="hover:bg-transparent hover:text-current p-0"
+                  >
                     重新開始
                   </Button>
                 )}
