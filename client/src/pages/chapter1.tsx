@@ -816,13 +816,6 @@ export default function Chapter1() {
   const resetChat = () => {
     setChatState(INITIAL_CHAT_STATE);
     setMessageStates({});
-    // Scroll to the top of the chat container
-    if (chatContainerRef.current) {
-        const yOffset = -20; // Slightly higher than the container
-        const element = chatContainerRef.current;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({top: y, behavior: 'smooth'});
-    }
   };
 
   return (
