@@ -908,16 +908,6 @@ export default function Chapter1() {
                   <h3 className="font-bold text-lg font-serif-chinese">{content.chat.title}</h3>
                   <p className="text-sm text-muted-foreground">{content.chat.subtitle}</p>
                 </div>
-                {chatState.completed && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={resetChat}
-                    className="hover:bg-transparent hover:text-current p-0"
-                  >
-                    重新開始
-                  </Button>
-                )}
               </div>
               
               <div className="overflow-visible p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
@@ -1020,7 +1010,20 @@ export default function Chapter1() {
                     {/* Show choices after message 6 */}
                     {index === 5 && (
                       <div className="ml-14 my-6 space-y-3 bg-slate-50/50 p-4 rounded-xl border border-dashed border-border/60">
-                         <p className="text-sm font-medium text-muted-foreground mb-2">請選擇瑞迪的回答：</p>
+                         <div className="flex items-center justify-between mb-2">
+                           <p className="text-sm font-medium text-muted-foreground">請選擇瑞迪的回答：</p>
+                           {chatState.completed && (
+                             <Button 
+                               variant="ghost" 
+                               size="sm" 
+                               onClick={resetChat}
+                               className="h-6 text-xs text-primary hover:text-primary hover:bg-primary/10 px-2"
+                             >
+                               <RotateCcw className="w-3 h-3 mr-1" />
+                               重新選擇
+                             </Button>
+                           )}
+                         </div>
                          {CHOICES.map((choice) => (
                           <button
                             key={choice.id}
