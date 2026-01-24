@@ -702,6 +702,7 @@ export default function Chapter1() {
   });
 
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -815,6 +816,13 @@ export default function Chapter1() {
   const resetChat = () => {
     setChatState(INITIAL_CHAT_STATE);
     setMessageStates({});
+    // Scroll to the top of the chat container
+    if (chatContainerRef.current) {
+        const yOffset = -100; // Adjust offset to account for sticky headers or spacing
+        const element = chatContainerRef.current;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({top: y, behavior: 'smooth'});
+    }
   };
 
   return (
@@ -897,7 +905,7 @@ export default function Chapter1() {
                  />
              </div>
 
-             <Card className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full">
+             <Card ref={chatContainerRef} className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full">
               <div 
                 className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
                 style={{ backgroundImage: `url(${chatBackground})` }}
