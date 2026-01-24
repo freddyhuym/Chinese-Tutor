@@ -813,6 +813,28 @@ export default function Home() {
               {t.whyChooseUs.paragraph2}
             </motion.p>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-12 text-center"
+          >
+             <Button 
+               size="lg" 
+               className="gap-2 bg-primary hover:bg-primary/90 shadow-lg text-lg px-8 py-6 rounded-full"
+               onClick={() => {
+                 const startLearningSection = document.getElementById('start-learning');
+                 if (startLearningSection) {
+                   startLearningSection.scrollIntoView({ behavior: 'smooth' });
+                 }
+               }}
+             >
+               我明白了
+               <ArrowDown className="w-5 h-5" />
+             </Button>
+          </motion.div>
         </div>
       </section>
 
