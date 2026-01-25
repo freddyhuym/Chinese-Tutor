@@ -700,6 +700,11 @@ type VocabWord = {
   english: string;
   partOfSpeech: string;
   tbcl: string;
+  example: {
+    zh: string;
+    pinyin: string;
+    en: string;
+  };
 };
 
 const VOCABULARY_LIST: VocabWord[] = [
@@ -710,6 +715,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "to learn",
     partOfSpeech: "V",
     tbcl: "2",
+    example: {
+      zh: "我很喜歡學習中文。",
+      pinyin: "Wǒ hěn xǐhuān xuéxí Zhōngwén.",
+      en: "I like learning Chinese very much.",
+    },
   },
   {
     traditional: "因為",
@@ -718,6 +728,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "because",
     partOfSpeech: "Conj",
     tbcl: "1*",
+    example: {
+      zh: "因為下雨，所以我沒去。",
+      pinyin: "Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.",
+      en: "Because it was raining, I didn't go.",
+    },
   },
   {
     traditional: "哇",
@@ -726,6 +741,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "wow",
     partOfSpeech: "Ptc",
     tbcl: "3",
+    example: {
+      zh: "哇，這個地方真漂亮！",
+      pinyin: "Wa, zhège dìfāng zhēn piàoliang!",
+      en: "Wow, this place is really beautiful!",
+    },
   },
   {
     traditional: "為什麼",
@@ -734,6 +754,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "why",
     partOfSpeech: "Adv",
     tbcl: "1*",
+    example: {
+      zh: "你為什麼生氣？",
+      pinyin: "Nǐ wèishéme shēngqì?",
+      en: "Why are you angry?",
+    },
   },
   {
     traditional: "覺得",
@@ -742,6 +767,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "to feel / to think",
     partOfSpeech: "Vst",
     tbcl: "1*",
+    example: {
+      zh: "我覺得今天很熱。",
+      pinyin: "Wǒ juédé jīntiān hěn rè.",
+      en: "I think it is very hot today.",
+    },
   },
   {
     traditional: "剛剛",
@@ -750,6 +780,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "just now",
     partOfSpeech: "Adv",
     tbcl: "2",
+    example: {
+      zh: "他剛剛離開這裡。",
+      pinyin: "Tā gānggāng líkāi zhèlǐ.",
+      en: "He just left here.",
+    },
   },
   {
     traditional: "文化",
@@ -758,6 +793,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "culture",
     partOfSpeech: "N",
     tbcl: "2",
+    example: {
+      zh: "我想了解台灣文化。",
+      pinyin: "Wǒ xiǎng liǎojiě Táiwān wénhuà.",
+      en: "I want to understand Taiwanese culture.",
+    },
   },
   {
     traditional: "啊",
@@ -766,6 +806,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "(particle)",
     partOfSpeech: "Ptc",
     tbcl: "2",
+    example: {
+      zh: "這真的是一個好主意啊！",
+      pinyin: "Zhè zhēn de shì yīgè hǎo zhǔyì a!",
+      en: "This is really a good idea!",
+    },
   },
   {
     traditional: "聊天",
@@ -774,6 +819,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "to chat",
     partOfSpeech: "V-sep",
     tbcl: "2",
+    example: {
+      zh: "我們在咖啡廳聊天。",
+      pinyin: "Wǒmen zài kāfēitīng liáotiān.",
+      en: "We are chatting in the coffee shop.",
+    },
   },
   {
     traditional: "練習",
@@ -782,6 +832,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "to practice",
     partOfSpeech: "V",
     tbcl: "2",
+    example: {
+      zh: "我每天練習彈鋼琴。",
+      pinyin: "Wǒ měitiān liànxí tán gāngqín.",
+      en: "I practice playing the piano every day.",
+    },
   },
   {
     traditional: "特別",
@@ -790,6 +845,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "special",
     partOfSpeech: "Vs",
     tbcl: "2",
+    example: {
+      zh: "這家餐廳特別好吃。",
+      pinyin: "Zhè jiā cāntīng tèbié hǎochī.",
+      en: "This restaurant is especially delicious.",
+    },
   },
   {
     traditional: "簡單",
@@ -798,6 +858,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "simple",
     partOfSpeech: "Vs",
     tbcl: "2",
+    example: {
+      zh: "這個問題很簡單。",
+      pinyin: "Zhège wèntí hěn jiǎndān.",
+      en: "This question is very simple.",
+    },
   },
   {
     traditional: "認識",
@@ -806,6 +871,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "to know / to recognize",
     partOfSpeech: "Vst",
     tbcl: "2",
+    example: {
+      zh: "很高興認識你。",
+      pinyin: "Hěn gāoxìng rènshì nǐ.",
+      en: "Nice to meet you.",
+    },
   },
   {
     traditional: "有意思",
@@ -814,6 +884,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "interesting",
     partOfSpeech: "Vs",
     tbcl: "2",
+    example: {
+      zh: "這部電影很有意思。",
+      pinyin: "Zhè bù diànyǐng hěn yǒuyìsi.",
+      en: "This movie is very interesting.",
+    },
   },
   {
     traditional: "厲害",
@@ -822,6 +897,11 @@ const VOCABULARY_LIST: VocabWord[] = [
     english: "amazing / severe",
     partOfSpeech: "Vs",
     tbcl: "2*",
+    example: {
+      zh: "你的中文真厲害。",
+      pinyin: "Nǐ de Zhōngwén zhēn lìhài.",
+      en: "Your Chinese is really amazing.",
+    },
   },
 ];
 
@@ -1347,51 +1427,73 @@ export default function Chapter1() {
                   </thead>
                   <tbody>
                     {VOCABULARY_LIST.map((word, index) => (
-                      <tr
-                        key={index}
-                        className="border-b border-border/50 hover:bg-slate-50/50 transition-colors group"
-                      >
-                        <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
-                          <div className="flex flex-col">
-                            <span className="font-bold text-lg font-serif-chinese text-slate-800">
-                              {word.traditional}
-                            </span>
-                            <span className="text-sm text-muted-foreground font-serif-chinese">
-                              {word.simplified}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="p-4 border-r border-border/50 font-medium text-primary">
-                          <div className="flex items-center gap-3">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
-                              onClick={() => playAudio(word.traditional, true)}
-                              title="播放"
+                      <React.Fragment key={index}>
+                        <tr
+                          className="border-b-0 hover:bg-slate-50/50 transition-colors group"
+                        >
+                          <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
+                            <div className="flex flex-col">
+                              <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                {word.traditional}
+                              </span>
+                              <span className="text-sm text-muted-foreground font-serif-chinese">
+                                {word.simplified}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="p-4 border-r border-border/50 font-medium text-primary">
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                onClick={() => playAudio(word.traditional, true)}
+                                title="播放"
+                              >
+                                <Volume2 className="w-4 h-4" />
+                              </Button>
+                              <span>{word.pinyin}</span>
+                            </div>
+                          </td>
+                          <td className="p-4 border-r border-border/50 text-slate-600">
+                            {word.english}
+                          </td>
+                          <td className="p-4 border-r border-border/50 text-center">
+                            <Badge
+                              variant="secondary"
+                              className="font-normal text-xs"
                             >
-                              <Volume2 className="w-4 h-4" />
-                            </Button>
-                            <span>{word.pinyin}</span>
-                          </div>
-                        </td>
-                        <td className="p-4 border-r border-border/50 text-slate-600">
-                          {word.english}
-                        </td>
-                        <td className="p-4 border-r border-border/50 text-center">
-                          <Badge
-                            variant="secondary"
-                            className="font-normal text-xs"
-                          >
-                            {word.partOfSpeech}
-                          </Badge>
-                        </td>
-                        <td className="p-4 text-center">
-                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
-                            {word.tbcl}
-                          </span>
-                        </td>
-                      </tr>
+                              {word.partOfSpeech}
+                            </Badge>
+                          </td>
+                          <td className="p-4 text-center">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                              {word.tbcl}
+                            </span>
+                          </td>
+                        </tr>
+                        {/* Example sentence row */}
+                        <tr className="border-b border-border/50 bg-slate-50/30">
+                          <td colSpan={5} className="px-4 pb-4 pt-0">
+                            <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-100/50 text-sm">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                                onClick={() => playAudio(word.example.zh, true)}
+                                title="播放例句"
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                              </Button>
+                              <div className="flex flex-wrap gap-x-4 gap-y-1 items-baseline">
+                                <span className="font-medium text-slate-700 font-serif-chinese">{word.example.zh}</span>
+                                <span className="text-slate-500 font-serif-chinese">{word.example.pinyin}</span>
+                                <span className="text-muted-foreground italic">{word.example.en}</span>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>
