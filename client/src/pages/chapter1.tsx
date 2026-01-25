@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
@@ -1427,7 +1427,7 @@ export default function Chapter1() {
                   </thead>
                   <tbody>
                     {VOCABULARY_LIST.map((word, index) => (
-                      <React.Fragment key={index}>
+                      <Fragment key={index}>
                         <tr
                           className="border-b-0 hover:bg-slate-50/50 transition-colors group"
                         >
@@ -1493,7 +1493,7 @@ export default function Chapter1() {
                             </div>
                           </td>
                         </tr>
-                      </React.Fragment>
+                      </Fragment>
                     ))}
                   </tbody>
                 </table>
