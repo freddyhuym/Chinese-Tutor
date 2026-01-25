@@ -981,7 +981,7 @@ const CHOICES = [
 
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
-  const [appScenario, setAppScenario] = useState<"dining" | "movie">("dining");
+  const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(null);
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [messageStates, setMessageStates] = useState<MessageState>({});
   const t = getTranslations(lang);
@@ -1598,13 +1598,55 @@ export default function Chapter1() {
                            </div>
                         </div>
 
-                        {/* Part 2 - Dynamic Scenario */}
-                        {appScenario === "dining" ? (
+                        {/* Part 2 - Choice Scenario */}
+                        {!appScenario ? (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/50 shadow-sm mx-4 mb-4"
+                          >
+                            <div className="flex justify-between items-center mb-3">
+                                <span className="text-sm font-medium text-slate-700">請選擇瑞迪的回答：</span>
+                            </div>
+                            <div className="space-y-3">
+                                <button
+                                    onClick={() => setAppScenario("dining")}
+                                    className="w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all group relative overflow-hidden"
+                                >
+                                    <div className="flex items-start gap-3 relative z-10">
+                                        <div className="w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold group-hover:bg-primary group-hover:text-white transition-colors">
+                                            1
+                                        </div>
+                                        <div className="flex-1">
+                                            <p className="font-medium text-slate-800 text-lg mb-1">我也是，那我們一起出去吃飯吧。</p>
+                                            <p className="text-xs text-slate-500">Me too, let's go eat together.</p>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <button
+                                    onClick={() => setAppScenario("movie")}
+                                    className="w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all group relative overflow-hidden"
+                                >
+                                    <div className="flex items-start gap-3 relative z-10">
+                                        <div className="w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold group-hover:bg-primary group-hover:text-white transition-colors">
+                                            2
+                                        </div>
+                                        <div className="flex-1">
+                                            <p className="font-medium text-slate-800 text-lg mb-1">我喜歡看電影，你要不要跟我去看電影？</p>
+                                            <p className="text-xs text-slate-500">I like watching movies, do you want to go watch a movie with me?</p>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                          </motion.div>
+                        ) : (
                           <motion.div 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="space-y-4"
                           >
+                             {/* The User's Choice rendered as a message */}
                              <div className="flex gap-4 flex-row">
                                 <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
                                   <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
@@ -1612,11 +1654,14 @@ export default function Chapter1() {
                                 <div className="flex flex-col items-start max-w-[85%]">
                                   <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
                                   <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                    <p className="font-medium text-lg">我也是，那我們一起出去吃飯吧。</p>
+                                    <p className="font-medium text-lg">
+                                        {appScenario === "dining" ? "我也是，那我們一起出去吃飯吧。" : "我喜歡看電影，你要不要跟我去看電影？"}
+                                    </p>
                                   </div>
                                 </div>
                              </div>
                              
+                             {/* Xiaoyu's Response based on choice */}
                              <div className="flex gap-4 flex-row">
                                 <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
                                   <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
@@ -1628,35 +1673,17 @@ export default function Chapter1() {
                                   </div>
                                 </div>
                              </div>
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="space-y-4"
-                          >
-                             <div className="flex gap-4 flex-row">
-                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                  <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="flex flex-col items-start max-w-[85%]">
-                                  <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                  <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                    <p className="font-medium text-lg">我喜歡看電影，你要不要跟我去看電影？</p>
-                                  </div>
-                                </div>
-                             </div>
-                             
-                             <div className="flex gap-4 flex-row">
-                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                  <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="flex flex-col items-start max-w-[85%]">
-                                  <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                  <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                    <p className="font-medium text-lg">好啊。</p>
-                                  </div>
-                                </div>
+
+                             <div className="flex justify-center mt-2 mb-4">
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    onClick={() => setAppScenario(null)}
+                                    className="text-muted-foreground hover:text-primary gap-1"
+                                >
+                                    <RotateCcw className="w-3 h-3" />
+                                    重新選擇
+                                </Button>
                              </div>
                           </motion.div>
                         )}
@@ -1815,19 +1842,19 @@ export default function Chapter1() {
             <span className="text-xs opacity-90 font-medium">
               {chatState.affinity === "green" ? "心情很好" : "心情普通"}
             </span>
-            <div className="mt-2 flex items-center bg-white/20 rounded-full p-0.5 w-full border border-white/30 backdrop-blur-sm">
+            <div className="mt-2 flex items-center bg-white/20 rounded-full p-0.5 w-full border border-white/30 backdrop-blur-sm opacity-50 pointer-events-none">
               <button
-                onClick={(e) => { e.stopPropagation(); setAppScenario("movie"); }}
+                disabled
                 className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "movie" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
+                  appScenario === "movie" ? "bg-white text-primary shadow-sm" : "text-white"
                 }`}
               >
                 電影
               </button>
               <button
-                onClick={(e) => { e.stopPropagation(); setAppScenario("dining"); }}
+                disabled
                 className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "dining" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
+                  appScenario === "dining" ? "bg-white text-primary shadow-sm" : "text-white"
                 }`}
               >
                 吃飯
