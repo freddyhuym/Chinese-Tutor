@@ -980,7 +980,7 @@ const CHOICES = [
 ];
 
 export default function Chapter1() {
-  const [lang, setLang] = useState<Language>("zh");
+  const [appScenario, setAppScenario] = useState<"dining" | "movie">("dining");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [messageStates, setMessageStates] = useState<MessageState>({});
   const t = getTranslations(lang);
@@ -1555,7 +1555,11 @@ export default function Chapter1() {
                 />
                 {point.id === 4 && (
                   <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-slate-50 dark:bg-slate-900 mb-12">
-                     <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                    <div 
+                      className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
+                      style={{ backgroundImage: `url(${chatBackground})` }}
+                    />
+                     <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3 relative z-10">
                         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                           <span className="text-lg">📱</span>
                         </div>
@@ -1565,155 +1569,143 @@ export default function Chapter1() {
                         </div>
                       </div>
                       
-                      <div className="p-6 space-y-6">
-                        {/* Part 1 */}
+                      <div className="p-6 space-y-6 relative z-10">
+                        {/* Part 1 - Common Start */}
                         <div className="space-y-4">
                            <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
+                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
                                 <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
                               </div>
                               <div className="flex flex-col items-start max-w-[85%]">
                                 <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium">你平常喜歡做什麼？</p>
+                                <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
+                                  <p className="font-medium text-lg">你平常喜歡做什麼？</p>
                                 </div>
                               </div>
                            </div>
                            
                            <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
+                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
                                 <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
                               </div>
                               <div className="flex flex-col items-start max-w-[85%]">
                                 <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium">我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？</p>
+                                <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
+                                  <p className="font-medium text-lg">我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？</p>
                                 </div>
                               </div>
                            </div>
                         </div>
 
-                        <div className="relative flex items-center justify-center">
-                           <div className="absolute inset-0 flex items-center">
-                             <span className="w-full border-t border-dashed border-slate-300"></span>
-                           </div>
-                           <span className="relative bg-slate-50 px-2 text-xs text-muted-foreground">情境 A</span>
-                        </div>
+                        {/* Part 2 - Dynamic Scenario */}
+                        {appScenario === "dining" ? (
+                          <motion.div 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="space-y-4"
+                          >
+                             <div className="flex gap-4 flex-row">
+                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
+                                  <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="flex flex-col items-start max-w-[85%]">
+                                  <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
+                                  <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
+                                    <p className="font-medium text-lg">我也是，那我們一起出去吃飯吧。</p>
+                                  </div>
+                                </div>
+                             </div>
+                             
+                             <div className="flex gap-4 flex-row">
+                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
+                                  <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="flex flex-col items-start max-w-[85%]">
+                                  <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
+                                  <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
+                                    <p className="font-medium text-lg">好啊。</p>
+                                  </div>
+                                </div>
+                             </div>
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="space-y-4"
+                          >
+                             <div className="flex gap-4 flex-row">
+                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
+                                  <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="flex flex-col items-start max-w-[85%]">
+                                  <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
+                                  <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
+                                    <p className="font-medium text-lg">我喜歡看電影，你要不要跟我去看電影？</p>
+                                  </div>
+                                </div>
+                             </div>
+                             
+                             <div className="flex gap-4 flex-row">
+                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
+                                  <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="flex flex-col items-start max-w-[85%]">
+                                  <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
+                                  <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
+                                    <p className="font-medium text-lg">好啊。</p>
+                                  </div>
+                                </div>
+                             </div>
+                          </motion.div>
+                        )}
 
-                        {/* Part 2 - Option A */}
+                        {/* Part 3 - Closing */}
                         <div className="space-y-4">
                            <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
+                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
                                 <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
                               </div>
                               <div className="flex flex-col items-start max-w-[85%]">
                                 <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium">我也是，那我們一起出去吃飯吧。</p>
+                                <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
+                                  <p className="font-medium text-lg">明天下午六點怎麼樣？</p>
                                 </div>
                               </div>
                            </div>
                            
                            <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
+                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
                                 <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
                               </div>
                               <div className="flex flex-col items-start max-w-[85%]">
                                 <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium">好啊。</p>
+                                <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
+                                  <p className="font-medium text-lg">可以的，我們在哪裡見面？</p>
                                 </div>
                               </div>
                            </div>
-                        </div>
 
-                        <div className="relative flex items-center justify-center">
-                           <div className="absolute inset-0 flex items-center">
-                             <span className="w-full border-t border-dashed border-slate-300"></span>
-                           </div>
-                           <span className="relative bg-slate-50 px-2 text-xs text-muted-foreground">情境 B</span>
-                        </div>
-
-                        {/* Part 3 - Option B */}
-                        <div className="space-y-4">
                            <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
+                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
                                 <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
                               </div>
                               <div className="flex flex-col items-start max-w-[85%]">
                                 <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium">我喜歡看電影，你要不要跟我去看電影？</p>
+                                <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
+                                  <p className="font-medium text-lg">台北１０１捷運站。</p>
                                 </div>
                               </div>
                            </div>
-                           
+
                            <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
+                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
                                 <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
                               </div>
                               <div className="flex flex-col items-start max-w-[85%]">
                                 <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium">好啊。</p>
-                                </div>
-                              </div>
-                           </div>
-                        </div>
-
-                        <div className="relative flex items-center justify-center">
-                           <div className="absolute inset-0 flex items-center">
-                             <span className="w-full border-t border-dashed border-slate-300"></span>
-                           </div>
-                           <span className="relative bg-slate-50 px-2 text-xs text-muted-foreground">結尾</span>
-                        </div>
-
-                        {/* Part 4 - Closing */}
-                        <div className="space-y-4">
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium">明天下午六點怎麼樣？</p>
-                                </div>
-                              </div>
-                           </div>
-                           
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium">可以的，我們在哪裡見面？</p>
-                                </div>
-                              </div>
-                           </div>
-
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium">台北１０１捷運站。</p>
-                                </div>
-                              </div>
-                           </div>
-
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-3 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium">沒問題，我們明天見！</p>
+                                <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
+                                  <p className="font-medium text-lg">沒問題，我們明天見！</p>
                                 </div>
                               </div>
                            </div>
@@ -1822,6 +1814,24 @@ export default function Chapter1() {
             <span className="text-xs opacity-90 font-medium">
               {chatState.affinity === "green" ? "心情很好" : "心情普通"}
             </span>
+            <div className="mt-2 flex items-center bg-white/20 rounded-full p-0.5 w-full border border-white/30 backdrop-blur-sm">
+              <button
+                onClick={(e) => { e.stopPropagation(); setAppScenario("movie"); }}
+                className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
+                  appScenario === "movie" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
+                }`}
+              >
+                電影
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); setAppScenario("dining"); }}
+                className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
+                  appScenario === "dining" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
+                }`}
+              >
+                吃飯
+              </button>
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>
