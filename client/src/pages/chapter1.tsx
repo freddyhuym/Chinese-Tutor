@@ -295,19 +295,19 @@ const GRAMMAR_POINTS: GrammarPoint[] = [
     },
     examples: [
       {
-        zh: "我常跟哥哥去看棒球比賽。",
-        pinyin: "Wǒ cháng gēn gēge qù kàn bàngqiú bǐsài.",
-        en: "I often go to watch baseball games with my older brother.",
+        zh: "我喜歡跟姐姐看電影。",
+        pinyin: "Wǒ xǐhuān gēn jiějie kàn diànyǐng.",
+        en: "I like watching movies with my older sister.",
       },
       {
-        zh: "我跟朋友在餐廳吃飯。",
-        pinyin: "Wǒ gēn péngyǒu zài cāntīng chīfàn.",
-        en: "I eat at a restaurant with friends.",
+        zh: "我跟我哥哥在學校讀書。",
+        pinyin: "Wǒ gēn wǒ gēge zài xuéxiào dúshū.",
+        en: "I study at school with my older brother.",
       },
       {
-        zh: "我週末要跟同學去參觀故宮。",
-        pinyin: "Wǒ zhōumò yào gēn tóngxué qù cānguān Gùgōng.",
-        en: "I am going to visit the Palace Museum with classmates this weekend.",
+        zh: "我下星期要跟朋友去打籃球。",
+        pinyin: "Wǒ xià xīngqī yào gēn péngyǒu qù dǎ lánqiú.",
+        en: "I am going to play basketball with friends next week.",
       },
     ],
   },
