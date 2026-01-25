@@ -980,6 +980,7 @@ const CHOICES = [
 ];
 
 export default function Chapter1() {
+  const [lang, setLang] = useState<Language>("zh");
   const [appScenario, setAppScenario] = useState<"dining" | "movie">("dining");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [messageStates, setMessageStates] = useState<MessageState>({});
