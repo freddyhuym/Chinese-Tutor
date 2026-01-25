@@ -1555,8 +1555,12 @@ export default function Chapter1() {
                   playAudio={playAudio}
                 />
                 {point.id === 4 && (
-                  <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-slate-50 dark:bg-slate-900 mb-12">
-                     <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                  <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-slate-50 dark:bg-slate-900 mb-12 relative">
+                    <div 
+                      className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
+                      style={{ backgroundImage: `url(${chatBackground})` }}
+                    />
+                     <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3 relative z-10">
                         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                           <span className="text-lg">📱</span>
                         </div>
@@ -1566,7 +1570,7 @@ export default function Chapter1() {
                         </div>
                       </div>
                       
-                      <div className="p-6 space-y-6">
+                      <div className="p-6 space-y-6 relative z-10">
                         {/* Part 1 - Common Start */}
                         <div className="space-y-4">
                            <div className="flex gap-4 flex-row">
