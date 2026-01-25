@@ -60,7 +60,7 @@ const chapterContent = {
     },
     vocabulary: {
       title: "生詞列表",
-      subtitle: "本章重點單字",
+      subtitle: "手機觀看往右滑動可以看到完整資訊",
       columns: {
         word: "生詞",
         pinyin: "拼音",
