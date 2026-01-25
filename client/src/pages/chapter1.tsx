@@ -1599,49 +1599,78 @@ export default function Chapter1() {
                         </div>
 
                         {/* Part 2 - Choice Scenario */}
-                        {!appScenario ? (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/50 shadow-sm mx-4 mb-4"
-                          >
-                            <div className="flex justify-between items-center mb-3">
-                                <span className="text-sm font-medium text-slate-700">請選擇瑞迪的回答：</span>
-                            </div>
-                            <div className="space-y-3">
-                                <button
-                                    onClick={() => setAppScenario("dining")}
-                                    className="w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all group relative overflow-hidden"
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/50 shadow-sm mx-4 mb-4 relative"
+                        >
+                          <div className="flex justify-between items-center mb-3">
+                              <span className="text-sm font-medium text-slate-700">請選擇瑞迪的回答：</span>
+                              {appScenario && (
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    onClick={() => setAppScenario(null)}
+                                    className="text-primary hover:text-primary/80 gap-1 h-6 px-2 text-xs"
                                 >
-                                    <div className="flex items-start gap-3 relative z-10">
-                                        <div className="w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold group-hover:bg-primary group-hover:text-white transition-colors">
-                                            1
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="font-medium text-slate-800 text-lg mb-1">我也是，那我們一起出去吃飯吧。</p>
-                                            <p className="text-xs text-slate-500">Me too, let's go eat together.</p>
-                                        </div>
-                                    </div>
-                                </button>
+                                    <RotateCcw className="w-3 h-3" />
+                                    重新選擇
+                                </Button>
+                              )}
+                          </div>
+                          <div className="space-y-3">
+                              <button
+                                  onClick={() => setAppScenario("dining")}
+                                  className={`w-full text-left p-4 rounded-xl bg-white border shadow-sm transition-all group relative overflow-hidden ${
+                                    appScenario === "dining" 
+                                      ? "border-red-500 ring-1 ring-red-500 shadow-md" 
+                                      : "border-slate-200 hover:border-primary/50 hover:shadow-md"
+                                  }`}
+                              >
+                                  <div className="flex items-start gap-3 relative z-10">
+                                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                                        appScenario === "dining"
+                                          ? "bg-red-600 text-white"
+                                          : "bg-slate-100 text-slate-500 group-hover:bg-primary group-hover:text-white"
+                                      }`}>
+                                          1
+                                      </div>
+                                      <div className="flex-1">
+                                          <p className="font-medium text-slate-800 text-lg mb-1">我也是，那我們一起出去吃飯吧。</p>
+                                          <p className="text-xs text-slate-500">Me too, let's go eat together.</p>
+                                      </div>
+                                  </div>
+                              </button>
 
-                                <button
-                                    onClick={() => setAppScenario("movie")}
-                                    className="w-full text-left p-4 rounded-xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-md transition-all group relative overflow-hidden"
-                                >
-                                    <div className="flex items-start gap-3 relative z-10">
-                                        <div className="w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold group-hover:bg-primary group-hover:text-white transition-colors">
-                                            2
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="font-medium text-slate-800 text-lg mb-1">我喜歡看電影，你要不要跟我去看電影？</p>
-                                            <p className="text-xs text-slate-500">I like watching movies, do you want to go watch a movie with me?</p>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                          </motion.div>
-                        ) : (
+                              <button
+                                  onClick={() => setAppScenario("movie")}
+                                  className={`w-full text-left p-4 rounded-xl bg-white border shadow-sm transition-all group relative overflow-hidden ${
+                                    appScenario === "movie" 
+                                      ? "border-red-500 ring-1 ring-red-500 shadow-md" 
+                                      : "border-slate-200 hover:border-primary/50 hover:shadow-md"
+                                  }`}
+                              >
+                                  <div className="flex items-start gap-3 relative z-10">
+                                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                                        appScenario === "movie"
+                                          ? "bg-red-600 text-white"
+                                          : "bg-slate-100 text-slate-500 group-hover:bg-primary group-hover:text-white"
+                                      }`}>
+                                          2
+                                      </div>
+                                      <div className="flex-1">
+                                          <p className="font-medium text-slate-800 text-lg mb-1">我喜歡看電影，你要不要跟我去看電影？</p>
+                                          <p className="text-xs text-slate-500">I like watching movies, do you want to go watch a movie with me?</p>
+                                      </div>
+                                  </div>
+                              </button>
+                          </div>
+                        </motion.div>
+
+                        {/* Part 3 - Scenario Content (Only shown when selected) */}
+                        {appScenario && (
                           <motion.div 
+                            key={appScenario}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="space-y-4"
@@ -1673,22 +1702,11 @@ export default function Chapter1() {
                                   </div>
                                 </div>
                              </div>
-
-                             <div className="flex justify-center mt-2 mb-4">
-                                <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    onClick={() => setAppScenario(null)}
-                                    className="text-muted-foreground hover:text-primary gap-1"
-                                >
-                                    <RotateCcw className="w-3 h-3" />
-                                    重新選擇
-                                </Button>
-                             </div>
                           </motion.div>
                         )}
 
-                        {/* Part 3 - Closing */}
+                        {/* Part 4 - Closing (Only shown when selected) */}
+                        {appScenario && (
                         <div className="space-y-4">
                            <div className="flex gap-4 flex-row">
                               <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
