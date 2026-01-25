@@ -1861,19 +1861,25 @@ export default function Chapter1() {
             <span className="text-xs opacity-90 font-medium">
               {chatState.affinity === "green" ? "心情很好" : "心情普通"}
             </span>
-            <div className="mt-2 flex items-center bg-white/20 rounded-full p-0.5 w-full border border-white/30 backdrop-blur-sm opacity-50 pointer-events-none">
+            <div className="mt-2 flex items-center bg-white/20 rounded-full p-0.5 w-full border border-white/30 backdrop-blur-sm">
               <button
-                disabled
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAppScenario("movie");
+                }}
                 className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "movie" ? "bg-white text-primary shadow-sm" : "text-white"
+                  appScenario === "movie" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
                 }`}
               >
                 電影
               </button>
               <button
-                disabled
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAppScenario("dining");
+                }}
                 className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "dining" ? "bg-white text-primary shadow-sm" : "text-white"
+                  appScenario === "dining" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
                 }`}
               >
                 吃飯
