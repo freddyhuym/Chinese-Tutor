@@ -939,6 +939,195 @@ const CHOICES = [
   },
 ];
 
+const APP_MESSAGES = [
+  // 0
+  {
+    id: 101,
+    sender: "xiaoyu",
+    text: "這個週末你有空嗎？",
+    en: "Are you free this weekend?",
+    pinyin: "Zhège zhōumò nǐ yǒu kòng ma?",
+  },
+  // 1
+  {
+    id: 102,
+    sender: "reddy",
+    text: "我有空，怎麼了？",
+    en: "I am free, what's up?",
+    pinyin: "Wǒ yǒu kòng, zěnme le?",
+  },
+  // 2 - Dining Choice
+  {
+    id: 103,
+    sender: "reddy",
+    text: "我也是，那我們一起出去吃飯吧。",
+    en: "Me too, let's go eat together.",
+    pinyin: "Wǒ yě shì, nà wǒmen yīqǐ chūqù chīfàn ba.",
+  },
+  // 3 - Response to Dining
+  {
+    id: 104,
+    sender: "xiaoyu",
+    text: "好啊！我知道一家很棒的餐廳。",
+    en: "Okay! I know a great restaurant.",
+    pinyin: "Hǎo a! Wǒ zhīdào yī jiā hěn bàng de cāntīng.",
+  },
+  // 4 - Movie Choice
+  {
+    id: 105,
+    sender: "reddy",
+    text: "我喜歡看電影，你要不要跟我去看電影？",
+    en: "I like watching movies, do you want to go watch a movie with me?",
+    pinyin: "Wǒ xǐhuān kàn diànyǐng, nǐ yào bù yào gēn wǒ qù kàn diànyǐng?",
+  },
+  // 5 - Response to Movie
+  {
+    id: 106,
+    sender: "xiaoyu",
+    text: "聽起來不錯！最近剛好有一部新電影。",
+    en: "Sounds good! There happens to be a new movie recently.",
+    pinyin: "Tīng qǐlái bùcuò! Zuìjìn gānghǎo yǒu yī bù xīn diànyǐng.",
+  },
+  // 6 - Closing 1
+  {
+    id: 107,
+    sender: "reddy",
+    text: "那我們約幾點見面？",
+    en: "What time shall we meet?",
+    pinyin: "Nà wǒmen yuē jǐ diǎn jiànmiàn?",
+  },
+  // 7 - Closing 2
+  {
+    id: 108,
+    sender: "xiaoyu",
+    text: "星期六晚上六點可以嗎？",
+    en: "Is Saturday evening at 6 o'clock okay?",
+    pinyin: "Xīngqīliù wǎnshàng liù diǎn kěyǐ ma?",
+  },
+  // 8 - Closing 3
+  {
+    id: 109,
+    sender: "reddy",
+    text: "沒問題，我們在捷運站見。",
+    en: "No problem, let's meet at the MRT station.",
+    pinyin: "Méi wèntí, wǒmen zài jiéyùn zhàn jiàn.",
+  },
+  // 9 - Closing 4
+  {
+    id: 110,
+    sender: "xiaoyu",
+    text: "好的，不見不散！",
+    en: "Okay, see you there!",
+    pinyin: "Hǎo de, bù jiàn bù sàn!",
+  },
+];
+
+const AppMessageBubble = ({
+  msg,
+  messageStates,
+  toggleMessageEn,
+  toggleMessagePinyin,
+  playAudio,
+}: {
+  msg: any;
+  messageStates: any;
+  toggleMessageEn: (id: number) => void;
+  toggleMessagePinyin: (id: number) => void;
+  playAudio: (text: string, isMale: boolean) => void;
+}) => {
+  if (!msg) return null;
+
+  return (
+    <div className="flex justify-start mb-4">
+      <div className="flex items-start gap-4 max-w-[90%] flex-row">
+        <div
+          className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md mt-1 border-2 ${
+            msg.sender === "reddy" ? "border-blue-200" : "border-pink-200"
+          }`}
+        >
+          <img
+            src={msg.sender === "reddy" ? reddyProfile : xiaoyuProfile}
+            alt={msg.sender === "reddy" ? "Reddy" : "Xiaoyu"}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1 w-full">
+          <span className="text-xs text-muted-foreground ml-1">
+            {msg.sender === "reddy" ? "Reddy" : "Xiao Yu"}
+          </span>
+
+          <div className="flex flex-col gap-2 max-w-[95%]">
+            <div
+              className={`p-4 rounded-2xl text-base shadow-sm leading-relaxed relative group transition-all duration-200 ${
+                msg.sender === "reddy"
+                  ? "bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none hover:shadow-md"
+                  : "bg-white text-slate-800 border border-slate-200 rounded-tl-none hover:shadow-md"
+              }`}
+            >
+              <div className="space-y-2">
+                {messageStates[msg.id]?.showPinyin && (
+                  <p className="text-sm text-primary font-medium mb-1 border-b border-primary/10 pb-1 font-serif-chinese">
+                    {msg.pinyin}
+                  </p>
+                )}
+
+                <p className="font-medium">{msg.text}</p>
+
+                {messageStates[msg.id]?.showEn && (
+                  <p className="text-sm text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                    {msg.en}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1 ml-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-6 px-2 rounded-full gap-1 text-[10px] font-medium transition-colors ${
+                  messageStates[msg.id]?.showEn
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-400 hover:text-slate-600"
+                }`}
+                onClick={() => toggleMessageEn(msg.id)}
+              >
+                <Languages className="w-3 h-3" />
+                <span>翻譯</span>
+              </Button>
+              <div className="w-px h-2 bg-slate-200" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-6 px-2 rounded-full gap-1 text-[10px] font-medium transition-colors ${
+                  messageStates[msg.id]?.showPinyin
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-400 hover:text-slate-600"
+                }`}
+                onClick={() => toggleMessagePinyin(msg.id)}
+              >
+                <Type className="w-3 h-3" />
+                <span>拼音</span>
+              </Button>
+              <div className="w-px h-2 bg-slate-200" />
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 px-2 rounded-full gap-1 text-[10px] font-medium text-slate-400 hover:text-primary transition-colors"
+                onClick={() => playAudio(msg.text, msg.sender === "reddy")}
+              >
+                <Volume2 className="w-3 h-3" />
+                <span>朗讀</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const INITIAL_CHAT_STATE: ChatState = {
   messages: [
     {
