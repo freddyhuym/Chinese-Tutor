@@ -943,18 +943,18 @@ const APP_MESSAGES = [
   // 0
   {
     id: 101,
-    sender: "xiaoyu",
-    text: "這個週末你有空嗎？",
-    en: "Are you free this weekend?",
-    pinyin: "Zhège zhōumò nǐ yǒu kòng ma?",
+    sender: "reddy",
+    text: "你平常喜歡做什麼？",
+    en: "What do you usually like to do?",
+    pinyin: "Nǐ píngcháng xǐhuān zuò shénme?",
   },
   // 1
   {
     id: 102,
-    sender: "reddy",
-    text: "我有空，怎麼了？",
-    en: "I am free, what's up?",
-    pinyin: "Wǒ yǒu kòng, zěnme le?",
+    sender: "xiaoyu",
+    text: "我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？",
+    en: "I like swimming and traveling, but I like going out to eat with friends the most. How about you?",
+    pinyin: "Wǒ xǐhuān yóuyǒng, lǚxíng, dàn wǒ zuì xǐhuān gēn péngyǒu chūqù chīfàn. Nǐ ne?",
   },
   // 2 - Dining Choice
   {
