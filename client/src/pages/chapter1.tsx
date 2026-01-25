@@ -906,6 +906,39 @@ const VOCABULARY_LIST: VocabWord[] = [
   },
 ];
 
+const CHOICES = [
+  {
+    id: 1,
+    text: "因為我想在台灣工作。",
+    en: "Because I want to work in Taiwan.",
+    pinyin: "Yīnwèi wǒ xiǎng zài Táiwān gōngzuò.",
+    response: "真的嗎？台灣的工作環境很不錯喔！",
+    responseEn: "Really? The work environment in Taiwan is quite nice!",
+    responsePinyin: "Zhēn de ma? Táiwān de gōngzuò huánjìng hěn bùcuò ō!",
+    affinityChange: "green" as const,
+  },
+  {
+    id: 2,
+    text: "因為我覺得中文很有意思。",
+    en: "Because I think Chinese is very interesting.",
+    pinyin: "Yīnwèi wǒ juédé Zhōngwén hěn yǒuyìsi.",
+    response: "我也覺得中文很有趣，我們可以一起學習！",
+    responseEn: "I also think Chinese is interesting, we can learn together!",
+    responsePinyin: "Wǒ yě juédé Zhōngwén hěn yǒuqù, wǒmen kěyǐ yīqǐ xuéxí!",
+    affinityChange: "green" as const,
+  },
+  {
+    id: 3,
+    text: "因為我想交台灣女朋友。",
+    en: "Because I want to get a Taiwanese girlfriend.",
+    pinyin: "Yīnwèi wǒ xiǎng jiāo Táiwān nǚpéngyǒu.",
+    response: "哈哈，那你可要加油囉！",
+    responseEn: "Haha, then you have to work hard!",
+    responsePinyin: "Hāhā, nà nǐ kě yào jiāyóu luō!",
+    affinityChange: "red" as const,
+  },
+];
+
 const INITIAL_CHAT_STATE: ChatState = {
   messages: [
     {
