@@ -956,28 +956,318 @@ const INITIAL_CHAT_STATE: ChatState = {
   completed: false,
 };
 
-const CHOICES = [
+interface AppMessage {
+  id: number;
+  sender: "reddy" | "xiaoyu";
+  text: string;
+  pinyin: string;
+  en: string;
+}
+
+const APP_MESSAGES: AppMessage[] = [
   {
-    id: 1,
-    text: "因為我覺得中文很簡單。",
-    en: "Because I think Chinese is very simple.",
-    pinyin: "Yīnwèi wǒ juédé Zhōngwén hěn jiǎndān.",
-    response: "哇，你很厲害！",
-    responseEn: "Wow, you are amazing!",
-    responsePinyin: "Wa, nǐ hěn lìhài!",
-    affinityChange: "red" as const,
+    id: 101,
+    sender: "reddy",
+    text: "你平常喜歡做什麼？",
+    pinyin: "Nǐ píngcháng xǐhuān zuò shénme?",
+    en: "What do you usually like to do?",
   },
   {
-    id: 2,
-    text: "因為我喜歡台灣文化，很有意思。",
-    en: "Because I like Taiwanese culture, it is very interesting.",
-    pinyin: "Yīnwèi wǒ xǐhuān Táiwān wénhuà, hěn yǒuyìsi.",
-    response: "哇，你很特別。",
-    responseEn: "Wow, you are very special.",
-    responsePinyin: "Wa, nǐ hěn tèbié.",
-    affinityChange: "green" as const,
+    id: 102,
+    sender: "xiaoyu",
+    text: "我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？",
+    pinyin: "Wǒ xǐhuān yóuyǒng, lǚxíng, dàn wǒ zuì xǐhuān gēn péngyǒu chūqù chīfàn. Nǐ ne?",
+    en: "I like swimming and traveling, but I like eating out with friends the most. How about you?",
+  },
+  // Dining scenario
+  {
+    id: 103,
+    sender: "reddy",
+    text: "我也是，那我們一起出去吃飯吧。",
+    pinyin: "Wǒ yěshì, nà wǒmen yīqǐ chūqù chīfàn ba.",
+    en: "Me too, let's go eat out together.",
+  },
+  {
+    id: 104,
+    sender: "xiaoyu",
+    text: "好啊。",
+    pinyin: "Hǎo a.",
+    en: "Okay.",
+  },
+  // Movie scenario
+  {
+    id: 105,
+    sender: "reddy",
+    text: "我喜歡看電影，你要不要跟我去看電影？",
+    pinyin: "Wǒ xǐhuān kàn diànyǐng, nǐ yào bùyào gēn wǒ qù kàn diànyǐng?",
+    en: "I like watching movies, do you want to go watch a movie with me?",
+  },
+  {
+    id: 106,
+    sender: "xiaoyu",
+    text: "好啊。",
+    pinyin: "Hǎo a.",
+    en: "Okay.",
+  },
+  // Closing
+  {
+    id: 107,
+    sender: "reddy",
+    text: "明天下午六點怎麼樣？",
+    pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?",
+    en: "How about tomorrow at 6 PM?",
+  },
+  {
+    id: 108,
+    sender: "xiaoyu",
+    text: "可以的，我們在哪裡見面？",
+    pinyin: "Kěyǐ de, wǒmen zài nǎlǐ jiànmiàn?",
+    en: "That works, where should we meet?",
+  },
+  {
+    id: 109,
+    sender: "reddy",
+    text: "台北１０１捷運站。",
+    pinyin: "Táiběi yī líng yī jiéyùn zhàn.",
+    en: "Taipei 101 MRT station.",
+  },
+  {
+    id: 110,
+    sender: "xiaoyu",
+    text: "沒問題，我們明天見！",
+    pinyin: "Méi wèntí, wǒmen míngtiān jiàn!",
+    en: "No problem, see you tomorrow!",
   },
 ];
+
+const AppMessageBubble = ({ msg, messageStates, toggleMessageEn, toggleMessagePinyin, playAudio }: {
+    msg: AppMessage,
+    messageStates: MessageState,
+    toggleMessageEn: (id: number) => void,
+    toggleMessagePinyin: (id: number) => void,
+    playAudio: (text: string, isMale: boolean) => void
+}) => {
+    return (
+        <div className="flex gap-4 flex-row">
+            <div className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 shadow-sm mt-1 ${msg.sender === 'reddy' ? 'border-blue-200' : 'border-pink-200'}`}>
+                <img src={msg.sender === 'reddy' ? reddyProfile : xiaoyuProfile} alt={msg.sender === 'reddy' ? "Reddy" : "Xiaoyu"} className="w-full h-full object-cover" />
+            </div>
+            <div className="flex flex-col items-start max-w-[85%]">
+                <span className="text-xs text-muted-foreground ml-1 mb-1">{msg.sender === 'reddy' ? '瑞迪' : '小雨'}</span>
+                <div className={`p-5 rounded-2xl rounded-tl-none text-slate-800 border shadow-sm ${msg.sender === 'reddy' ? 'bg-blue-50 border-blue-100' : 'bg-white border-slate-200'}`}>
+                    <p className="font-medium text-lg">{msg.text}</p>
+                    {messageStates[msg.id]?.showPinyin && (
+                        <p className="text-sm text-primary font-medium font-serif-chinese mt-2 pt-2 border-t border-slate-200/60">
+                            {msg.pinyin}
+                        </p>
+                    )}
+                    {messageStates[msg.id]?.showEn && (
+                        <p className="text-base text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                            {msg.en}
+                        </p>
+                    )}
+                </div>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-1 ml-1 mt-1">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`h-8 px-2 rounded-full gap-1.5 text-xs font-medium transition-colors ${
+                            messageStates[msg.id]?.showEn
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                        }`}
+                        onClick={() => toggleMessageEn(msg.id)}
+                    >
+                        <Languages className="w-3.5 h-3.5" />
+                        <span>翻譯</span>
+                    </Button>
+                    <div className="w-px h-3 bg-slate-200" />
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`h-8 px-2 rounded-full gap-1.5 text-xs font-medium transition-colors ${
+                            messageStates[msg.id]?.showPinyin
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                        }`}
+                        onClick={() => toggleMessagePinyin(msg.id)}
+                    >
+                        <Type className="w-3.5 h-3.5" />
+                        <span>拼音</span>
+                    </Button>
+                    <div className="w-px h-3 bg-slate-200" />
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 px-2 rounded-full gap-1.5 text-xs font-medium text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
+                        onClick={() => playAudio(msg.text, msg.sender === "reddy")}
+                    >
+                        <Volume2 className="w-3.5 h-3.5" />
+                        <span>朗讀</span>
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+interface AppMessage {
+  id: number;
+  sender: "reddy" | "xiaoyu";
+  text: string;
+  pinyin: string;
+  en: string;
+}
+
+const APP_MESSAGES: AppMessage[] = [
+  {
+    id: 101,
+    sender: "reddy",
+    text: "你平常喜歡做什麼？",
+    pinyin: "Nǐ píngcháng xǐhuān zuò shénme?",
+    en: "What do you usually like to do?",
+  },
+  {
+    id: 102,
+    sender: "xiaoyu",
+    text: "我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？",
+    pinyin: "Wǒ xǐhuān yóuyǒng, lǚxíng, dàn wǒ zuì xǐhuān gēn péngyǒu chūqù chīfàn. Nǐ ne?",
+    en: "I like swimming and traveling, but I like eating out with friends the most. How about you?",
+  },
+  // Dining scenario
+  {
+    id: 103,
+    sender: "reddy",
+    text: "我也是，那我們一起出去吃飯吧。",
+    pinyin: "Wǒ yěshì, nà wǒmen yīqǐ chūqù chīfàn ba.",
+    en: "Me too, let's go eat out together.",
+  },
+  {
+    id: 104,
+    sender: "xiaoyu",
+    text: "好啊。",
+    pinyin: "Hǎo a.",
+    en: "Okay.",
+  },
+  // Movie scenario
+  {
+    id: 105,
+    sender: "reddy",
+    text: "我喜歡看電影，你要不要跟我去看電影？",
+    pinyin: "Wǒ xǐhuān kàn diànyǐng, nǐ yào bùyào gēn wǒ qù kàn diànyǐng?",
+    en: "I like watching movies, do you want to go watch a movie with me?",
+  },
+  {
+    id: 106,
+    sender: "xiaoyu",
+    text: "好啊。",
+    pinyin: "Hǎo a.",
+    en: "Okay.",
+  },
+  // Closing
+  {
+    id: 107,
+    sender: "reddy",
+    text: "明天下午六點怎麼樣？",
+    pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?",
+    en: "How about tomorrow at 6 PM?",
+  },
+  {
+    id: 108,
+    sender: "xiaoyu",
+    text: "可以的，我們在哪裡見面？",
+    pinyin: "Kěyǐ de, wǒmen zài nǎlǐ jiànmiàn?",
+    en: "That works, where should we meet?",
+  },
+  {
+    id: 109,
+    sender: "reddy",
+    text: "台北１０１捷運站。",
+    pinyin: "Táiběi yī líng yī jiéyùn zhàn.",
+    en: "Taipei 101 MRT station.",
+  },
+  {
+    id: 110,
+    sender: "xiaoyu",
+    text: "沒問題，我們明天見！",
+    pinyin: "Méi wèntí, wǒmen míngtiān jiàn!",
+    en: "No problem, see you tomorrow!",
+  },
+];
+
+const AppMessageBubble = ({ msg, messageStates, toggleMessageEn, toggleMessagePinyin, playAudio }: {
+    msg: AppMessage,
+    messageStates: MessageState,
+    toggleMessageEn: (id: number) => void,
+    toggleMessagePinyin: (id: number) => void,
+    playAudio: (text: string, isMale: boolean) => void
+}) => {
+    return (
+        <div className="flex gap-4 flex-row">
+            <div className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 shadow-sm mt-1 ${msg.sender === 'reddy' ? 'border-blue-200' : 'border-pink-200'}`}>
+                <img src={msg.sender === 'reddy' ? reddyProfile : xiaoyuProfile} alt={msg.sender === 'reddy' ? "Reddy" : "Xiaoyu"} className="w-full h-full object-cover" />
+            </div>
+            <div className="flex flex-col items-start max-w-[85%]">
+                <span className="text-xs text-muted-foreground ml-1 mb-1">{msg.sender === 'reddy' ? '瑞迪' : '小雨'}</span>
+                <div className={`p-5 rounded-2xl rounded-tl-none text-slate-800 border shadow-sm ${msg.sender === 'reddy' ? 'bg-blue-50 border-blue-100' : 'bg-white border-slate-200'}`}>
+                    <p className="font-medium text-lg">{msg.text}</p>
+                    {messageStates[msg.id]?.showPinyin && (
+                        <p className="text-sm text-primary font-medium font-serif-chinese mt-2 pt-2 border-t border-slate-200/60">
+                            {msg.pinyin}
+                        </p>
+                    )}
+                    {messageStates[msg.id]?.showEn && (
+                        <p className="text-base text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                            {msg.en}
+                        </p>
+                    )}
+                </div>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-1 ml-1 mt-1">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`h-8 px-2 rounded-full gap-1.5 text-xs font-medium transition-colors ${
+                            messageStates[msg.id]?.showEn
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                        }`}
+                        onClick={() => toggleMessageEn(msg.id)}
+                    >
+                        <Languages className="w-3.5 h-3.5" />
+                        <span>翻譯</span>
+                    </Button>
+                    <div className="w-px h-3 bg-slate-200" />
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`h-8 px-2 rounded-full gap-1.5 text-xs font-medium transition-colors ${
+                            messageStates[msg.id]?.showPinyin
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                        }`}
+                        onClick={() => toggleMessagePinyin(msg.id)}
+                    >
+                        <Type className="w-3.5 h-3.5" />
+                        <span>拼音</span>
+                    </Button>
+                    <div className="w-px h-3 bg-slate-200" />
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 px-2 rounded-full gap-1.5 text-xs font-medium text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
+                        onClick={() => playAudio(msg.text, msg.sender === "reddy")}
+                    >
+                        <Volume2 className="w-3.5 h-3.5" />
+                        <span>朗讀</span>
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
@@ -1573,29 +1863,8 @@ export default function Chapter1() {
                       <div className="p-6 space-y-6 relative z-10">
                         {/* Part 1 - Common Start */}
                         <div className="space-y-4">
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium text-lg">你平常喜歡做什麼？</p>
-                                </div>
-                              </div>
-                           </div>
-                           
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium text-lg">我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？</p>
-                                </div>
-                              </div>
-                           </div>
+                           <AppMessageBubble msg={APP_MESSAGES[0]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
+                           <AppMessageBubble msg={APP_MESSAGES[1]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
                         </div>
 
                         {/* Part 2 - Choice Scenario */}
@@ -1676,85 +1945,23 @@ export default function Chapter1() {
                             className="space-y-4"
                           >
                              {/* The User's Choice rendered as a message */}
-                             <div className="flex gap-4 flex-row">
-                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                  <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="flex flex-col items-start max-w-[85%]">
-                                  <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                  <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                    <p className="font-medium text-lg">
-                                        {appScenario === "dining" ? "我也是，那我們一起出去吃飯吧。" : "我喜歡看電影，你要不要跟我去看電影？"}
-                                    </p>
-                                  </div>
-                                </div>
-                             </div>
+                             <AppMessageBubble msg={appScenario === 'dining' ? APP_MESSAGES[2] : APP_MESSAGES[4]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
                              
                              {/* Xiaoyu's Response based on choice */}
-                             <div className="flex gap-4 flex-row">
-                                <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                  <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="flex flex-col items-start max-w-[85%]">
-                                  <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                  <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                    <p className="font-medium text-lg">好啊。</p>
-                                  </div>
-                                </div>
-                             </div>
+                             <AppMessageBubble msg={appScenario === 'dining' ? APP_MESSAGES[3] : APP_MESSAGES[5]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
                           </motion.div>
                         )}
 
                         {/* Part 4 - Closing (Only shown when selected) */}
                         {appScenario && (
                         <div className="space-y-4">
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium text-lg">明天下午六點怎麼樣？</p>
-                                </div>
-                              </div>
-                           </div>
+                           <AppMessageBubble msg={APP_MESSAGES[6]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
                            
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium text-lg">可以的，我們在哪裡見面？</p>
-                                </div>
-                              </div>
-                           </div>
+                           <AppMessageBubble msg={APP_MESSAGES[7]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
 
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-blue-200 shadow-sm mt-1">
-                                <img src={reddyProfile} alt="Reddy" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">瑞迪</span>
-                                <div className="p-5 rounded-2xl rounded-tl-none bg-blue-50 text-slate-800 border border-blue-100 shadow-sm">
-                                  <p className="font-medium text-lg">台北１０１捷運站。</p>
-                                </div>
-                              </div>
-                           </div>
+                           <AppMessageBubble msg={APP_MESSAGES[8]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
 
-                           <div className="flex gap-4 flex-row">
-                              <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border-2 border-pink-200 shadow-sm mt-1">
-                                <img src={xiaoyuProfile} alt="Xiaoyu" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="flex flex-col items-start max-w-[85%]">
-                                <span className="text-xs text-muted-foreground ml-1 mb-1">小雨</span>
-                                <div className="p-5 rounded-2xl rounded-tl-none bg-white text-slate-800 border border-slate-200 shadow-sm">
-                                  <p className="font-medium text-lg">沒問題，我們明天見！</p>
-                                </div>
-                              </div>
-                           </div>
+                           <AppMessageBubble msg={APP_MESSAGES[9]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
                         </div>
                         )}
                       </div>
