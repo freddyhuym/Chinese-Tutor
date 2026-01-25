@@ -1183,6 +1183,126 @@ const INITIAL_CHAT_STATE: ChatState = {
 
 
 
+const APP_VOCABULARY_LIST: VocabWord[] = [
+  {
+    traditional: "平常",
+    simplified: "平常",
+    pinyin: "píngcháng",
+    english: "usually",
+    partOfSpeech: "Vs-attr",
+    tbcl: "2",
+    example: {
+      zh: "我平常喜歡看書。",
+      pinyin: "Wǒ píngcháng xǐhuān kànshū.",
+      en: "I usually like reading books.",
+    },
+  },
+  {
+    traditional: "電影",
+    simplified: "电影",
+    pinyin: "diànyǐng",
+    english: "movie",
+    partOfSpeech: "N",
+    tbcl: "1",
+    example: {
+      zh: "這部電影很好看。",
+      pinyin: "Zhè bù diànyǐng hěn hǎokàn.",
+      en: "This movie is very good.",
+    },
+  },
+  {
+    traditional: "最",
+    simplified: "最",
+    pinyin: "zuì",
+    english: "most",
+    partOfSpeech: "Adv",
+    tbcl: "1",
+    example: {
+      zh: "我最喜歡吃牛肉麵。",
+      pinyin: "Wǒ zuì xǐhuān chī niúròumiàn.",
+      en: "I like eating beef noodles the most.",
+    },
+  },
+  {
+    traditional: "見",
+    simplified: "见",
+    pinyin: "jiàn",
+    english: "to see / to meet",
+    partOfSpeech: "V",
+    tbcl: "1",
+    example: {
+      zh: "明天見。",
+      pinyin: "Míngtiān jiàn.",
+      en: "See you tomorrow.",
+    },
+  },
+  {
+    traditional: "怎麼樣",
+    simplified: "怎么样",
+    pinyin: "zěnmeyàng",
+    english: "how about / how is it",
+    partOfSpeech: "Vs",
+    tbcl: "1",
+    example: {
+      zh: "這件衣服怎麼樣？",
+      pinyin: "Zhè jiàn yīfú zěnmeyàng?",
+      en: "How is this piece of clothing?",
+    },
+  },
+  {
+    traditional: "但",
+    simplified: "但",
+    pinyin: "dàn",
+    english: "but",
+    partOfSpeech: "Conj",
+    tbcl: "2",
+    example: {
+      zh: "我想去，但我沒錢。",
+      pinyin: "Wǒ xiǎng qù, dàn wǒ méi qián.",
+      en: "I want to go, but I don't have money.",
+    },
+  },
+  {
+    traditional: "旅行",
+    simplified: "旅行",
+    pinyin: "lǚxíng",
+    english: "to travel",
+    partOfSpeech: "V (Vi)",
+    tbcl: "2",
+    example: {
+      zh: "我喜歡去日本旅行。",
+      pinyin: "Wǒ xǐhuān qù Rìběn lǚxíng.",
+      en: "I like to travel to Japan.",
+    },
+  },
+  {
+    traditional: "游泳",
+    simplified: "游泳",
+    pinyin: "yóuyǒng",
+    english: "to swim",
+    partOfSpeech: "V-sep",
+    tbcl: "1",
+    example: {
+      zh: "他常常去游泳。",
+      pinyin: "Tā chángcháng qù yóuyǒng.",
+      en: "He often goes swimming.",
+    },
+  },
+  {
+    traditional: "見面",
+    simplified: "见面",
+    pinyin: "jiànmiàn",
+    english: "to meet",
+    partOfSpeech: "V-sep",
+    tbcl: "2",
+    example: {
+      zh: "我們約在車站見面。",
+      pinyin: "Wǒmen yuē zài chēzhàn jiànmiàn.",
+      en: "We agreed to meet at the station.",
+    },
+  },
+];
+
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
   const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(null);
@@ -1230,6 +1350,15 @@ export default function Chapter1() {
 
   const toggleVocabExample = (index: number) => {
     setVocabStates((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const [appVocabStates, setAppVocabStates] = useState<{ [key: number]: boolean }>({});
+
+  const toggleAppVocabExample = (index: number) => {
+    setAppVocabStates((prev) => ({
       ...prev,
       [index]: !prev[index],
     }));
@@ -1878,6 +2007,144 @@ export default function Chapter1() {
                            <AppMessageBubble msg={APP_MESSAGES[9]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
                         </div>
                         )}
+                        
+                        {/* APP Vocabulary List */}
+                        <div className="mt-8 pt-8 border-t border-border/50">
+                          <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
+                            <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <List className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <h3 className="font-bold text-lg font-serif-chinese">
+                                  生詞列表
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                  APP 練習生詞
+                                </p>
+                              </div>
+                            </div>
+                            <div className="overflow-x-auto">
+                              <table className="w-full text-left border-collapse">
+                                <thead>
+                                  <tr className="bg-slate-50/50 border-b border-border">
+                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-auto min-w-[80px] border-r border-border/50 whitespace-nowrap">
+                                      {content.vocabulary.columns.word}
+                                    </th>
+                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[150px] border-r border-border/50">
+                                      {content.vocabulary.columns.pinyin}
+                                    </th>
+                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[40%] min-w-[200px] border-r border-border/50">
+                                      {content.vocabulary.columns.english}
+                                    </th>
+                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] border-r border-border/50 text-center">
+                                      {content.vocabulary.columns.partOfSpeech}
+                                    </th>
+                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] text-center">
+                                      {content.vocabulary.columns.tbcl}
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {APP_VOCABULARY_LIST.map((word, index) => (
+                                    <Fragment key={index}>
+                                      <tr
+                                        className="border-b-0 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                                        onClick={() => toggleAppVocabExample(index)}
+                                      >
+                                        <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
+                                          <div className="flex items-center gap-2">
+                                              <Button
+                                                  variant="ghost"
+                                                  size="icon"
+                                                  className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                                              >
+                                                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${appVocabStates[index] ? 'rotate-180' : ''}`} />
+                                              </Button>
+                                              <div className="flex flex-col">
+                                                <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                                  {word.traditional}
+                                                </span>
+                                                <span className="text-sm text-muted-foreground font-serif-chinese">
+                                                  {word.simplified}
+                                                </span>
+                                              </div>
+                                          </div>
+                                        </td>
+                                        <td className="p-4 border-r border-border/50 font-medium text-primary">
+                                          <div className="flex items-center gap-3">
+                                            <Button
+                                              variant="ghost"
+                                              size="icon"
+                                              className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                              onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  playAudio(word.traditional, true);
+                                              }}
+                                              title="播放"
+                                            >
+                                              <Volume2 className="w-4 h-4" />
+                                            </Button>
+                                            <span>{word.pinyin}</span>
+                                          </div>
+                                        </td>
+                                        <td className="p-4 border-r border-border/50 text-slate-600">
+                                          {word.english}
+                                        </td>
+                                        <td className="p-4 border-r border-border/50 text-center">
+                                          <Badge
+                                            variant="secondary"
+                                            className="font-normal text-xs"
+                                          >
+                                            {word.partOfSpeech}
+                                          </Badge>
+                                        </td>
+                                        <td className="p-4 text-center">
+                                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                                            {word.tbcl}
+                                          </span>
+                                        </td>
+                                      </tr>
+                                      {/* Example sentence row */}
+                                      <AnimatePresence>
+                                          {appVocabStates[index] && (
+                                              <tr className="border-b border-border/50 bg-slate-50/30">
+                                                <td colSpan={5} className="px-4 pb-4 pt-0">
+                                                  <motion.div
+                                                      initial={{ opacity: 0, height: 0 }}
+                                                      animate={{ opacity: 1, height: "auto" }}
+                                                      exit={{ opacity: 0, height: 0 }}
+                                                      className="overflow-hidden"
+                                                  >
+                                                      <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
+                                                        <Button
+                                                          variant="ghost"
+                                                          size="icon"
+                                                          className="h-8 w-8 rounded-full bg-white shadow-sm text-primary hover:text-primary hover:bg-white mt-1 shrink-0"
+                                                          onClick={() => playAudio(word.example.zh, true)}
+                                                          title="播放例句"
+                                                        >
+                                                          <Volume2 className="w-4 h-4" />
+                                                        </Button>
+                                                        <div className="flex flex-col gap-1">
+                                                          <span className="text-primary/80 font-serif-chinese text-sm">{word.example.pinyin}</span>
+                                                          <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">{word.example.zh}</span>
+                                                          <span className="text-slate-500 italic border-t border-slate-200/60 pt-1 mt-1 block">{word.example.en}</span>
+                                                        </div>
+                                                      </div>
+                                                  </motion.div>
+                                                </td>
+                                              </tr>
+                                          )}
+                                      </AnimatePresence>
+                                    </Fragment>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </Card>
+                        </div>
+
                       </div>
                   </Card>
                 )}
