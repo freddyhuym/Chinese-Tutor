@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
+  ChevronDown,
   Languages,
   BookOpen,
   Play,
@@ -1020,6 +1021,15 @@ export default function Chapter1() {
     }
   }, [chatState]);
 
+  const [vocabStates, setVocabStates] = useState<{ [key: number]: boolean }>({});
+
+  const toggleVocabExample = (index: number) => {
+    setVocabStates((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   const toggleLang = () => {
     setLang((prev) => (prev === "zh" ? "en" : "zh"));
   };
@@ -1429,16 +1439,26 @@ export default function Chapter1() {
                     {VOCABULARY_LIST.map((word, index) => (
                       <Fragment key={index}>
                         <tr
-                          className="border-b-0 hover:bg-slate-50/50 transition-colors group"
+                          className="border-b-0 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                          onClick={() => toggleVocabExample(index)}
                         >
                           <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
-                            <div className="flex flex-col">
-                              <span className="font-bold text-lg font-serif-chinese text-slate-800">
-                                {word.traditional}
-                              </span>
-                              <span className="text-sm text-muted-foreground font-serif-chinese">
-                                {word.simplified}
-                              </span>
+                            <div className="flex items-center gap-2">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                                >
+                                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${vocabStates[index] ? 'rotate-180' : ''}`} />
+                                </Button>
+                                <div className="flex flex-col">
+                                  <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                    {word.traditional}
+                                  </span>
+                                  <span className="text-sm text-muted-foreground font-serif-chinese">
+                                    {word.simplified}
+                                  </span>
+                                </div>
                             </div>
                           </td>
                           <td className="p-4 border-r border-border/50 font-medium text-primary">
@@ -1447,7 +1467,10 @@ export default function Chapter1() {
                                 variant="ghost"
                                 size="icon"
                                 className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
-                                onClick={() => playAudio(word.traditional, true)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    playAudio(word.traditional, true);
+                                }}
                                 title="播放"
                               >
                                 <Volume2 className="w-4 h-4" />
@@ -1473,26 +1496,37 @@ export default function Chapter1() {
                           </td>
                         </tr>
                         {/* Example sentence row */}
-                        <tr className="border-b border-border/50 bg-slate-50/30">
-                          <td colSpan={5} className="px-4 pb-4 pt-0">
-                            <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-100/50 text-sm">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
-                                onClick={() => playAudio(word.example.zh, true)}
-                                title="播放例句"
-                              >
-                                <Volume2 className="w-3.5 h-3.5" />
-                              </Button>
-                              <div className="flex flex-wrap gap-x-4 gap-y-1 items-baseline">
-                                <span className="font-medium text-slate-700 font-serif-chinese">{word.example.zh}</span>
-                                <span className="text-slate-500 font-serif-chinese">{word.example.pinyin}</span>
-                                <span className="text-muted-foreground italic">{word.example.en}</span>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
+                        <AnimatePresence>
+                            {vocabStates[index] && (
+                                <tr className="border-b border-border/50 bg-slate-50/30">
+                                  <td colSpan={5} className="px-4 pb-4 pt-0">
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
+                                          <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 rounded-full bg-white shadow-sm text-primary hover:text-primary hover:bg-white mt-1 shrink-0"
+                                            onClick={() => playAudio(word.example.zh, true)}
+                                            title="播放例句"
+                                          >
+                                            <Volume2 className="w-4 h-4" />
+                                          </Button>
+                                          <div className="flex flex-col gap-1">
+                                            <span className="text-primary/80 font-serif-chinese text-sm">{word.example.pinyin}</span>
+                                            <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">{word.example.zh}</span>
+                                            <span className="text-slate-500 italic border-t border-slate-200/60 pt-1 mt-1 block">{word.example.en}</span>
+                                          </div>
+                                        </div>
+                                    </motion.div>
+                                  </td>
+                                </tr>
+                            )}
+                        </AnimatePresence>
                       </Fragment>
                     ))}
                   </tbody>
