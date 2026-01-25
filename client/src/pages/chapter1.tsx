@@ -1888,6 +1888,7 @@ export default function Chapter1() {
                   playAudio={playAudio}
                 />
                 {point.id === 4 && (
+                  <div className="space-y-12">
                   <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-slate-50 dark:bg-slate-900 mb-12 relative">
                     <div 
                       className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
@@ -2008,8 +2009,11 @@ export default function Chapter1() {
                         </div>
                         )}
                         
-                        {/* APP Vocabulary List */}
-                        <div className="mt-8 pt-8 border-t border-border/50">
+                      </div>
+                    </Card>
+                    
+                    {/* APP Vocabulary List */}
+                    <div className="mb-12">
                           <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
                             <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
                               <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
@@ -2144,9 +2148,7 @@ export default function Chapter1() {
                             </div>
                           </Card>
                         </div>
-
-                      </div>
-                  </Card>
+                  </div>
                 )}
               </Fragment>
             ))}
