@@ -245,6 +245,72 @@ const GRAMMAR_POINTS: GrammarPoint[] = [
       },
     ],
   },
+  {
+    id: 5,
+    title: "呢",
+    function: {
+      zh: "呢是一個助詞，用在陳述句後形成簡略問句。",
+      en: "The 呢 ne question is a tag question with a short form following a statement.",
+    },
+    structure: {
+      zh: "陳述句 + 呢？",
+      en: "Statement + ne?",
+    },
+    explanation: {
+      zh: "用來反問對方「那你呢？」或是根據上下文問「那...呢？」。",
+      en: 'Used to ask "And you?" or "What about...?" depending on the context.',
+    },
+    examples: [
+      {
+        zh: "我是美國人，你呢？",
+        pinyin: "Wǒ shì Měiguó rén, nǐ ne?",
+        en: "I am American, and you?",
+      },
+      {
+        zh: "這本書很有趣，那本呢？",
+        pinyin: "Zhè běn shū hěn yǒuyìsi, nà běn ne?",
+        en: "This book is interesting, what about that one?",
+      },
+      {
+        zh: "爸爸在看書，媽媽呢？",
+        pinyin: "Bàba zài kànshū, māma ne?",
+        en: "Dad is reading, what about Mom?",
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "跟",
+    function: {
+      zh: "介系詞「跟」引出一起做動作的對象。",
+      en: "The preposition 跟 gēn introduces somebody one does something with.",
+    },
+    structure: {
+      zh: "主語 + 跟 + 對象 + (一起) + 動詞短語",
+      en: "Subject + with + Person + (together) + Verb Phrase",
+    },
+    explanation: {
+      zh: "副詞「一起」常與「跟」搭配使用，放在主要動詞前面。",
+      en: "The adverb 一起 yìqǐ is commonly associated with 跟 gēn and is placed in front of the main verb.",
+    },
+    examples: [
+      {
+        zh: "我常跟哥哥去看棒球比賽。",
+        pinyin: "Wǒ cháng gēn gēge qù kàn bàngqiú bǐsài.",
+        en: "I often go to watch baseball games with my older brother.",
+      },
+      {
+        zh: "我跟朋友在餐廳吃飯。",
+        pinyin: "Wǒ gēn péngyǒu zài cāntīng chīfàn.",
+        en: "I eat at a restaurant with friends.",
+      },
+      {
+        zh: "我週末要跟同學去參觀故宮。",
+        pinyin: "Wǒ zhōumò yào gēn tóngxué qù cānguān Gùgōng.",
+        en: "I am going to visit the Palace Museum with classmates this weekend.",
+      },
+    ],
+  },
 ];
 
 function SpeakingPractice({
