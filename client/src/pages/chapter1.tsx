@@ -954,7 +954,8 @@ const APP_MESSAGES = [
     sender: "xiaoyu",
     text: "我喜歡游泳、旅行，但我最喜歡跟朋友出去吃飯。你呢？",
     en: "I like swimming and traveling, but I like going out to eat with friends the most. How about you?",
-    pinyin: "Wǒ xǐhuān yóuyǒng, lǚxíng, dàn wǒ zuì xǐhuān gēn péngyǒu chūqù chīfàn. Nǐ ne?",
+    pinyin:
+      "Wǒ xǐhuān yóuyǒng, lǚxíng, dàn wǒ zuì xǐhuān gēn péngyǒu chūqù chīfàn. Nǐ ne?",
   },
   // 2 - Dining Choice
   {
@@ -968,9 +969,9 @@ const APP_MESSAGES = [
   {
     id: 104,
     sender: "xiaoyu",
-    text: "好啊！我知道一家很棒的餐廳。",
-    en: "Okay! I know a great restaurant.",
-    pinyin: "Hǎo a! Wǒ zhīdào yī jiā hěn bàng de cāntīng.",
+    text: "好啊。",
+    en: "OK.",
+    pinyin: "Hǎo a.",
   },
   // 4 - Movie Choice
   {
@@ -984,41 +985,41 @@ const APP_MESSAGES = [
   {
     id: 106,
     sender: "xiaoyu",
-    text: "聽起來不錯！最近剛好有一部新電影。",
-    en: "Sounds good! There happens to be a new movie recently.",
-    pinyin: "Tīng qǐlái bùcuò! Zuìjìn gānghǎo yǒu yī bù xīn diànyǐng.",
+    text: "好啊。",
+    en: "OK.",
+    pinyin: "Hǎo a.",
   },
   // 6 - Closing 1
   {
     id: 107,
     sender: "reddy",
-    text: "那我們約幾點見面？",
-    en: "What time shall we meet?",
-    pinyin: "Nà wǒmen yuē jǐ diǎn jiànmiàn?",
+    text: "明天下午六點怎麼樣？",
+    en: "How about 6 PM tomorrow?",
+    pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?",
   },
   // 7 - Closing 2
   {
     id: 108,
     sender: "xiaoyu",
-    text: "星期六晚上六點可以嗎？",
-    en: "Is Saturday evening at 6 o'clock okay?",
-    pinyin: "Xīngqīliù wǎnshàng liù diǎn kěyǐ ma?",
+    text: "可以的，我們在哪裡見面？",
+    en: "That works, where shall we meet?",
+    pinyin: "Kěyǐ de, wǒmen zài nǎlǐ jiànmiàn?",
   },
   // 8 - Closing 3
   {
     id: 109,
     sender: "reddy",
-    text: "沒問題，我們在捷運站見。",
-    en: "No problem, let's meet at the MRT station.",
-    pinyin: "Méi wèntí, wǒmen zài jiéyùn zhàn jiàn.",
+    text: "台北１０１捷運站。",
+    en: "Taipei 101 MRT Station.",
+    pinyin: "Táiběi yī líng yī jiéyùn zhàn.",
   },
   // 9 - Closing 4
   {
     id: 110,
     sender: "xiaoyu",
-    text: "好的，不見不散！",
-    en: "Okay, see you there!",
-    pinyin: "Hǎo de, bù jiàn bù sàn!",
+    text: "沒問題，我們明天見！",
+    en: "No problem, see you tomorrow!",
+    pinyin: "Méi wèntí, wǒmen míngtiān jiàn!",
   },
 ];
 
@@ -1054,7 +1055,7 @@ const AppMessageBubble = ({
 
         <div className="flex flex-col gap-1 w-full">
           <span className="text-xs text-muted-foreground ml-1">
-            {msg.sender === "reddy" ? "Reddy" : "Xiao Yu"}
+            {msg.sender === "reddy" ? "瑞迪" : "小雨"}
           </span>
 
           <div className="flex flex-col gap-2 max-w-[95%]">
@@ -1178,11 +1179,6 @@ const INITIAL_CHAT_STATE: ChatState = {
   completed: false,
 };
 
-
-
-
-
-
 const APP_VOCABULARY_LIST: VocabWord[] = [
   {
     traditional: "平常",
@@ -1203,7 +1199,7 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
     pinyin: "diànyǐng",
     english: "movie",
     partOfSpeech: "N",
-    tbcl: "1",
+    tbcl: "1*",
     example: {
       zh: "這部電影很好看。",
       pinyin: "Zhè bù diànyǐng hěn hǎokàn.",
@@ -1216,7 +1212,7 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
     pinyin: "zuì",
     english: "most",
     partOfSpeech: "Adv",
-    tbcl: "1",
+    tbcl: "1*",
     example: {
       zh: "我最喜歡吃牛肉麵。",
       pinyin: "Wǒ zuì xǐhuān chī niúròumiàn.",
@@ -1229,7 +1225,7 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
     pinyin: "jiàn",
     english: "to see / to meet",
     partOfSpeech: "V",
-    tbcl: "1",
+    tbcl: "1*",
     example: {
       zh: "明天見。",
       pinyin: "Míngtiān jiàn.",
@@ -1242,7 +1238,7 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
     pinyin: "zěnmeyàng",
     english: "how about / how is it",
     partOfSpeech: "Vs",
-    tbcl: "1",
+    tbcl: "1*",
     example: {
       zh: "這件衣服怎麼樣？",
       pinyin: "Zhè jiàn yīfú zěnmeyàng?",
@@ -1281,7 +1277,7 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
     pinyin: "yóuyǒng",
     english: "to swim",
     partOfSpeech: "V-sep",
-    tbcl: "1",
+    tbcl: "2*",
     example: {
       zh: "他常常去游泳。",
       pinyin: "Tā chángcháng qù yóuyǒng.",
@@ -1294,7 +1290,7 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
     pinyin: "jiànmiàn",
     english: "to meet",
     partOfSpeech: "V-sep",
-    tbcl: "2",
+    tbcl: "2*",
     example: {
       zh: "我們約在車站見面。",
       pinyin: "Wǒmen yuē zài chēzhàn jiànmiàn.",
@@ -1305,7 +1301,9 @@ const APP_VOCABULARY_LIST: VocabWord[] = [
 
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
-  const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(null);
+  const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(
+    null,
+  );
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [messageStates, setMessageStates] = useState<MessageState>({});
   const t = getTranslations(lang);
@@ -1346,7 +1344,9 @@ export default function Chapter1() {
     }
   }, [chatState]);
 
-  const [vocabStates, setVocabStates] = useState<{ [key: number]: boolean }>({});
+  const [vocabStates, setVocabStates] = useState<{ [key: number]: boolean }>(
+    {},
+  );
 
   const toggleVocabExample = (index: number) => {
     setVocabStates((prev) => ({
@@ -1355,7 +1355,9 @@ export default function Chapter1() {
     }));
   };
 
-  const [appVocabStates, setAppVocabStates] = useState<{ [key: number]: boolean }>({});
+  const [appVocabStates, setAppVocabStates] = useState<{
+    [key: number]: boolean;
+  }>({});
 
   const toggleAppVocabExample = (index: number) => {
     setAppVocabStates((prev) => ({
@@ -1778,21 +1780,23 @@ export default function Chapter1() {
                         >
                           <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
                             <div className="flex items-center gap-2">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
-                                >
-                                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${vocabStates[index] ? 'rotate-180' : ''}`} />
-                                </Button>
-                                <div className="flex flex-col">
-                                  <span className="font-bold text-lg font-serif-chinese text-slate-800">
-                                    {word.traditional}
-                                  </span>
-                                  <span className="text-sm text-muted-foreground font-serif-chinese">
-                                    {word.simplified}
-                                  </span>
-                                </div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                              >
+                                <ChevronDown
+                                  className={`w-4 h-4 transition-transform duration-200 ${vocabStates[index] ? "rotate-180" : ""}`}
+                                />
+                              </Button>
+                              <div className="flex flex-col">
+                                <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                  {word.traditional}
+                                </span>
+                                <span className="text-sm text-muted-foreground font-serif-chinese">
+                                  {word.simplified}
+                                </span>
+                              </div>
                             </div>
                           </td>
                           <td className="p-4 border-r border-border/50 font-medium text-primary">
@@ -1802,8 +1806,8 @@ export default function Chapter1() {
                                 size="icon"
                                 className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
                                 onClick={(e) => {
-                                    e.stopPropagation();
-                                    playAudio(word.traditional, true);
+                                  e.stopPropagation();
+                                  playAudio(word.traditional, true);
                                 }}
                                 title="播放"
                               >
@@ -1831,35 +1835,43 @@ export default function Chapter1() {
                         </tr>
                         {/* Example sentence row */}
                         <AnimatePresence>
-                            {vocabStates[index] && (
-                                <tr className="border-b border-border/50 bg-slate-50/30">
-                                  <td colSpan={5} className="px-4 pb-4 pt-0">
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: "auto" }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        className="overflow-hidden"
+                          {vocabStates[index] && (
+                            <tr className="border-b border-border/50 bg-slate-50/30">
+                              <td colSpan={5} className="px-4 pb-4 pt-0">
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-8 w-8 rounded-full bg-white shadow-sm text-primary hover:text-primary hover:bg-white mt-1 shrink-0"
+                                      onClick={() =>
+                                        playAudio(word.example.zh, true)
+                                      }
+                                      title="播放例句"
                                     >
-                                        <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
-                                          <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="h-8 w-8 rounded-full bg-white shadow-sm text-primary hover:text-primary hover:bg-white mt-1 shrink-0"
-                                            onClick={() => playAudio(word.example.zh, true)}
-                                            title="播放例句"
-                                          >
-                                            <Volume2 className="w-4 h-4" />
-                                          </Button>
-                                          <div className="flex flex-col gap-1">
-                                            <span className="text-primary/80 font-serif-chinese text-sm">{word.example.pinyin}</span>
-                                            <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">{word.example.zh}</span>
-                                            <span className="text-slate-500 italic border-t border-slate-200/60 pt-1 mt-1 block">{word.example.en}</span>
-                                          </div>
-                                        </div>
-                                    </motion.div>
-                                  </td>
-                                </tr>
-                            )}
+                                      <Volume2 className="w-4 h-4" />
+                                    </Button>
+                                    <div className="flex flex-col gap-1">
+                                      <span className="text-primary/80 font-serif-chinese text-sm">
+                                        {word.example.pinyin}
+                                      </span>
+                                      <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">
+                                        {word.example.zh}
+                                      </span>
+                                      <span className="text-slate-500 italic border-t border-slate-200/60 pt-1 mt-1 block">
+                                        {word.example.en}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              </td>
+                            </tr>
+                          )}
                         </AnimatePresence>
                       </Fragment>
                     ))}
@@ -1883,32 +1895,45 @@ export default function Chapter1() {
 
             {GRAMMAR_POINTS.map((point) => (
               <Fragment key={point.id}>
-                <GrammarPointCard
-                  point={point}
-                  playAudio={playAudio}
-                />
+                <GrammarPointCard point={point} playAudio={playAudio} />
                 {point.id === 4 && (
                   <div className="space-y-12">
-                  <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-slate-50 dark:bg-slate-900 mb-12 relative">
-                    <div 
-                      className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
-                      style={{ backgroundImage: `url(${chatBackground})` }}
-                    />
-                     <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3 relative z-10">
+                    <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-slate-50 dark:bg-slate-900 mb-12 relative">
+                      <div
+                        className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
+                        style={{ backgroundImage: `url(${chatBackground})` }}
+                      />
+                      <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3 relative z-10">
                         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                           <span className="text-lg">📱</span>
                         </div>
                         <div>
-                          <h3 className="font-bold text-lg font-serif-chinese">APP 約時間見面</h3>
-                          <p className="text-sm text-muted-foreground">應用練習</p>
+                          <h3 className="font-bold text-lg font-serif-chinese">
+                            APP 約時間見面
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            應用練習
+                          </p>
                         </div>
                       </div>
-                      
+
                       <div className="p-6 space-y-6 relative z-10">
                         {/* Part 1 - Common Start */}
                         <div className="space-y-4">
-                           <AppMessageBubble msg={APP_MESSAGES[0]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
-                           <AppMessageBubble msg={APP_MESSAGES[1]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
+                          <AppMessageBubble
+                            msg={APP_MESSAGES[0]}
+                            messageStates={messageStates}
+                            toggleMessageEn={toggleMessageEn}
+                            toggleMessagePinyin={toggleMessagePinyin}
+                            playAudio={playAudio}
+                          />
+                          <AppMessageBubble
+                            msg={APP_MESSAGES[1]}
+                            messageStates={messageStates}
+                            toggleMessageEn={toggleMessageEn}
+                            toggleMessagePinyin={toggleMessagePinyin}
+                            playAudio={playAudio}
+                          />
                         </div>
 
                         {/* Part 2 - Choice Scenario */}
@@ -1918,236 +1943,313 @@ export default function Chapter1() {
                           className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-white/50 shadow-sm mx-4 mb-4 relative"
                         >
                           <div className="flex justify-between items-center mb-3">
-                              <span className="text-sm font-medium text-slate-700">請選擇瑞迪的回答：</span>
-                              {appScenario && (
-                                <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    onClick={() => setAppScenario(null)}
-                                    className="text-primary hover:text-primary/80 gap-1 h-6 px-2 text-xs"
-                                >
-                                    <RotateCcw className="w-3 h-3" />
-                                    重新選擇
-                                </Button>
-                              )}
+                            <span className="text-sm font-medium text-slate-700">
+                              請選擇瑞迪的回答：
+                            </span>
+                            {appScenario && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setAppScenario(null)}
+                                className="text-primary hover:text-primary/80 gap-1 h-6 px-2 text-xs"
+                              >
+                                <RotateCcw className="w-3 h-3" />
+                                重新選擇
+                              </Button>
+                            )}
                           </div>
                           <div className="space-y-3">
-                              <button
-                                  onClick={() => setAppScenario("dining")}
-                                  className={`w-full text-left p-4 rounded-xl bg-white border shadow-sm transition-all group relative overflow-hidden ${
-                                    appScenario === "dining" 
-                                      ? "border-red-500 ring-1 ring-red-500 shadow-md" 
-                                      : "border-slate-200 hover:border-primary/50 hover:shadow-md"
+                            <button
+                              onClick={() => setAppScenario("dining")}
+                              className={`w-full text-left p-4 rounded-xl bg-white border shadow-sm transition-all group relative overflow-hidden ${
+                                appScenario === "dining"
+                                  ? "border-red-500 ring-1 ring-red-500 shadow-md"
+                                  : "border-slate-200 hover:border-primary/50 hover:shadow-md"
+                              }`}
+                            >
+                              <div className="flex items-start gap-3 relative z-10">
+                                <div
+                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                                    appScenario === "dining"
+                                      ? "bg-red-600 text-white"
+                                      : "bg-slate-100 text-slate-500 group-hover:bg-primary group-hover:text-white"
                                   }`}
-                              >
-                                  <div className="flex items-start gap-3 relative z-10">
-                                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-                                        appScenario === "dining"
-                                          ? "bg-red-600 text-white"
-                                          : "bg-slate-100 text-slate-500 group-hover:bg-primary group-hover:text-white"
-                                      }`}>
-                                          1
-                                      </div>
-                                      <div className="flex-1">
-                                          <p className="font-medium text-slate-800 text-lg mb-1">我也是，那我們一起出去吃飯吧。</p>
-                                          <p className="text-xs text-slate-500">Me too, let's go eat together.</p>
-                                      </div>
-                                  </div>
-                              </button>
+                                >
+                                  1
+                                </div>
+                                <div className="flex-1">
+                                  <p className="font-medium text-slate-800 text-lg mb-1">
+                                    我也是，那我們一起出去吃飯吧。
+                                  </p>
+                                  <p className="text-xs text-slate-500">
+                                    Me too, let's go eat together.
+                                  </p>
+                                </div>
+                              </div>
+                            </button>
 
-                              <button
-                                  onClick={() => setAppScenario("movie")}
-                                  className={`w-full text-left p-4 rounded-xl bg-white border shadow-sm transition-all group relative overflow-hidden ${
-                                    appScenario === "movie" 
-                                      ? "border-red-500 ring-1 ring-red-500 shadow-md" 
-                                      : "border-slate-200 hover:border-primary/50 hover:shadow-md"
+                            <button
+                              onClick={() => setAppScenario("movie")}
+                              className={`w-full text-left p-4 rounded-xl bg-white border shadow-sm transition-all group relative overflow-hidden ${
+                                appScenario === "movie"
+                                  ? "border-red-500 ring-1 ring-red-500 shadow-md"
+                                  : "border-slate-200 hover:border-primary/50 hover:shadow-md"
+                              }`}
+                            >
+                              <div className="flex items-start gap-3 relative z-10">
+                                <div
+                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
+                                    appScenario === "movie"
+                                      ? "bg-red-600 text-white"
+                                      : "bg-slate-100 text-slate-500 group-hover:bg-primary group-hover:text-white"
                                   }`}
-                              >
-                                  <div className="flex items-start gap-3 relative z-10">
-                                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-                                        appScenario === "movie"
-                                          ? "bg-red-600 text-white"
-                                          : "bg-slate-100 text-slate-500 group-hover:bg-primary group-hover:text-white"
-                                      }`}>
-                                          2
-                                      </div>
-                                      <div className="flex-1">
-                                          <p className="font-medium text-slate-800 text-lg mb-1">我喜歡看電影，你要不要跟我去看電影？</p>
-                                          <p className="text-xs text-slate-500">I like watching movies, do you want to go watch a movie with me?</p>
-                                      </div>
-                                  </div>
-                              </button>
+                                >
+                                  2
+                                </div>
+                                <div className="flex-1">
+                                  <p className="font-medium text-slate-800 text-lg mb-1">
+                                    我喜歡看電影，你要不要跟我去看電影？
+                                  </p>
+                                  <p className="text-xs text-slate-500">
+                                    I like watching movies, do you want to go
+                                    watch a movie with me?
+                                  </p>
+                                </div>
+                              </div>
+                            </button>
                           </div>
                         </motion.div>
 
                         {/* Part 3 - Scenario Content (Only shown when selected) */}
                         {appScenario && (
-                          <motion.div 
+                          <motion.div
                             key={appScenario}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="space-y-4"
                           >
-                             {/* The User's Choice rendered as a message */}
-                             <AppMessageBubble msg={appScenario === 'dining' ? APP_MESSAGES[2] : APP_MESSAGES[4]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
-                             
-                             {/* Xiaoyu's Response based on choice */}
-                             <AppMessageBubble msg={appScenario === 'dining' ? APP_MESSAGES[3] : APP_MESSAGES[5]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
+                            {/* The User's Choice rendered as a message */}
+                            <AppMessageBubble
+                              msg={
+                                appScenario === "dining"
+                                  ? APP_MESSAGES[2]
+                                  : APP_MESSAGES[4]
+                              }
+                              messageStates={messageStates}
+                              toggleMessageEn={toggleMessageEn}
+                              toggleMessagePinyin={toggleMessagePinyin}
+                              playAudio={playAudio}
+                            />
+
+                            {/* Xiaoyu's Response based on choice */}
+                            <AppMessageBubble
+                              msg={
+                                appScenario === "dining"
+                                  ? APP_MESSAGES[3]
+                                  : APP_MESSAGES[5]
+                              }
+                              messageStates={messageStates}
+                              toggleMessageEn={toggleMessageEn}
+                              toggleMessagePinyin={toggleMessagePinyin}
+                              playAudio={playAudio}
+                            />
                           </motion.div>
                         )}
 
                         {/* Part 4 - Closing (Only shown when selected) */}
                         {appScenario && (
-                        <div className="space-y-4">
-                           <AppMessageBubble msg={APP_MESSAGES[6]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
-                           
-                           <AppMessageBubble msg={APP_MESSAGES[7]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
+                          <div className="space-y-4">
+                            <AppMessageBubble
+                              msg={APP_MESSAGES[6]}
+                              messageStates={messageStates}
+                              toggleMessageEn={toggleMessageEn}
+                              toggleMessagePinyin={toggleMessagePinyin}
+                              playAudio={playAudio}
+                            />
 
-                           <AppMessageBubble msg={APP_MESSAGES[8]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
+                            <AppMessageBubble
+                              msg={APP_MESSAGES[7]}
+                              messageStates={messageStates}
+                              toggleMessageEn={toggleMessageEn}
+                              toggleMessagePinyin={toggleMessagePinyin}
+                              playAudio={playAudio}
+                            />
 
-                           <AppMessageBubble msg={APP_MESSAGES[9]} messageStates={messageStates} toggleMessageEn={toggleMessageEn} toggleMessagePinyin={toggleMessagePinyin} playAudio={playAudio} />
-                        </div>
+                            <AppMessageBubble
+                              msg={APP_MESSAGES[8]}
+                              messageStates={messageStates}
+                              toggleMessageEn={toggleMessageEn}
+                              toggleMessagePinyin={toggleMessagePinyin}
+                              playAudio={playAudio}
+                            />
+
+                            <AppMessageBubble
+                              msg={APP_MESSAGES[9]}
+                              messageStates={messageStates}
+                              toggleMessageEn={toggleMessageEn}
+                              toggleMessagePinyin={toggleMessagePinyin}
+                              playAudio={playAudio}
+                            />
+                          </div>
                         )}
-                        
                       </div>
                     </Card>
-                    
+
                     {/* APP Vocabulary List */}
                     <div className="mb-12">
-                          <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
-                            <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                                <List className="w-5 h-5" />
-                              </div>
-                              <div>
-                                <h3 className="font-bold text-lg font-serif-chinese">
-                                  生詞列表
-                                </h3>
-                                <p className="text-sm text-muted-foreground">
-                                  APP 練習生詞
-                                </p>
-                              </div>
-                            </div>
-                            <div className="overflow-x-auto">
-                              <table className="w-full text-left border-collapse">
-                                <thead>
-                                  <tr className="bg-slate-50/50 border-b border-border">
-                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-auto min-w-[80px] border-r border-border/50 whitespace-nowrap">
-                                      {content.vocabulary.columns.word}
-                                    </th>
-                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[150px] border-r border-border/50">
-                                      {content.vocabulary.columns.pinyin}
-                                    </th>
-                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[40%] min-w-[200px] border-r border-border/50">
-                                      {content.vocabulary.columns.english}
-                                    </th>
-                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] border-r border-border/50 text-center">
-                                      {content.vocabulary.columns.partOfSpeech}
-                                    </th>
-                                    <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] text-center">
-                                      {content.vocabulary.columns.tbcl}
-                                    </th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {APP_VOCABULARY_LIST.map((word, index) => (
-                                    <Fragment key={index}>
-                                      <tr
-                                        className="border-b-0 hover:bg-slate-50/50 transition-colors group cursor-pointer"
-                                        onClick={() => toggleAppVocabExample(index)}
+                      <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
+                        <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <List className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-lg font-serif-chinese">
+                              生詞列表
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              APP 練習生詞
+                            </p>
+                          </div>
+                        </div>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left border-collapse">
+                            <thead>
+                              <tr className="bg-slate-50/50 border-b border-border">
+                                <th className="p-4 font-semibold text-sm text-muted-foreground w-auto min-w-[80px] border-r border-border/50 whitespace-nowrap">
+                                  {content.vocabulary.columns.word}
+                                </th>
+                                <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[150px] border-r border-border/50">
+                                  {content.vocabulary.columns.pinyin}
+                                </th>
+                                <th className="p-4 font-semibold text-sm text-muted-foreground w-[40%] min-w-[200px] border-r border-border/50">
+                                  {content.vocabulary.columns.english}
+                                </th>
+                                <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] border-r border-border/50 text-center">
+                                  {content.vocabulary.columns.partOfSpeech}
+                                </th>
+                                <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] text-center">
+                                  {content.vocabulary.columns.tbcl}
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {APP_VOCABULARY_LIST.map((word, index) => (
+                                <Fragment key={index}>
+                                  <tr
+                                    className="border-b-0 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                                    onClick={() => toggleAppVocabExample(index)}
+                                  >
+                                    <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
+                                      <div className="flex items-center gap-2">
+                                        <Button
+                                          variant="ghost"
+                                          size="icon"
+                                          className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                                        >
+                                          <ChevronDown
+                                            className={`w-4 h-4 transition-transform duration-200 ${appVocabStates[index] ? "rotate-180" : ""}`}
+                                          />
+                                        </Button>
+                                        <div className="flex flex-col">
+                                          <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                            {word.traditional}
+                                          </span>
+                                          <span className="text-sm text-muted-foreground font-serif-chinese">
+                                            {word.simplified}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="p-4 border-r border-border/50 font-medium text-primary">
+                                      <div className="flex items-center gap-3">
+                                        <Button
+                                          variant="ghost"
+                                          size="icon"
+                                          className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            playAudio(word.traditional, true);
+                                          }}
+                                          title="播放"
+                                        >
+                                          <Volume2 className="w-4 h-4" />
+                                        </Button>
+                                        <span>{word.pinyin}</span>
+                                      </div>
+                                    </td>
+                                    <td className="p-4 border-r border-border/50 text-slate-600">
+                                      {word.english}
+                                    </td>
+                                    <td className="p-4 border-r border-border/50 text-center">
+                                      <Badge
+                                        variant="secondary"
+                                        className="font-normal text-xs"
                                       >
-                                        <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
-                                          <div className="flex items-center gap-2">
+                                        {word.partOfSpeech}
+                                      </Badge>
+                                    </td>
+                                    <td className="p-4 text-center">
+                                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                                        {word.tbcl}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                  {/* Example sentence row */}
+                                  <AnimatePresence>
+                                    {appVocabStates[index] && (
+                                      <tr className="border-b border-border/50 bg-slate-50/30">
+                                        <td
+                                          colSpan={5}
+                                          className="px-4 pb-4 pt-0"
+                                        >
+                                          <motion.div
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{
+                                              opacity: 1,
+                                              height: "auto",
+                                            }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            className="overflow-hidden"
+                                          >
+                                            <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
                                               <Button
-                                                  variant="ghost"
-                                                  size="icon"
-                                                  className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-8 w-8 rounded-full bg-white shadow-sm text-primary hover:text-primary hover:bg-white mt-1 shrink-0"
+                                                onClick={() =>
+                                                  playAudio(
+                                                    word.example.zh,
+                                                    true,
+                                                  )
+                                                }
+                                                title="播放例句"
                                               >
-                                                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${appVocabStates[index] ? 'rotate-180' : ''}`} />
+                                                <Volume2 className="w-4 h-4" />
                                               </Button>
-                                              <div className="flex flex-col">
-                                                <span className="font-bold text-lg font-serif-chinese text-slate-800">
-                                                  {word.traditional}
+                                              <div className="flex flex-col gap-1">
+                                                <span className="text-primary/80 font-serif-chinese text-sm">
+                                                  {word.example.pinyin}
                                                 </span>
-                                                <span className="text-sm text-muted-foreground font-serif-chinese">
-                                                  {word.simplified}
+                                                <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">
+                                                  {word.example.zh}
+                                                </span>
+                                                <span className="text-slate-500 italic border-t border-slate-200/60 pt-1 mt-1 block">
+                                                  {word.example.en}
                                                 </span>
                                               </div>
-                                          </div>
-                                        </td>
-                                        <td className="p-4 border-r border-border/50 font-medium text-primary">
-                                          <div className="flex items-center gap-3">
-                                            <Button
-                                              variant="ghost"
-                                              size="icon"
-                                              className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
-                                              onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  playAudio(word.traditional, true);
-                                              }}
-                                              title="播放"
-                                            >
-                                              <Volume2 className="w-4 h-4" />
-                                            </Button>
-                                            <span>{word.pinyin}</span>
-                                          </div>
-                                        </td>
-                                        <td className="p-4 border-r border-border/50 text-slate-600">
-                                          {word.english}
-                                        </td>
-                                        <td className="p-4 border-r border-border/50 text-center">
-                                          <Badge
-                                            variant="secondary"
-                                            className="font-normal text-xs"
-                                          >
-                                            {word.partOfSpeech}
-                                          </Badge>
-                                        </td>
-                                        <td className="p-4 text-center">
-                                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
-                                            {word.tbcl}
-                                          </span>
+                                            </div>
+                                          </motion.div>
                                         </td>
                                       </tr>
-                                      {/* Example sentence row */}
-                                      <AnimatePresence>
-                                          {appVocabStates[index] && (
-                                              <tr className="border-b border-border/50 bg-slate-50/30">
-                                                <td colSpan={5} className="px-4 pb-4 pt-0">
-                                                  <motion.div
-                                                      initial={{ opacity: 0, height: 0 }}
-                                                      animate={{ opacity: 1, height: "auto" }}
-                                                      exit={{ opacity: 0, height: 0 }}
-                                                      className="overflow-hidden"
-                                                  >
-                                                      <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
-                                                        <Button
-                                                          variant="ghost"
-                                                          size="icon"
-                                                          className="h-8 w-8 rounded-full bg-white shadow-sm text-primary hover:text-primary hover:bg-white mt-1 shrink-0"
-                                                          onClick={() => playAudio(word.example.zh, true)}
-                                                          title="播放例句"
-                                                        >
-                                                          <Volume2 className="w-4 h-4" />
-                                                        </Button>
-                                                        <div className="flex flex-col gap-1">
-                                                          <span className="text-primary/80 font-serif-chinese text-sm">{word.example.pinyin}</span>
-                                                          <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">{word.example.zh}</span>
-                                                          <span className="text-slate-500 italic border-t border-slate-200/60 pt-1 mt-1 block">{word.example.en}</span>
-                                                        </div>
-                                                      </div>
-                                                  </motion.div>
-                                                </td>
-                                              </tr>
-                                          )}
-                                      </AnimatePresence>
-                                    </Fragment>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          </Card>
+                                    )}
+                                  </AnimatePresence>
+                                </Fragment>
+                              ))}
+                            </tbody>
+                          </table>
                         </div>
+                      </Card>
+                    </div>
                   </div>
                 )}
               </Fragment>
@@ -2258,7 +2360,9 @@ export default function Chapter1() {
                   setAppScenario("movie");
                 }}
                 className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "movie" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
+                  appScenario === "movie"
+                    ? "bg-white text-primary shadow-sm"
+                    : "text-white hover:bg-white/10"
                 }`}
               >
                 電影
@@ -2269,7 +2373,9 @@ export default function Chapter1() {
                   setAppScenario("dining");
                 }}
                 className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "dining" ? "bg-white text-primary shadow-sm" : "text-white hover:bg-white/10"
+                  appScenario === "dining"
+                    ? "bg-white text-primary shadow-sm"
+                    : "text-white hover:bg-white/10"
                 }`}
               >
                 吃飯
