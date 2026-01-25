@@ -1756,6 +1756,7 @@ export default function Chapter1() {
                               </div>
                            </div>
                         </div>
+                        )}
                       </div>
                   </Card>
                 )}
