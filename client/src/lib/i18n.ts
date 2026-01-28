@@ -270,7 +270,7 @@ export const translations = {
     chapter1Page: {
       background: {
         title: "Background Story",
-        content: "Reddy is an American who has just arrived in Taiwan.\nHe met Xiao Yu in a Facebook group for making friends.\n\nReddy wants to chat with Xiao Yu first to get to know her slowly,\nthen have meals and watch movies together.\n\nTwo months later, he hopes to go to Elephant Mountain with Xiao Yu\nand confess his feelings to her while enjoying the scenery.\n\nWhether he succeeds or not depends on your help.\nIn the process of helping Reddy, you can also learn the Chinese commonly used\nwhen dating Taiwanese girls. Let's learn together!"
+        content: "Randy is an American who has just arrived in Taiwan.\nHe met Xiao Yu in a Facebook group for making friends.\n\nRandy wants to chat with Xiao Yu first to get to know her slowly,\nthen have meals and watch movies together.\n\nTwo months later, he hopes to go to Elephant Mountain with Xiao Yu\nand confess his feelings to her while enjoying the scenery.\n\nWhether he succeeds or not depends on your help.\nIn the process of helping Randy, you can also learn the Chinese commonly used\nwhen dating Taiwanese girls. Let's learn together!"
       }
     },
     footer: {

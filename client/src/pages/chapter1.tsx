@@ -24,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -37,11 +38,11 @@ import casualManImage from "@assets/generated_images/asian_man_in_casual_clothes
 // @ts-ignore
 import teacherManImage from "@assets/generated_images/asian_male_teacher_illustration.png";
 // @ts-ignore
-import reddyProfile from "@/assets/generated_images/reddy_profile.png";
+import randyProfile from "@/assets/generated_images/randy_profile.png";
 // @ts-ignore
 import xiaoyuProfile from "@/assets/generated_images/xiaoyu_profile.png";
 // @ts-ignore
-import reddyFull from "@/assets/generated_images/reddy_full.png";
+import randyFull from "@/assets/generated_images/randy_full.png";
 // @ts-ignore
 import xiaoyuFull from "@/assets/generated_images/xiaoyu_full.png";
 // @ts-ignore
@@ -50,8 +51,8 @@ import chatBackground from "@/assets/generated_images/chat_background_no_clouds.
 const chapterContent = {
   zh: {
     title: "第一章",
-    subtitle: "基礎入門",
-    description: "歡迎來到第一章！在這裡您將學習中文的基礎知識。",
+    subtitle: "在APP上認識新的朋友",
+    description: "兩個人互相介紹自己，聊興趣，最後約時間見面。",
     backToHome: "返回首頁",
     sections: [
       { title: "課程介紹", duration: "5 分鐘", completed: false },
@@ -62,11 +63,11 @@ const chapterContent = {
     comingSoon: "內容即將推出",
     comingSoonDesc: "我們正在努力準備精彩的學習內容，敬請期待！",
     chat: {
-      title: "對話練習：初次聊天",
-      subtitle: "選擇正確的回答來提升好感度！",
-      reddy: "瑞迪",
+      title: "第一次聊天",
+      subtitle: "有些回答，可能會讓小與心跳加快",
+      randy: "瑞迪",
       xiaoyu: "小雨",
-      affinity: "小雨的好感度",
+      affinity: "",
     },
     vocabulary: {
       title: "生詞列表",
@@ -100,9 +101,9 @@ const chapterContent = {
     comingSoonDesc:
       "We are working hard to prepare exciting learning content. Stay tuned!",
     chat: {
-      title: "Dialogue Practice: First Chat",
-      subtitle: "Choose the right answer to increase affinity!",
-      reddy: "Reddy",
+      title: "First Chat",
+      subtitle: "Some of your replies might make Xiaoyu’s heart beat faster",
+      randy: "Randy",
       xiaoyu: "Xiao Yu",
       affinity: "Xiao Yu's Affinity",
     },
@@ -748,7 +749,7 @@ function GrammarPointCard({
 
 type Message = {
   id: number;
-  sender: "reddy" | "xiaoyu";
+  sender: "randy" | "xiaoyu";
   text: string;
   en: string;
   pinyin: string;
@@ -985,33 +986,23 @@ const VOCABULARY_LIST: VocabWord[] = [
 const CHOICES = [
   {
     id: 1,
-    text: "因為我想在台灣工作。",
-    en: "Because I want to work in Taiwan.",
-    pinyin: "Yīnwèi wǒ xiǎng zài Táiwān gōngzuò.",
-    response: "真的嗎？台灣的工作環境很不錯喔！",
-    responseEn: "Really? The work environment in Taiwan is quite nice!",
-    responsePinyin: "Zhēn de ma? Táiwān de gōngzuò huánjìng hěn bùcuò ō!",
-    affinityChange: "green" as const,
+    text: "因為我覺得中文很簡單。",
+    en: "Because I think Chinese is easy.",
+    pinyin: "Yīnwèi wǒ juéde Zhōngwén hěn jiǎndān.",
+    response: "哇，你很厲害！",
+    responseEn: "Wow, you are really good!",
+    responsePinyin: "Wa, nǐ hěn lìhài!",
+    affinityChange: "red" as const,
   },
   {
     id: 2,
-    text: "因為我覺得中文很有意思。",
-    en: "Because I think Chinese is very interesting.",
-    pinyin: "Yīnwèi wǒ juédé Zhōngwén hěn yǒuyìsi.",
-    response: "我也覺得中文很有趣，我們可以一起學習！",
-    responseEn: "I also think Chinese is interesting, we can learn together!",
-    responsePinyin: "Wǒ yě juédé Zhōngwén hěn yǒuqù, wǒmen kěyǐ yīqǐ xuéxí!",
+    text: "因為我喜歡台灣文化，很有意思。",
+    en: "Because I like Taiwanese culture. It’s very interesting.",
+    pinyin: "Yīnwèi wǒ xǐhuān Táiwān wénhuà, hěn yǒu yìsi.",
+    response: "哇，你很特別。",
+    responseEn: "Wow, you are special.",
+    responsePinyin: "Wa, nǐ hěn tèbié.",
     affinityChange: "green" as const,
-  },
-  {
-    id: 3,
-    text: "因為我想交台灣女朋友。",
-    en: "Because I want to get a Taiwanese girlfriend.",
-    pinyin: "Yīnwèi wǒ xiǎng jiāo Táiwān nǚpéngyǒu.",
-    response: "哈哈，那你可要加油囉！",
-    responseEn: "Haha, then you have to work hard!",
-    responsePinyin: "Hāhā, nà nǐ kě yào jiāyóu luō!",
-    affinityChange: "red" as const,
   },
 ];
 
@@ -1019,7 +1010,7 @@ const APP_MESSAGES = [
   // 0
   {
     id: 101,
-    sender: "reddy",
+    sender: "randy",
     text: "你平常喜歡做什麼？",
     en: "What do you usually like to do?",
     pinyin: "Nǐ píngcháng xǐhuān zuò shénme?",
@@ -1036,7 +1027,7 @@ const APP_MESSAGES = [
   // 2 - Dining Choice
   {
     id: 103,
-    sender: "reddy",
+    sender: "randy",
     text: "我也是，那我們一起出去吃飯吧。",
     en: "Me too, let's go eat together.",
     pinyin: "Wǒ yě shì, nà wǒmen yīqǐ chūqù chīfàn ba.",
@@ -1052,7 +1043,7 @@ const APP_MESSAGES = [
   // 4 - Movie Choice
   {
     id: 105,
-    sender: "reddy",
+    sender: "randy",
     text: "我喜歡看電影，你要不要跟我去看電影？",
     en: "I like watching movies, do you want to go watch a movie with me?",
     pinyin: "Wǒ xǐhuān kàn diànyǐng, nǐ yào bù yào gēn wǒ qù kàn diànyǐng?",
@@ -1068,7 +1059,7 @@ const APP_MESSAGES = [
   // 6 - Closing 1
   {
     id: 107,
-    sender: "reddy",
+    sender: "randy",
     text: "明天下午六點怎麼樣？",
     en: "How about 6 PM tomorrow?",
     pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?",
@@ -1084,7 +1075,7 @@ const APP_MESSAGES = [
   // 8 - Closing 3
   {
     id: 109,
-    sender: "reddy",
+    sender: "randy",
     text: "台北１０１捷運站。",
     en: "Taipei 101 MRT Station.",
     pinyin: "Táiběi yī líng yī jiéyùn zhàn.",
@@ -1119,25 +1110,25 @@ const AppMessageBubble = ({
       <div className="flex items-start gap-4 max-w-[90%] flex-row">
         <div
           className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md mt-1 border-2 ${
-            msg.sender === "reddy" ? "border-blue-200" : "border-pink-200"
+            msg.sender === "randy" ? "border-blue-200" : "border-pink-200"
           }`}
         >
           <img
-            src={msg.sender === "reddy" ? reddyProfile : xiaoyuProfile}
-            alt={msg.sender === "reddy" ? "Reddy" : "Xiaoyu"}
+            src={msg.sender === "randy" ? randyProfile : xiaoyuProfile}
+            alt={msg.sender === "randy" ? "Randy" : "Xiaoyu"}
             className="w-full h-full object-cover"
           />
         </div>
 
         <div className="flex flex-col gap-1 w-full">
           <span className="text-xs text-muted-foreground ml-1">
-            {msg.sender === "reddy" ? "瑞迪" : "小雨"}
+            {msg.sender === "randy" ? "瑞迪" : "小雨"}
           </span>
 
           <div className="flex flex-col gap-2 max-w-[95%]">
             <div
               className={`p-4 rounded-2xl text-base shadow-sm leading-relaxed relative group transition-all duration-200 ${
-                msg.sender === "reddy"
+                msg.sender === "randy"
                   ? "bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none hover:shadow-md"
                   : "bg-white text-slate-800 border border-slate-200 rounded-tl-none hover:shadow-md"
               }`}
@@ -1192,7 +1183,7 @@ const AppMessageBubble = ({
                 variant="ghost"
                 size="sm"
                 className="h-6 px-2 rounded-full gap-1 text-[10px] font-medium text-slate-400 hover:text-primary transition-colors"
-                onClick={() => playAudio(msg.text, msg.sender === "reddy")}
+                onClick={() => playAudio(msg.text, msg.sender === "randy")}
               >
                 <Volume2 className="w-3 h-3" />
                 <span>朗讀</span>
@@ -1209,9 +1200,9 @@ const INITIAL_CHAT_STATE: ChatState = {
   messages: [
     {
       id: 1,
-      sender: "reddy",
+      sender: "randy",
       text: "你好，我是瑞迪，美國人，我會說一點中文。",
-      en: "Hello, I am Reddy, an American. I can speak a little Chinese.",
+      en: "Hello, I am Randy, an American. I can speak a little Chinese.",
       pinyin: "Nǐ hǎo, wǒ shì Ruìdí, Měiguó rén, wǒ huì shuō yīdiǎn Zhōngwén.",
     },
     {
@@ -1223,7 +1214,7 @@ const INITIAL_CHAT_STATE: ChatState = {
     },
     {
       id: 3,
-      sender: "reddy",
+      sender: "randy",
       text: "我剛來台灣，想認識新朋友。",
       en: "I just arrived in Taiwan and want to meet new friends.",
       pinyin: "Wǒ gāng lái Táiwān, xiǎng rènshì xīn péngyǒu.",
@@ -1237,7 +1228,7 @@ const INITIAL_CHAT_STATE: ChatState = {
     },
     {
       id: 5,
-      sender: "reddy",
+      sender: "randy",
       text: "我正在學習中文，也想多練習。",
       en: "I am learning Chinese and also want to practice more.",
       pinyin: "Wǒ zhèngzài xuéxí Zhōngwén, yě xiǎng duō liànxí.",
@@ -1838,7 +1829,7 @@ export default function Chapter1() {
       ...INITIAL_CHAT_STATE.messages,
       {
         id: Date.now(),
-        sender: "reddy",
+        sender: "randy",
         text: choice.text,
         en: choice.en,
         pinyin: choice.pinyin,
@@ -1935,8 +1926,8 @@ export default function Chapter1() {
             {/* Floating Characters (Desktop only) */}
             <div className="hidden min-[1360px]:block fixed left-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
               <img
-                src={reddyFull}
-                alt="Reddy Full Body"
+                src={randyFull}
+                alt="Randy Full Body"
                 className="w-full h-full object-contain object-bottom drop-shadow-2xl scale-110 origin-bottom"
               />
             </div>
@@ -1966,6 +1957,14 @@ export default function Chapter1() {
                     {content.chat.subtitle}
                   </p>
                 </div>
+                <Button
+                  variant="ghost"
+                  onClick={toggleLang}
+                  className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                >
+                  <Languages className="w-4 h-4" />
+                  {lang === "zh" ? "English Translation" : "中文"}
+                </Button>
               </div>
 
               <div className="overflow-visible p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
@@ -1979,26 +1978,26 @@ export default function Chapter1() {
                       <div className="flex items-start gap-4 max-w-[90%] flex-row">
                         <div
                           className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 shadow-md mt-8 border-2 ${
-                            msg.sender === "reddy"
+                            msg.sender === "randy"
                               ? "border-blue-200"
                               : "border-pink-200"
                           }`}
                         >
                           <img
                             src={
-                              msg.sender === "reddy"
-                                ? reddyProfile
+                              msg.sender === "randy"
+                                ? randyProfile
                                 : xiaoyuProfile
                             }
-                            alt={msg.sender === "reddy" ? "Reddy" : "Xiaoyu"}
+                            alt={msg.sender === "randy" ? "Randy" : "Xiaoyu"}
                             className="w-full h-full object-cover"
                           />
                         </div>
 
                         <div className="flex flex-col gap-1 w-full">
                           <span className="text-xs text-muted-foreground ml-1">
-                            {msg.sender === "reddy"
-                              ? content.chat.reddy
+                            {msg.sender === "randy"
+                              ? content.chat.randy
                               : content.chat.xiaoyu}
                           </span>
 
@@ -2006,7 +2005,7 @@ export default function Chapter1() {
                             {/* Message Bubble */}
                             <div
                               className={`p-5 rounded-2xl text-lg shadow-sm leading-relaxed relative group transition-all duration-200 ${
-                                msg.sender === "reddy"
+                                msg.sender === "randy"
                                   ? "bg-blue-50 text-slate-800 border border-blue-100 rounded-tl-none hover:shadow-md hover:border-blue-200"
                                   : "bg-white text-slate-800 border border-slate-200 rounded-tl-none hover:shadow-md hover:border-primary/20"
                               }`}
@@ -2065,7 +2064,7 @@ export default function Chapter1() {
                                 size="sm"
                                 className="h-8 px-2 rounded-full gap-1.5 text-xs font-medium text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
                                 onClick={() =>
-                                  playAudio(msg.text, msg.sender === "reddy")
+                                  playAudio(msg.text, msg.sender === "randy")
                                 }
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
@@ -2996,67 +2995,72 @@ export default function Chapter1() {
       </footer>
 
       {/* Floating Affinity Meter - Fixed at bottom right */}
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
-          className={`fixed bottom-8 right-8 z-[60] flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
-            chatState.affinity === "green"
-              ? "bg-jade/90 border-jade text-white shadow-jade/20"
-              : "bg-red-500/90 border-red-500 text-white shadow-red-500/20"
-          }`}
-        >
+      <div className="fixed bottom-8 right-8 z-[60] flex flex-col gap-3">
+        <AnimatePresence>
           <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className={`flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
+              chatState.affinity === "green"
+                ? "bg-jade/90 border-jade text-white shadow-jade/20"
+                : "bg-red-500/90 border-red-500 text-white shadow-red-500/20"
+            }`}
           >
-            <Heart className={`w-6 h-6 fill-current`} />
-          </motion.div>
-          <div className="flex flex-col">
-            <span className="font-bold text-base whitespace-nowrap">
-              {content.chat.affinity}
-            </span>
-            <span className="text-xs opacity-90 font-medium">
-              {chatState.affinity === "green" ? "心情很好" : "心情普通"}
-            </span>
-            <div className="mt-2 flex items-center bg-white/20 rounded-full p-0.5 w-full border border-white/30 backdrop-blur-sm">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setAppScenario("movie");
-                }}
-                className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "movie"
-                    ? "bg-white text-primary shadow-sm"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                電影
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setAppScenario("dining");
-                }}
-                className={`flex-1 text-[10px] font-bold py-1 rounded-full transition-all ${
-                  appScenario === "dining"
-                    ? "bg-white text-primary shadow-sm"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                吃飯
-              </button>
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <Heart className={`w-6 h-6 fill-current`} />
+            </motion.div>
+            <div className="flex flex-col">
+              <span className="text-xs opacity-90 font-medium">
+                {chatState.affinity === "green" ? "小雨的心跳普通" : "小雨的心跳加速"}
+              </span>
+              <span className="font-bold text-base whitespace-nowrap">
+                {content.chat.affinity}
+              </span>
             </div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Floating Scenario Toggle - Fixed below affinity meter */}
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className={`flex items-center gap-3 px-5 py-3 rounded-full shadow-2xl backdrop-blur-md border-2 transition-colors duration-500 ${
+              (appScenario || "movie") === "movie"
+                ? "bg-purple-500/90 border-purple-500 text-white shadow-purple-500/20"
+                : "bg-orange-500/90 border-orange-500 text-white shadow-orange-500/20"
+            }`}
+          >
+            <span className="font-medium text-sm whitespace-nowrap">小雨想</span>
+            <div className="flex items-center gap-2 bg-white/20 rounded-full px-2 py-1 border border-white/30">
+              <span className={`text-xs font-medium transition-opacity ${(appScenario || "movie") === "movie" ? "opacity-100" : "opacity-50"}`}>
+                🍿 看電影
+              </span>
+              <Switch
+                checked={(appScenario || "movie") === "dining"}
+                onCheckedChange={(checked) => {
+                  setAppScenario(checked ? "dining" : "movie");
+                }}
+                className="data-[state=checked]:bg-orange-500"
+              />
+              <span className={`text-xs font-medium transition-opacity ${(appScenario || "movie") === "dining" ? "opacity-100" : "opacity-50"}`}>
+                🍽️ 吃飯
+              </span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
