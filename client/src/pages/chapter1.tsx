@@ -2313,18 +2313,25 @@ export default function Chapter1() {
                         className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
                         style={{ backgroundImage: `url(${chatBackground})` }}
                       />
-                      <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3 relative z-10">
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                          <span className="text-lg">📱</span>
+                      <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
+                        <div className="flex items-center gap-3">
+                          <div>
+                            <h3 className="font-bold text-lg font-serif-chinese">
+                              {lang === "zh" ? "APP 約時間見面" : "APP: Schedule a Meeting"}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {lang === "zh" ? "有些回答，會讓之後故事不一樣" : "Some answers will change the story later"}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-bold text-lg font-serif-chinese">
-                            APP 約時間見面
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            應用練習
-                          </p>
-                        </div>
+                        <Button
+                          variant="ghost"
+                          onClick={toggleLang}
+                          className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                        >
+                          <Languages className="w-4 h-4" />
+                          {lang === "zh" ? "English Translation" : "中文"}
+                        </Button>
                       </div>
 
                       <div className="p-6 space-y-6 relative z-10">
@@ -3007,24 +3014,27 @@ export default function Chapter1() {
                 : "bg-red-500/90 border-red-500 text-white shadow-red-500/20"
             }`}
           >
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Heart className={`w-6 h-6 fill-current`} />
-            </motion.div>
+            {chatState.affinity === "green" ? (
+              <div>
+                <Heart className={`w-6 h-6 fill-current`} />
+              </div>
+            ) : (
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 0.7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <Heart className={`w-6 h-6 fill-current`} />
+              </motion.div>
+            )}
             <div className="flex flex-col">
               <span className="text-xs opacity-90 font-medium">
                 {chatState.affinity === "green" ? "小雨的心跳普通" : "小雨的心跳加速"}
-              </span>
-              <span className="font-bold text-base whitespace-nowrap">
-                {content.chat.affinity}
               </span>
             </div>
           </motion.div>

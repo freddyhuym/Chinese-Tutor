@@ -13,10 +13,10 @@ import logo from "@/assets/heartbeat-chinese-logo.png";
 export function Header() {
   const [location] = useLocation();
   const menuItems = [
-    { href: "/", label: "首頁" },
-    { href: "/chapter1", label: "第一章" },
-    { href: "/chapter2", label: "第二章" },
-    { href: "/chapter3", label: "第三章" },
+    { href: "/", label: "首頁 Home" },
+    { href: "/chapter1", label: "第一章 Unit 1: First Chat" },
+    { href: "/chapter2", label: "第二章 Unit 2: First Date" },
+    { href: "/chapter3", label: "第三章 Unit 3: Feelings & Choices" },
   ];
 
   return (
@@ -35,10 +35,10 @@ export function Header() {
             </div>
             <div className="flex flex-col">
               <span className="text-lg sm:text-xl md:text-2xl font-display font-bold text-slate-900 leading-tight group-hover:text-rose-600 transition-colors duration-300">
-                Heartbeat Chinese
+                Let’s Speak Chinese: Dating Edition
               </span>
               <span className="text-sm sm:text-base md:text-lg font-bold font-chinese text-rose-500/90 tracking-wide leading-tight">
-                心動中文
+                說中文吧：約會篇
               </span>
             </div>
           </Link>
@@ -55,14 +55,14 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l-rose-100 bg-gradient-to-b from-white to-rose-50/30">
-              <SheetHeader className="mb-6">
+              {/*<SheetHeader className="mb-6">
                 <SheetTitle className="text-2xl font-display font-bold text-slate-900">
                   Heartbeat Chinese
                 </SheetTitle>
                 <p className="text-lg font-chinese text-rose-500/90 mt-1">
                   心動中文
                 </p>
-              </SheetHeader>
+              </SheetHeader>*/}
               <nav className="flex flex-col gap-4 pl-2">
                 {menuItems.map((item) => (
                   <Link key={item.href} href={item.href}>
