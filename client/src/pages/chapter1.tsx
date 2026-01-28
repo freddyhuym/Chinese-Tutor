@@ -1792,26 +1792,64 @@ export default function Chapter1() {
     }));
   };
 
-  const playAudio = (text: string, isMale: boolean) => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel(); // Stop any current speech
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "zh-TW";
+  const playAudio = async (text: string, isMale: boolean) => {
+    try {
+      // Stop any currently playing audio
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
 
-      // Try to find a suitable voice
-      const voices = window.speechSynthesis.getVoices();
+      // Call TTS API with caching
+      const response = await fetch("/api/tts/cached", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text, isMale }),
+      });
 
-      // Simple logic to try and vary voices, though browser support varies greatly
-      // We can use pitch to simulate gender differences if multiple voices aren't available
-      if (isMale) {
-        utterance.pitch = 0.8;
-        utterance.rate = 0.9;
-      } else {
-        utterance.pitch = 1.2;
-        utterance.rate = 1.0;
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const textResponse = await response.text();
+        console.error("Non-JSON response received:", textResponse.substring(0, 200));
+        throw new Error(`API returned non-JSON response: ${response.status} ${response.statusText}`);
       }
 
-      window.speechSynthesis.speak(utterance);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: response.statusText }));
+        throw new Error(`TTS API error: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      if (!data.audio) {
+        throw new Error("No audio data in response");
+      }
+      
+      // Play the audio
+      const audio = new Audio(data.audio);
+      audio.play().catch((err) => {
+        console.error("Error playing audio:", err);
+      });
+    } catch (error) {
+      console.error("Error in playAudio:", error);
+      // Fallback to browser speech synthesis if API fails
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "zh-TW";
+        if (isMale) {
+          utterance.pitch = 0.8;
+          utterance.rate = 0.9;
+        } else {
+          utterance.pitch = 1.2;
+          utterance.rate = 1.0;
+        }
+        window.speechSynthesis.speak(utterance);
+      }
     }
   };
 
