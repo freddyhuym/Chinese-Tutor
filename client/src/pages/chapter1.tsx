@@ -2981,7 +2981,7 @@ export default function Chapter1() {
               />
               <div className="px-2 py-1 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-xs font-bold font-chinese text-primary-foreground">
-                  說中文吧：約會篇
+                  心動中文
                 </span>
               </div>
               <span className="font-semibold font-serif-chinese">

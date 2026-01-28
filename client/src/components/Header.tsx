@@ -8,6 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import logo from "@/assets/heartbeat-chinese-logo.png";
 
 export function Header() {
   const [location] = useLocation();
@@ -19,50 +20,71 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-100 shadow-sm transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex flex-col gap-1">
-          {/* Top Row: English Title - Elegant & Unified */}
-          <div className="py-1">
-             <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold italic tracking-tight text-slate-900 drop-shadow-sm leading-tight whitespace-nowrap">
-                Let’s Speak Chinese: <span className="text-rose-600">Dating Edition</span>
-             </span>
-          </div>
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-white via-rose-50/30 to-white backdrop-blur-lg border-b border-rose-100/50 shadow-sm transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center justify-between">
+          {/* Left: Logo + Brand Name */}
+          <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+            <div className="relative">
+              <img 
+                src={logo} 
+                alt="心動中文 Heartbeat Chinese Logo" 
+                className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2 drop-shadow-md"
+              />
+              <div className="absolute inset-0 bg-rose-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg sm:text-xl md:text-2xl font-display font-bold text-slate-900 leading-tight group-hover:text-rose-600 transition-colors duration-300">
+                Heartbeat Chinese
+              </span>
+              <span className="text-sm sm:text-base md:text-lg font-bold font-chinese text-rose-500/90 tracking-wide leading-tight">
+                心動中文
+              </span>
+            </div>
+          </Link>
 
-          {/* Bottom Row: Chinese Text + Menu - Minimalist & refined */}
-          <div className="flex items-center justify-between mt-1 pl-1">
-            <span className="text-base md:text-lg font-bold font-chinese text-rose-500/90 tracking-[0.2em] relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-12 after:h-[2px] after:bg-rose-200">
-               說中文吧：約會篇
-            </span>
-
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-all duration-300">
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l-rose-100">
-                <div className="mt-8"></div>
-                <nav className="flex flex-col gap-6 pl-2">
-                  {menuItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <div className="flex items-center group cursor-pointer">
-                        <span
-                          className={`text-xl font-medium font-serif-chinese transition-all duration-300 ${
-                            location === item.href
-                              ? "text-rose-500 font-bold translate-x-2"
-                              : "text-slate-600 group-hover:text-rose-400 group-hover:translate-x-1"
-                          }`}
-                        >
-                          {item.label}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </div>
+          {/* Right: Menu Button */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-10 w-10 sm:h-11 sm:w-11 text-slate-600 hover:text-rose-600 hover:bg-rose-50/80 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] border-l-rose-100 bg-gradient-to-b from-white to-rose-50/30">
+              <SheetHeader className="mb-6">
+                <SheetTitle className="text-2xl font-display font-bold text-slate-900">
+                  Heartbeat Chinese
+                </SheetTitle>
+                <p className="text-lg font-chinese text-rose-500/90 mt-1">
+                  心動中文
+                </p>
+              </SheetHeader>
+              <nav className="flex flex-col gap-4 pl-2">
+                {menuItems.map((item) => (
+                  <Link key={item.href} href={item.href}>
+                    <div className="flex items-center group cursor-pointer py-2 px-3 rounded-lg hover:bg-rose-50/80 transition-all duration-300">
+                      <span
+                        className={`text-lg font-medium font-serif-chinese transition-all duration-300 ${
+                          location === item.href
+                            ? "text-rose-600 font-bold translate-x-2"
+                            : "text-slate-600 group-hover:text-rose-500 group-hover:translate-x-1"
+                        }`}
+                      >
+                        {item.label}
+                      </span>
+                      {location === item.href && (
+                        <div className="ml-auto w-2 h-2 bg-rose-500 rounded-full animate-pulse"></div>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
