@@ -431,12 +431,12 @@ export default function Chapter2() {
               className="overflow-hidden border-2 border-purple-400 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
             >
               <div
-                className="absolute inset-0 z-0 opacity-90 pointer-events-none bg-cover bg-center"
+                className="absolute inset-0 z-0 opacity-100 pointer-events-none bg-cover bg-center"
                 style={{ backgroundImage: `url(${movieChatBackground})` }}
               />
-              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-purple-700/10 via-transparent to-purple-900/10" />
-              <div className="absolute inset-0 z-0 pointer-events-none bg-white/25 mix-blend-screen" />
-              <div className="absolute inset-0 z-0 pointer-events-none bg-purple-400/15 mix-blend-soft-light" />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-purple-600/10 via-transparent to-purple-800/10" />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-white/40 mix-blend-screen" />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-purple-300/18 mix-blend-soft-light" />
               <div className="bg-purple-100/50 p-4 border-b border-purple-200 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
