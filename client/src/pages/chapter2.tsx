@@ -82,6 +82,10 @@ export default function Chapter2() {
   const [showDiningTranslation, setShowDiningTranslation] = useState(false);
   const [showMovieTranslation, setShowMovieTranslation] = useState(false);
   
+  // Independent translation states for each Chat Interface
+  const [diningChatLang, setDiningChatLang] = useState<Language>("zh");
+  const [movieChatLang, setMovieChatLang] = useState<Language>("zh");
+  
   // Shared scenario state using localStorage
   const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(() => {
     const saved = localStorage.getItem("app_scenario");
@@ -96,6 +100,14 @@ export default function Chapter2() {
   
   const t = getTranslations(lang);
   const content = chapterContent[lang];
+  
+  const toggleDiningChatLang = () => {
+    setDiningChatLang((prev) => (prev === "zh" ? "en" : "zh"));
+  };
+  
+  const toggleMovieChatLang = () => {
+    setMovieChatLang((prev) => (prev === "zh" ? "en" : "zh"));
+  };
   
   const diningScenarioRef = useRef<HTMLDivElement>(null);
   const movieScenarioRef = useRef<HTMLDivElement>(null);
@@ -394,16 +406,16 @@ export default function Chapter2() {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title} - {lang === "zh" ? "餐廳情境" : "Restaurant"}
+                      {chapterContent[diningChatLang].chat.title} - {diningChatLang === "zh" ? "餐廳情境" : "Restaurant"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {content.chat.subtitle}
+                      {chapterContent[diningChatLang].chat.subtitle}
                     </p>
                   </div>
                 </div>
                 <Button
                   variant="ghost"
-                  onClick={toggleLang}
+                  onClick={toggleDiningChatLang}
                   className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
                 >
                   <Languages className="w-4 h-4" />
@@ -412,7 +424,7 @@ export default function Chapter2() {
 
               <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
                 <div className="text-center py-12 text-muted-foreground">
-                  <p className="text-lg">{lang === "zh" ? "餐廳對話內容即將推出" : "Restaurant chat content coming soon"}</p>
+                  <p className="text-lg">餐廳對話內容即將推出</p>
                 </div>
               </div>
             </Card>
@@ -454,16 +466,16 @@ export default function Chapter2() {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title} - {lang === "zh" ? "電影院情境" : "Movie Theater"}
+                      {chapterContent[movieChatLang].chat.title} - {movieChatLang === "zh" ? "電影院情境" : "Movie Theater"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {content.chat.subtitle}
+                      {chapterContent[movieChatLang].chat.subtitle}
                     </p>
                   </div>
                 </div>
                 <Button
                   variant="ghost"
-                  onClick={toggleLang}
+                  onClick={toggleMovieChatLang}
                   className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
                 >
                   <Languages className="w-4 h-4" />
@@ -472,7 +484,7 @@ export default function Chapter2() {
 
               <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
                 <div className="text-center py-12 text-muted-foreground">
-                  <p className="text-lg">{lang === "zh" ? "電影院對話內容即將推出" : "Movie theater chat content coming soon"}</p>
+                  <p className="text-lg">電影院對話內容即將推出</p>
                 </div>
               </div>
             </Card>
