@@ -26,6 +26,7 @@ import xiaoyuFull from "@/assets/generated_images/xiaoyu_full.png";
 // @ts-ignore
 import chatBackground from "@/assets/generated_images/chat_background_no_clouds.png";
 import diningChatBackground from "@/assets/generated_images/chapter2_dining_chat_bg.png";
+import movieChatBackground from "@/assets/generated_images/chapter2_movie_chat_bg.png";
 
 const chapterContent = {
   zh: {
@@ -433,9 +434,10 @@ export default function Chapter2() {
               className="overflow-hidden border-2 border-purple-400 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
             >
               <div
-                className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
-                style={{ backgroundImage: `url(${chatBackground})` }}
+                className="absolute inset-0 z-0 opacity-90 pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${movieChatBackground})` }}
               />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-slate-900/35 via-slate-900/10 to-slate-950/40" />
               <div className="bg-purple-100/50 p-4 border-b border-purple-200 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
