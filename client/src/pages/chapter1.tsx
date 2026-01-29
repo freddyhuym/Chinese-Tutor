@@ -51,7 +51,7 @@ import chatBackground from "@/assets/generated_images/chat_background_no_clouds.
 const chapterContent = {
   zh: {
     title: "第一章",
-    subtitle: "在APP上認識新的朋友",
+    subtitle: "第一次聊天 First Chat",
     description: "兩個人互相介紹自己，聊興趣，最後約時間見面。",
     backToHome: "返回首頁",
     sections: [
@@ -1661,9 +1661,11 @@ function SpeakingPracticeItem({
 
 export default function Chapter1() {
   const [lang, setLang] = useState<Language>("zh");
-  const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(
-    null,
-  );
+  // Shared scenario state using localStorage
+  const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(() => {
+    const saved = localStorage.getItem("app_scenario");
+    return (saved === "dining" || saved === "movie") ? saved : "movie";
+  });
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [messageStates, setMessageStates] = useState<MessageState>({});
   const t = getTranslations(lang);
@@ -1678,6 +1680,13 @@ export default function Chapter1() {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  // Save scenario to localStorage when it changes
+  useEffect(() => {
+    if (appScenario) {
+      localStorage.setItem("app_scenario", appScenario);
+    }
+  }, [appScenario]);
+
   // Scroll to top on mount
   useEffect(() => {
     // Force scroll to top on mount with a slight delay to ensure render is complete
@@ -1691,6 +1700,8 @@ export default function Chapter1() {
 
   useEffect(() => {
     localStorage.setItem("chapter1_chat_state", JSON.stringify(chatState));
+    // Save affinity state to shared localStorage
+    localStorage.setItem("affinity_state", chatState.affinity);
     // Only scroll to bottom if we are not completed and it's NOT the initial state (length > 2)
     // This prevents scrolling when resetting to initial state
     // AND check if we have scrolled once already to avoid initial load scroll interference
