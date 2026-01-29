@@ -434,8 +434,9 @@ export default function Chapter2() {
                 className="absolute inset-0 z-0 opacity-90 pointer-events-none bg-cover bg-center"
                 style={{ backgroundImage: `url(${movieChatBackground})` }}
               />
-              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-purple-900/25 via-slate-900/5 to-purple-950/25" />
-              <div className="absolute inset-0 z-0 pointer-events-none bg-purple-500/10 mix-blend-soft-light" />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-purple-700/10 via-transparent to-purple-900/10" />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-white/25 mix-blend-screen" />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-purple-400/15 mix-blend-soft-light" />
               <div className="bg-purple-100/50 p-4 border-b border-purple-200 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
