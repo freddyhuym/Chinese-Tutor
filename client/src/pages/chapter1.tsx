@@ -1107,7 +1107,7 @@ const AppMessageBubble = ({
 
   return (
     <div className="flex justify-start mb-4">
-      <div className="flex items-start gap-4 max-w-[90%] flex-row">
+      <div className="flex items-start gap-4 w-full flex-row">
         <div
           className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md mt-1 border-2 ${
             msg.sender === "randy" ? "border-blue-200" : "border-pink-200"
@@ -1125,7 +1125,7 @@ const AppMessageBubble = ({
             {msg.sender === "randy" ? "瑞迪" : "小雨"}
           </span>
 
-          <div className="flex flex-col gap-2 max-w-[95%]">
+          <div className="flex flex-col gap-2 w-full">
             <div
               className={`p-4 rounded-2xl text-base shadow-sm leading-relaxed relative group transition-all duration-200 ${
                 msg.sender === "randy"
@@ -1960,7 +1960,7 @@ export default function Chapter1() {
           </div>
 
           {/* Chat Interface */}
-          <div className="mb-12 relative max-w-3xl mx-auto">
+          <div className="mb-12 relative max-w-4xl mx-auto">
             {/* Floating Characters (Desktop only) */}
             <div className="hidden min-[1360px]:block fixed left-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
               <img
@@ -1987,13 +1987,18 @@ export default function Chapter1() {
                 style={{ backgroundImage: `url(${chatBackground})` }}
               />
               <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
-                <div>
-                  <h3 className="font-bold text-lg font-serif-chinese">
-                    {content.chat.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {content.chat.subtitle}
-                  </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">📱</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg font-serif-chinese">
+                      {content.chat.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {content.chat.subtitle}
+                    </p>
+                  </div>
                 </div>
                 <Button
                   variant="ghost"
@@ -2005,7 +2010,7 @@ export default function Chapter1() {
                 </Button>
               </div>
 
-              <div className="overflow-visible p-6 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
+              <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
                 {chatState.messages.map((msg, index) => (
                   <div key={`msg-${msg.id}`}>
                     <motion.div
@@ -2013,7 +2018,7 @@ export default function Chapter1() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex justify-start mb-4"
                     >
-                      <div className="flex items-start gap-4 max-w-[90%] flex-row">
+                      <div className="flex items-start gap-4 w-full flex-row">
                         <div
                           className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 shadow-md mt-8 border-2 ${
                             msg.sender === "randy"
@@ -2039,7 +2044,7 @@ export default function Chapter1() {
                               : content.chat.xiaoyu}
                           </span>
 
-                          <div className="flex flex-col gap-2 max-w-[95%]">
+                          <div className="flex flex-col gap-2 w-full">
                             {/* Message Bubble */}
                             <div
                               className={`p-5 rounded-2xl text-lg shadow-sm leading-relaxed relative group transition-all duration-200 ${
@@ -2340,6 +2345,19 @@ export default function Chapter1() {
                 {content.grammar.subtitle}
               </h2>
             </div>
+{/*                      <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3 relative z-10">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                          <span className="text-lg">📱</span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg font-serif-chinese">
+                            APP 約時間見面
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            應用練習
+                          </p>
+                        </div>
+                      </div>*/}
 
             {GRAMMAR_POINTS.map((point) => (
               <Fragment key={point.id}>
@@ -2353,6 +2371,9 @@ export default function Chapter1() {
                       />
                       <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
                         <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                          <span className="text-lg">📱</span>
+                        </div>                          
                           <div>
                             <h3 className="font-bold text-lg font-serif-chinese">
                               {lang === "zh" ? "APP 約時間見面" : "APP: Schedule a Meeting"}
