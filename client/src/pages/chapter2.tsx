@@ -6,6 +6,8 @@ import {
   BookOpen,
   Heart,
   ArrowDown,
+  Type,
+  Volume2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -77,6 +79,59 @@ const chapterContent = {
   },
 };
 
+type DiningMessage = {
+  id: number;
+  sender: "randy" | "xiaoyu";
+  text: string;
+  en: string;
+  pinyin: string;
+};
+
+const DINING_MESSAGES: DiningMessage[] = [
+  {
+    id: 1,
+    sender: "xiaoyu",
+    text: "吃飽了嗎？",
+    en: "Are you full?",
+    pinyin: "Chī bǎo le ma?",
+  },
+  {
+    id: 2,
+    sender: "randy",
+    text: "已經吃飽了，真的太好吃了！我沒想到台灣菜這麼好吃。",
+    en: "I'm already full, it's really delicious! I didn't expect Taiwanese food to be so good.",
+    pinyin: "Yǐjīng chī bǎo le, zhēn de tài hǎo chī le! Wǒ méi xiǎngdào Táiwān cài zhème hǎo chī.",
+  },
+  {
+    id: 3,
+    sender: "xiaoyu",
+    text: "太好了！台灣還有很多不一樣的菜，以後一起去吃吃看。",
+    en: "Great! Taiwan has many different dishes, let's go try them together in the future.",
+    pinyin: "Tài hǎo le! Táiwān hái yǒu hěn duō bù yīyàng de cài, yǐhòu yīqǐ qù chī chī kàn.",
+  },
+  {
+    id: 4,
+    sender: "randy",
+    text: "好啊，如果你有時間，下次我們一定要去。",
+    en: "Sure, if you have time, we must go next time.",
+    pinyin: "Hǎo a, rúguǒ nǐ yǒu shíjiān, xiàcì wǒmen yīdìng yào qù.",
+  },
+  {
+    id: 5,
+    sender: "xiaoyu",
+    text: "今天我請你吃飯，不要客氣。",
+    en: "Today I'm treating you to a meal, don't be polite.",
+    pinyin: "Jīntiān wǒ qǐng nǐ chīfàn, bùyào kèqì.",
+  },
+];
+
+type MessageState = {
+  [key: number]: {
+    showEn: boolean;
+    showPinyin: boolean;
+  };
+};
+
 export default function Chapter2() {
   const [lang, setLang] = useState<Language>("zh");
   const [showDiningTranslation, setShowDiningTranslation] = useState(false);
@@ -85,6 +140,9 @@ export default function Chapter2() {
   // Independent translation states for each Chat Interface
   const [diningChatLang, setDiningChatLang] = useState<Language>("zh");
   const [movieChatLang, setMovieChatLang] = useState<Language>("zh");
+  
+  // Message states for dining chat
+  const [diningMessageStates, setDiningMessageStates] = useState<MessageState>({});
   
   // Shared scenario state using localStorage
   const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(() => {
@@ -107,6 +165,87 @@ export default function Chapter2() {
   
   const toggleMovieChatLang = () => {
     setMovieChatLang((prev) => (prev === "zh" ? "en" : "zh"));
+  };
+  
+  const toggleDiningMessageEn = (id: number) => {
+    setDiningMessageStates((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showEn: !prev[id]?.showEn,
+      },
+    }));
+  };
+  
+  const toggleDiningMessagePinyin = (id: number) => {
+    setDiningMessageStates((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showPinyin: !prev[id]?.showPinyin,
+      },
+    }));
+  };
+  
+  const playAudio = async (text: string, isMale: boolean) => {
+    try {
+      // Stop any currently playing audio
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+
+      // Call TTS API with caching
+      const response = await fetch("/api/tts/cached", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text, isMale }),
+      });
+
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const textResponse = await response.text();
+        console.error("Non-JSON response received:", textResponse.substring(0, 200));
+        throw new Error(`API returned non-JSON response: ${response.status} ${response.statusText}`);
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: response.statusText }));
+        throw new Error(`TTS API error: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      if (!data.audio) {
+        throw new Error("No audio data in response");
+      }
+      
+      // Play the audio
+      const audio = new Audio(data.audio);
+      audio.play().catch((err) => {
+        console.error("Error playing audio:", err);
+      });
+    } catch (error) {
+      console.error("Error in playAudio:", error);
+      // Fallback to browser speech synthesis if API fails
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "zh-TW";
+        if (isMale) {
+          utterance.pitch = 0.8;
+          utterance.rate = 0.9;
+        } else {
+          utterance.pitch = 1.2;
+          utterance.rate = 1.0;
+        }
+        window.speechSynthesis.speak(utterance);
+      }
+    }
   };
   
   const diningScenarioRef = useRef<HTMLDivElement>(null);
@@ -422,10 +561,88 @@ export default function Chapter2() {
                 </Button>
               </div>
 
-              <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
-                <div className="text-center py-12 text-muted-foreground">
-                  <p className="text-lg">餐廳對話內容即將推出</p>
-                </div>
+              <div className="overflow-visible p-8 space-y-6 bg-slate-100/50 dark:bg-slate-950/50 relative">
+                {DINING_MESSAGES.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md border-2 ${
+                        msg.sender === "randy" ? "border-blue-200" : "border-pink-200"
+                      }`}
+                    >
+                      <img
+                        src={msg.sender === "randy" ? randyProfile : xiaoyuProfile}
+                        alt={msg.sender === "randy" ? "Randy" : "Xiaoyu"}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="mb-1">
+                        <span className="text-xs text-muted-foreground font-medium">
+                          {msg.sender === "randy" ? "瑞迪" : "小雨"}
+                        </span>
+                      </div>
+                      <div className="space-y-2 mb-2">
+                        {diningMessageStates[msg.id]?.showPinyin && (
+                          <p className="text-sm text-primary font-medium border-b border-primary/10 pb-1 font-serif-chinese">
+                            {msg.pinyin}
+                          </p>
+                        )}
+                        <p className="text-base font-medium leading-relaxed">
+                          {msg.text}
+                        </p>
+                        {diningMessageStates[msg.id]?.showEn && (
+                          <p className="text-sm text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                            {msg.en}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                            diningMessageStates[msg.id]?.showEn
+                              ? "bg-primary/10 text-primary hover:bg-primary/20"
+                              : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                          }`}
+                          onClick={() => toggleDiningMessageEn(msg.id)}
+                        >
+                          <Languages className="w-3.5 h-3.5" />
+                          <span>翻譯</span>
+                        </Button>
+                        <div className="w-px h-3 bg-slate-200" />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                            diningMessageStates[msg.id]?.showPinyin
+                              ? "bg-primary/10 text-primary hover:bg-primary/20"
+                              : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                          }`}
+                          onClick={() => toggleDiningMessagePinyin(msg.id)}
+                        >
+                          <Type className="w-3.5 h-3.5" />
+                          <span>拼音</span>
+                        </Button>
+                        <div className="w-px h-3 bg-slate-200" />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
+                          onClick={() => playAudio(msg.text, msg.sender === "randy")}
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                          <span>朗讀</span>
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </Card>
           </div>
