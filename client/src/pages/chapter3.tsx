@@ -5,6 +5,8 @@ import {
   Languages,
   BookOpen,
   Heart,
+  Volume2,
+  Type,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -54,9 +56,107 @@ const chapterContent = {
   },
 };
 
+type BarMessage = {
+  id: number;
+  sender: "randy" | "xiaoyu" | "narrator";
+  text: string;
+  en: string;
+  pinyin: string;
+};
+
+const BAR_MESSAGES: BarMessage[] = [
+  {
+    id: 1,
+    sender: "randy",
+    text: "小雨，你想不想一起喝酒？",
+    en: "Xiaoyu, would you like to drink together?",
+    pinyin: "Xiǎoyǔ, nǐ xiǎng bù xiǎng yīqǐ hējiǔ?",
+  },
+  {
+    id: 2,
+    sender: "xiaoyu",
+    text: "好啊，我們去喝酒吧，台北101附近有很多酒吧。",
+    en: "Sure, let's go drink. There are many bars near Taipei 101.",
+    pinyin: "Hǎo a, wǒmen qù hējiǔ ba, Táiběi 101 fùjìn yǒu hěn duō jiǔbā.",
+  },
+  {
+    id: 3,
+    sender: "randy",
+    text: "那我們走吧。",
+    en: "Then let's go.",
+    pinyin: "Nà wǒmen zǒu ba.",
+  },
+  {
+    id: 4,
+    sender: "narrator",
+    text: "他們走在路上，一邊走，一邊聊天。",
+    en: "They walked on the road, chatting as they walked.",
+    pinyin: "Tāmen zǒu zài lùshàng, yībiān zǒu, yībiān liáotiān.",
+  },
+  {
+    id: 5,
+    sender: "narrator",
+    text: "進入了一間店後，他們開始聊天。",
+    en: "After entering a shop, they started chatting.",
+    pinyin: "Jìnrù le yī jiān diàn hòu, tāmen kāishǐ liáotiān.",
+  },
+  {
+    id: 6,
+    sender: "xiaoyu",
+    text: "你第一次跟新朋友出去，就喝酒嗎？",
+    en: "Is this the first time you go out with a new friend and drink?",
+    pinyin: "Nǐ dì yī cì gēn xīn péngyǒu chūqù, jiù hējiǔ ma?",
+  },
+  {
+    id: 7,
+    sender: "randy",
+    text: "不一定，但認識你比喝酒更重要。",
+    en: "Not necessarily, but getting to know you is more important than drinking.",
+    pinyin: "Bù yīdìng, dàn rènshí nǐ bǐ hējiǔ gèng zhòngyào.",
+  },
+  {
+    id: 8,
+    sender: "xiaoyu",
+    text: "你很會說話。",
+    en: "You're very good at talking.",
+    pinyin: "Nǐ hěn huì shuōhuà.",
+  },
+  {
+    id: 9,
+    sender: "randy",
+    text: "我們一邊喝酒，一邊聊天，乾杯。",
+    en: "Let's drink and chat at the same time, cheers.",
+    pinyin: "Wǒmen yībiān hējiǔ, yībiān liáotiān, gānbēi.",
+  },
+  {
+    id: 10,
+    sender: "xiaoyu",
+    text: "乾杯。",
+    en: "Cheers.",
+    pinyin: "Gānbēi.",
+  },
+];
+
+type MessageState = {
+  [key: number]: {
+    showEn: boolean;
+    showPinyin: boolean;
+  };
+};
+
 export default function Chapter3() {
   const [lang, setLang] = useState<Language>("zh");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
+  const [barChatLang, setBarChatLang] = useState<Language>("zh");
+  
+  // Message states for bar chat
+  const [barMessageStates, setBarMessageStates] = useState<MessageState>({});
+  
+  // Bar chat state
+  const [barChatState, setBarChatState] = useState<{ messages: BarMessage[] }>(() => {
+    const saved = localStorage.getItem("chapter3_bar_chat_state");
+    return saved ? JSON.parse(saved) : { messages: BAR_MESSAGES };
+  });
   
   // Shared scenario state using localStorage
   const [appScenario, setAppScenario] = useState<"dining" | "movie" | null>(() => {
@@ -74,6 +174,7 @@ export default function Chapter3() {
   const content = chapterContent[lang];
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const barChatRef = useRef<HTMLDivElement>(null);
 
   // Save scenario to localStorage when it changes
   useEffect(() => {
@@ -87,6 +188,11 @@ export default function Chapter3() {
     localStorage.setItem("affinity_state", affinity);
   }, [affinity]);
 
+  // Save bar chat state to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem("chapter3_bar_chat_state", JSON.stringify(barChatState));
+  }, [barChatState]);
+
   // Scroll to top on mount
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -99,6 +205,30 @@ export default function Chapter3() {
 
   const toggleLang = () => {
     setLang((prev) => (prev === "zh" ? "en" : "zh"));
+  };
+
+  const toggleBarChatLang = () => {
+    setBarChatLang((prev) => (prev === "zh" ? "en" : "zh"));
+  };
+
+  const toggleBarMessageEn = (id: number) => {
+    setBarMessageStates((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showEn: !prev[id]?.showEn,
+      },
+    }));
+  };
+
+  const toggleBarMessagePinyin = (id: number) => {
+    setBarMessageStates((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showPinyin: !prev[id]?.showPinyin,
+      },
+    }));
   };
 
   return (
@@ -153,10 +283,13 @@ export default function Chapter3() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
-                    背景故事
+                    {showStoryTranslation ? "Background Story" : "背景故事"}
                   </h2>
                   <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
-                    內容即將推出
+                    {showStoryTranslation 
+                      ? "After finishing dinner / watching the movie, they went to a bar near Taipei 101."
+                      : "吃完晚餐／看完電影之後，他們去台北101附近的酒吧。"
+                    }
                   </p>
                 </div>
               </div>
@@ -217,6 +350,174 @@ export default function Chapter3() {
                 <div className="text-center py-12 text-muted-foreground">
                   <p className="text-lg">內容即將推出</p>
                 </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Bar Chat Interface */}
+          <div ref={barChatRef} className="mb-12 relative max-w-4xl mx-auto scroll-mt-20">
+            <Card
+              className="overflow-hidden border-2 border-primary/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
+            >
+              <div
+                className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${chatBackground})` }}
+              />
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">🍺</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg font-serif-chinese">
+                      {content.chat.title} - {barChatLang === "zh" ? "酒吧情境" : "Bar"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {content.chat.subtitle}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  onClick={toggleBarChatLang}
+                  className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                >
+                  <Languages className="w-4 h-4" />
+                </Button>
+              </div>
+
+              <div className="overflow-visible p-8 space-y-6 bg-slate-100/50 dark:bg-slate-950/50 relative">
+                {barChatState.messages.map((msg, index) => (
+                  <div key={msg.id}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-start gap-4"
+                    >
+                      {msg.sender === "narrator" ? (
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border-2 border-slate-300 bg-slate-50">
+                          {msg.id === 4 ? (
+                            // 特別處理"他們走在路上，一邊走，一邊聊天。"這句，使用男生女生聊天的emoji動畫
+                            <motion.div
+                              animate={{
+                                scale: [1, 1.1, 1],
+                                rotate: [0, 5, -5, 5, -5, 0],
+                              }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                repeatDelay: 0.5,
+                                ease: "easeInOut",
+                              }}
+                              className="text-2xl"
+                            >
+                              💬
+                            </motion.div>
+                          ) : (
+                            <motion.div
+                              animate={{
+                                rotate: [0, 14, -8, 14, -8, 0],
+                              }}
+                              transition={{
+                                duration: 0.6,
+                                repeat: Infinity,
+                                repeatDelay: 1,
+                                ease: "easeInOut",
+                              }}
+                              className="text-2xl"
+                            >
+                              📝
+                            </motion.div>
+                          )}
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md border-2 ${
+                            msg.sender === "randy" ? "border-blue-200" : "border-pink-200"
+                          }`}
+                        >
+                          <img
+                            src={msg.sender === "randy" ? randyProfile : xiaoyuProfile}
+                            alt={msg.sender === "randy" ? "Randy" : "Xiaoyu"}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        {msg.sender !== "narrator" && (
+                          <div className="mb-1">
+                            <span className="text-xs text-muted-foreground font-medium">
+                              {msg.sender === "randy" ? "瑞迪" : "小雨"}
+                            </span>
+                          </div>
+                        )}
+                        <div className="space-y-2 mb-2">
+                          {barMessageStates[msg.id]?.showPinyin && (
+                            <p className="text-sm text-primary font-medium border-b border-primary/10 pb-1 font-serif-chinese">
+                              {msg.pinyin}
+                            </p>
+                          )}
+                          <p className={`${msg.sender === "narrator" ? "text-sm italic text-slate-600" : "text-base font-medium"} leading-relaxed font-serif-chinese`}>
+                            {msg.text}
+                          </p>
+                          {barMessageStates[msg.id]?.showEn && (
+                            <p className="text-sm text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                              {msg.en}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                              barMessageStates[msg.id]?.showEn
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            }`}
+                            onClick={() => toggleBarMessageEn(msg.id)}
+                          >
+                            <Languages className="w-3.5 h-3.5" />
+                            <span>翻譯</span>
+                          </Button>
+                          <div className="w-px h-3 bg-slate-200" />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                              barMessageStates[msg.id]?.showPinyin
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            }`}
+                            onClick={() => toggleBarMessagePinyin(msg.id)}
+                          >
+                            <Type className="w-3.5 h-3.5" />
+                            <span>拼音</span>
+                          </Button>
+                          {msg.sender !== "narrator" && (
+                            <>
+                              <div className="w-px h-3 bg-slate-200" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                                onClick={() => {
+                                  // Mock audio play
+                                  const utterance = new SpeechSynthesisUtterance(msg.text);
+                                  utterance.lang = "zh-TW";
+                                  utterance.rate = 0.8;
+                                  window.speechSynthesis.speak(utterance);
+                                }}
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                ))}
               </div>
             </Card>
           </div>
