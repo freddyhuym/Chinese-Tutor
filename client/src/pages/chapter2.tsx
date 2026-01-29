@@ -97,6 +97,7 @@ export default function Chapter2() {
   
   const diningChatRef = useRef<HTMLDivElement>(null);
   const movieChatRef = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
   
   const scrollToDiningChat = () => {
     diningChatRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -106,20 +107,36 @@ export default function Chapter2() {
     movieChatRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   
+  // Scroll to top on mount (ignore floating button state)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      // Mark initial mount as complete after scrolling to top
+      setTimeout(() => {
+        isInitialMount.current = false;
+      }, 500);
+    }, 10);
+    return () => clearTimeout(timeoutId);
+  }, []);
+  
   // Save scenario to localStorage when it changes
   useEffect(() => {
     if (appScenario) {
       localStorage.setItem("app_scenario", appScenario);
       
-      // Auto-scroll to corresponding chat interface when scenario changes
-      if (appScenario === "dining") {
-        setTimeout(() => {
-          scrollToDiningChat();
-        }, 100);
-      } else if (appScenario === "movie") {
-        setTimeout(() => {
-          scrollToMovieChat();
-        }, 100);
+      // Auto-scroll to corresponding chat interface when scenario changes (but not on initial mount)
+      if (!isInitialMount.current) {
+        if (appScenario === "dining") {
+          setTimeout(() => {
+            scrollToDiningChat();
+          }, 100);
+        } else if (appScenario === "movie") {
+          setTimeout(() => {
+            scrollToMovieChat();
+          }, 100);
+        }
       }
     }
   }, [appScenario]);
@@ -128,16 +145,6 @@ export default function Chapter2() {
   useEffect(() => {
     localStorage.setItem("affinity_state", affinity);
   }, [affinity]);
-
-  // Scroll to top on mount
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }, 10);
-    return () => clearTimeout(timeoutId);
-  }, []);
 
   const toggleLang = () => {
     setLang((prev) => (prev === "zh" ? "en" : "zh"));
@@ -372,7 +379,7 @@ export default function Chapter2() {
               <div className="bg-orange-100/50 p-4 border-b border-orange-200 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📱</span>
+                    <span className="text-2xl">🥢</span>
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
@@ -430,7 +437,7 @@ export default function Chapter2() {
               <div className="bg-purple-100/50 p-4 border-b border-purple-200 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📱</span>
+                    <span className="text-2xl">🍿</span>
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
