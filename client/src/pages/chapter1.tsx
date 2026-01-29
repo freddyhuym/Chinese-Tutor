@@ -423,14 +423,8 @@ function SpeakingPractice({
   return (
     <div className="mt-6 pt-6 border-t border-dashed border-border/50">
       <div className="flex items-center gap-2 mb-4">
-        <Badge
-          variant="outline"
-          className="text-primary border-primary/20 bg-primary/5"
-        >
-          <Mic className="w-3 h-3 mr-1" />
-          口語練習 Speaking Practice
-        </Badge>
-        <span className="text-sm text-muted-foreground">請跟著唸：</span>
+        
+        <span className="text-sm text-muted-foreground">請跟著唸：</span><br/>
         <span className="text-sm font-bold font-serif-chinese">
           你是老師，我也是老師
         </span>
@@ -510,12 +504,12 @@ function SpeakingPractice({
             {isListening ? (
               <>
                 <MicOff className="w-5 h-5 mr-2" />
-                停止錄音 Stop
+                停止 Stop
               </>
             ) : (
               <>
                 <Mic className="w-5 h-5 mr-2" />
-                開始練習 Start
+                開始 Start
               </>
             )}
           </Button>
@@ -527,7 +521,7 @@ function SpeakingPractice({
             onClick={resetPractice}
           >
             <RotateCcw className="w-5 h-5" />
-            重新開始 Reset
+            重新 Reset
           </Button>
         </div>
 
