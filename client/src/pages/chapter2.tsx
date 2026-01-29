@@ -5,6 +5,7 @@ import {
   Languages,
   BookOpen,
   Heart,
+  ArrowDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -94,10 +95,32 @@ export default function Chapter2() {
   const t = getTranslations(lang);
   const content = chapterContent[lang];
   
+  const diningChatRef = useRef<HTMLDivElement>(null);
+  const movieChatRef = useRef<HTMLDivElement>(null);
+  
+  const scrollToDiningChat = () => {
+    diningChatRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  
+  const scrollToMovieChat = () => {
+    movieChatRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  
   // Save scenario to localStorage when it changes
   useEffect(() => {
     if (appScenario) {
       localStorage.setItem("app_scenario", appScenario);
+      
+      // Auto-scroll to corresponding chat interface when scenario changes
+      if (appScenario === "dining") {
+        setTimeout(() => {
+          scrollToDiningChat();
+        }, 100);
+      } else if (appScenario === "movie") {
+        setTimeout(() => {
+          scrollToMovieChat();
+        }, 100);
+      }
     }
   }, [appScenario]);
   
@@ -105,8 +128,6 @@ export default function Chapter2() {
   useEffect(() => {
     localStorage.setItem("affinity_state", affinity);
   }, [affinity]);
-
-  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -157,9 +178,50 @@ export default function Chapter2() {
           </div>
 
           {/* Restaurant Scenario */}
-          <div className="mb-12">
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-sm relative">
-              <div className="absolute top-4 right-4">
+          <div className="mb-12 relative">
+            {/* Highlight indicator */}
+            {appScenario === "dining" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -top-8 left-0 z-10"
+              >
+                <Badge className="bg-orange-500 text-white border-orange-500 shadow-lg">
+                  <span className="text-xs font-medium">
+                    {lang === "zh" ? "✨ 請看這個故事" : "✨ Please read this story"}
+                  </span>
+                </Badge>
+              </motion.div>
+            )}
+            <motion.div
+              animate={
+                appScenario === "dining"
+                  ? {
+                      boxShadow: [
+                        "0 0 0px rgba(249, 115, 22, 0)",
+                        "0 0 20px rgba(249, 115, 22, 0.5)",
+                        "0 0 40px rgba(249, 115, 22, 0.8)",
+                        "0 0 20px rgba(249, 115, 22, 0.5)",
+                        "0 0 0px rgba(249, 115, 22, 0)",
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 2,
+                repeat: appScenario === "dining" ? Infinity : 0,
+                ease: "easeInOut",
+              }}
+              className="relative"
+            >
+              <Card
+                className={`p-8 backdrop-blur-sm border-2 shadow-sm relative transition-all duration-300 ${
+                  appScenario === "dining"
+                    ? "bg-orange-50/90 border-orange-400 shadow-orange-200"
+                    : "bg-card/50 border-primary/20"
+                }`}
+              >
+                <div className="absolute top-4 right-4">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -183,11 +245,106 @@ export default function Chapter2() {
                   </p>
                 </div>
               </div>
+              {appScenario === "dining" && (
+                <div className="mt-6 flex justify-center">
+                  <Button
+                    onClick={scrollToDiningChat}
+                    className="bg-orange-500 hover:bg-orange-600 text-white shadow-lg"
+                  >
+                    <ArrowDown className="w-4 h-4 mr-2" />
+                    {lang === "zh" ? "開始對話" : "Start Chat"}
+                  </Button>
+                </div>
+              )}
             </Card>
+            </motion.div>
           </div>
 
-          {/* Chat Interface */}
-          <div className="mb-12 relative max-w-4xl mx-auto">
+          {/* Movie Theater Scenario */}
+          <div className="mb-12 relative">
+            {/* Highlight indicator */}
+            {appScenario === "movie" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -top-8 left-0 z-10"
+              >
+                <Badge className="bg-purple-500 text-white border-purple-500 shadow-lg">
+                  <span className="text-xs font-medium">
+                    {lang === "zh" ? "✨ 請看這個故事" : "✨ Please read this story"}
+                  </span>
+                </Badge>
+              </motion.div>
+            )}
+            <motion.div
+              animate={
+                appScenario === "movie"
+                  ? {
+                      boxShadow: [
+                        "0 0 0px rgba(168, 85, 247, 0)",
+                        "0 0 20px rgba(168, 85, 247, 0.5)",
+                        "0 0 40px rgba(168, 85, 247, 0.8)",
+                        "0 0 20px rgba(168, 85, 247, 0.5)",
+                        "0 0 0px rgba(168, 85, 247, 0)",
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 2,
+                repeat: appScenario === "movie" ? Infinity : 0,
+                ease: "easeInOut",
+              }}
+              className="relative"
+            >
+              <Card
+                className={`p-8 backdrop-blur-sm border-2 shadow-sm relative transition-all duration-300 ${
+                  appScenario === "movie"
+                    ? "bg-purple-50/90 border-purple-400 shadow-purple-200"
+                    : "bg-card/50 border-primary/20"
+                }`}
+              >
+                <div className="absolute top-4 right-4">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                    onClick={() => setShowMovieTranslation(!showMovieTranslation)}
+                  >
+                    <Languages className="w-4 h-4" />
+                    {showMovieTranslation ? "顯示原文" : "English Translation"}
+                  </Button>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                    <BookOpen className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
+                      {showMovieTranslation ? chapterContent.en.scenarios.movie.title : chapterContent.zh.scenarios.movie.title}
+                    </h2>
+                    <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
+                      {showMovieTranslation ? chapterContent.en.scenarios.movie.content : chapterContent.zh.scenarios.movie.content}
+                    </p>
+                  </div>
+                </div>
+                {appScenario === "movie" && (
+                  <div className="mt-6 flex justify-center">
+                    <Button
+                      onClick={scrollToMovieChat}
+                      className="bg-purple-500 hover:bg-purple-600 text-white shadow-lg"
+                    >
+                      <ArrowDown className="w-4 h-4 mr-2" />
+                      {lang === "zh" ? "開始對話" : "Start Chat"}
+                    </Button>
+                  </div>
+                )}
+              </Card>
+            </motion.div>
+          </div>
+
+          {/* Restaurant Chat Interface */}
+          <div ref={diningChatRef} className="mb-12 relative max-w-4xl mx-auto scroll-mt-20">
             {/* Floating Characters (Desktop only) */}
             <div className="hidden min-[1360px]:block fixed left-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
               <img
@@ -206,21 +363,20 @@ export default function Chapter2() {
             </div>
 
             <Card
-              ref={chatContainerRef}
-              className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
+              className="overflow-hidden border-2 border-orange-400 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
             >
               <div
                 className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
                 style={{ backgroundImage: `url(${chatBackground})` }}
               />
-              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
+              <div className="bg-orange-100/50 p-4 border-b border-orange-200 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">📱</span>
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title}
+                      {content.chat.title} - {lang === "zh" ? "餐廳情境" : "Restaurant"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       {content.chat.subtitle}
@@ -239,41 +395,70 @@ export default function Chapter2() {
 
               <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
                 <div className="text-center py-12 text-muted-foreground">
-                  <p className="text-lg">內容即將推出</p>
+                  <p className="text-lg">{lang === "zh" ? "餐廳對話內容即將推出" : "Restaurant chat content coming soon"}</p>
                 </div>
               </div>
             </Card>
-          </div>          
+          </div>
 
-          {/* Movie Theater Scenario */}
-          <div className="mb-12">
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-sm relative">
-              <div className="absolute top-4 right-4">
+          {/* Movie Theater Chat Interface */}
+          <div ref={movieChatRef} className="mb-12 relative max-w-4xl mx-auto scroll-mt-20">
+            {/* Floating Characters (Desktop only) */}
+            <div className="hidden min-[1360px]:block fixed left-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
+              <img
+                src={randyFull}
+                alt="Randy Full Body"
+                className="w-full h-full object-contain object-bottom drop-shadow-2xl scale-110 origin-bottom"
+              />
+            </div>
+
+            <div className="hidden min-[1360px]:block fixed right-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
+              <img
+                src={xiaoyuFull}
+                alt="Xiao Yu Full Body"
+                className="w-full h-full object-contain object-bottom drop-shadow-2xl origin-bottom"
+              />
+            </div>
+
+            <Card
+              className="overflow-hidden border-2 border-purple-400 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
+            >
+              <div
+                className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${chatBackground})` }}
+              />
+              <div className="bg-purple-100/50 p-4 border-b border-purple-200 flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">📱</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg font-serif-chinese">
+                      {content.chat.title} - {lang === "zh" ? "電影院情境" : "Movie Theater"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {content.chat.subtitle}
+                    </p>
+                  </div>
+                </div>
                 <Button
                   variant="ghost"
-                  size="sm"
-                  className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
-                  onClick={() => setShowMovieTranslation(!showMovieTranslation)}
+                  onClick={toggleLang}
+                  className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
                 >
                   <Languages className="w-4 h-4" />
-                  {showMovieTranslation ? "顯示原文" : "English Translation"}
+                  {lang === "zh" ? "English Translation" : "中文"}
                 </Button>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                  <BookOpen className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
-                    {showMovieTranslation ? chapterContent.en.scenarios.movie.title : chapterContent.zh.scenarios.movie.title}
-                  </h2>
-                  <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
-                    {showMovieTranslation ? chapterContent.en.scenarios.movie.content : chapterContent.zh.scenarios.movie.content}
-                  </p>
+
+              <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
+                <div className="text-center py-12 text-muted-foreground">
+                  <p className="text-lg">{lang === "zh" ? "電影院對話內容即將推出" : "Movie theater chat content coming soon"}</p>
                 </div>
               </div>
             </Card>
-          </div>          
+          </div>
+
 
 
         </motion.div>
