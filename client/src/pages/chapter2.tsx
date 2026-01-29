@@ -97,9 +97,19 @@ export default function Chapter2() {
   const t = getTranslations(lang);
   const content = chapterContent[lang];
   
+  const diningScenarioRef = useRef<HTMLDivElement>(null);
+  const movieScenarioRef = useRef<HTMLDivElement>(null);
   const diningChatRef = useRef<HTMLDivElement>(null);
   const movieChatRef = useRef<HTMLDivElement>(null);
   const isInitialMount = useRef(true);
+  
+  const scrollToDiningScenario = () => {
+    diningScenarioRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  
+  const scrollToMovieScenario = () => {
+    movieScenarioRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   
   const scrollToDiningChat = () => {
     diningChatRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -128,15 +138,15 @@ export default function Chapter2() {
     if (appScenario) {
       localStorage.setItem("app_scenario", appScenario);
       
-      // Auto-scroll to corresponding chat interface when scenario changes (but not on initial mount)
+      // Auto-scroll to corresponding scenario block when scenario changes (but not on initial mount)
       if (!isInitialMount.current) {
         if (appScenario === "dining") {
           setTimeout(() => {
-            scrollToDiningChat();
+            scrollToDiningScenario();
           }, 100);
         } else if (appScenario === "movie") {
           setTimeout(() => {
-            scrollToMovieChat();
+            scrollToMovieScenario();
           }, 100);
         }
       }
@@ -187,7 +197,7 @@ export default function Chapter2() {
           </div>
 
           {/* Restaurant Scenario */}
-          <div className="mb-12 relative">
+          <div ref={diningScenarioRef} className="mb-12 relative scroll-mt-20">
             {/* Highlight indicator */}
             {appScenario === "dining" && (
               <motion.div
@@ -269,7 +279,7 @@ export default function Chapter2() {
           </div>
 
           {/* Movie Theater Scenario */}
-          <div className="mb-12 relative">
+          <div ref={movieScenarioRef} className="mb-12 relative scroll-mt-20">
             {/* Highlight indicator */}
             {appScenario === "movie" && (
               <motion.div
