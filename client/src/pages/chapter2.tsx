@@ -154,9 +154,9 @@ const DINING_MESSAGES: DiningMessage[] = [
   {
     id: 5,
     sender: "xiaoyu",
-    text: "今天我請你吃飯，不要客氣。",
-    en: "Today I'm treating you to a meal, don't be polite.",
-    pinyin: "Jīntiān wǒ qǐng nǐ chīfàn, bùyào kèqì.",
+    text: "今天我請你吃晚餐，不要客氣。",
+    en: "Today I'm treating you to the dinner, don't be polite.",
+    pinyin: "Jīntiān wǒ qǐng nǐ wǎncān, bùyào kèqì.",
   },
 ];
 
@@ -378,10 +378,269 @@ const DINING_VOCABULARY_LIST: VocabWord[] = [
       en: "Boss, check please.",
     },
   },
+  {
+    traditional: "晚餐",
+    simplified: "晚餐",
+    pinyin: "wǎncān",
+    english: "dinner / evening meal",
+    partOfSpeech: "N",
+    tbcl: "1*",
+    example: {
+      zh: "我們一起去吃晚餐。",
+      pinyin: "Wǒmen yīqǐ qù chī wǎncān.",
+      en: "Let's go have dinner together.",
+    },
+  },
+  {
+    traditional: "付",
+    simplified: "付",
+    pinyin: "fù",
+    english: "to pay",
+    partOfSpeech: "V",
+    tbcl: "2*",
+    example: {
+      zh: "我來付錢。",
+      pinyin: "Wǒ lái fùqián.",
+      en: "I'll pay.",
+    },
+  },
 ];
 
 type DiningChatState = {
   messages: DiningMessage[];
+  completed: boolean;
+  selectedChoiceId: number | null;
+};
+
+type MovieMessage = {
+  id: number;
+  sender: "randy" | "xiaoyu" | "narrator";
+  text: string;
+  en: string;
+  pinyin: string;
+};
+
+const MOVIE_MESSAGES: MovieMessage[] = [
+  {
+    id: 1,
+    sender: "xiaoyu",
+    text: "你想看浪漫電影還是動作電影？",
+    en: "Do you want to watch a romantic movie or an action movie?",
+    pinyin: "Nǐ xiǎng kàn làngmàn diànyǐng háishì dòngzuò diànyǐng?",
+  },
+  {
+    id: 2,
+    sender: "randy",
+    text: "我們看浪漫的電影！",
+    en: "Let's watch a romantic movie!",
+    pinyin: "Wǒmen kàn làngmàn de diànyǐng!",
+  },
+  {
+    id: 3,
+    sender: "xiaoyu",
+    text: "我剛剛想說你應該不喜歡這一種電影。",
+    en: "I just wanted to say that you probably don’t like this kind of movie.",
+    pinyin: "Wǒ gānggāng xiǎng shuō nǐ yīnggāi bù xǐhuān zhè yì zhǒng diànyǐng.",
+  },
+  {
+    id: 4,
+    sender: "randy",
+    text: "浪漫電影和動作電影我都喜歡，但我覺得你想看浪漫的。",
+    en: "I like both romantic movies and action movies, but I think you want to watch a romantic one.",
+    pinyin: "Làngmàn diànyǐng hé dòngzuò diànyǐng wǒ dōu xǐhuān, dàn wǒ juéde nǐ xiǎng kàn làngmàn de.",
+  },
+  {
+    id: 5,
+    sender: "xiaoyu",
+    text: "你很懂我的想法，哈哈。",
+    en: "You really understand what I'm thinking, haha.",
+    pinyin: "Nǐ hěn dǒng wǒ de xiǎngfǎ, hāhā.",
+  },
+  {
+    id: 6,
+    sender: "randy",
+    text: "那我們去買票吧！",
+    en: "Then let's go buy tickets!",
+    pinyin: "Nà wǒmen qù mǎi piào ba!",
+  },
+  {
+    id: 7,
+    sender: "xiaoyu",
+    text: "今天我請客。",
+    en: "Today I'm treating.",
+    pinyin: "Jīntiān wǒ qǐngkè.",
+  },
+];
+
+type MovieChoice = {
+  id: number;
+  text: string;
+  en: string;
+  pinyin: string;
+  response: string;
+  responseEn: string;
+  responsePinyin: string;
+  affinityChange: "green" | "red";
+};
+
+const MOVIE_CHOICES: MovieChoice[] = [
+  {
+    id: 1,
+    text: "不用，我來付錢。",
+    en: "No need, I'll pay.",
+    pinyin: "Bùyòng, wǒ lái fùqián.",
+    response: "哇，真的嗎？謝謝你，太好了。",
+    responseEn: "Wow, really? Thank you, that's great.",
+    responsePinyin: "Wa, zhēn de ma? Xièxiè nǐ, tài hǎo le.",
+    affinityChange: "red",
+  },
+  {
+    id: 2,
+    text: "好啊，謝謝小雨。",
+    en: "OK, thank you Xiaoyu.",
+    pinyin: "Hǎo a, xièxiè Xiǎoyǔ.",
+    response: "不客氣。",
+    responseEn: "You're welcome.",
+    responsePinyin: "Bù kèqì.",
+    affinityChange: "green",
+  },
+];
+
+const MOVIE_VOCABULARY_LIST: VocabWord[] = [
+  {
+    traditional: "浪漫",
+    simplified: "浪漫",
+    pinyin: "làngmàn",
+    english: "romantic",
+    partOfSpeech: "Vs",
+    tbcl: "4*",
+    example: {
+      zh: "你想看浪漫電影還是動作電影？",
+      pinyin: "Nǐ xiǎng kàn làngmàn diànyǐng háishì dòngzuò diànyǐng?",
+      en: "Do you want to watch a romantic movie or an action movie?",
+    },
+  },
+  {
+    traditional: "動作",
+    simplified: "动作",
+    pinyin: "dòngzuò",
+    english: "action / movement",
+    partOfSpeech: "N",
+    tbcl: "4",
+    example: {
+      zh: "動作電影很好看。",
+      pinyin: "Dòngzuò diànyǐng hěn hǎokàn.",
+      en: "Action movies are very entertaining.",
+    },
+  },
+  {
+    traditional: "應該",
+    simplified: "应该",
+    pinyin: "yīnggāi",
+    english: "should / ought to",
+    partOfSpeech: "Vaux",
+    tbcl: "1*",
+    example: {
+      zh: "我應該去看電影。",
+      pinyin: "Wǒ yīnggāi qù kàn diànyǐng.",
+      en: "I should go watch a movie.",
+    },
+  },
+  {
+    traditional: "種",
+    simplified: "种",
+    pinyin: "zhǒng",
+    english: "kind / type (measure word)",
+    partOfSpeech: "M",
+    tbcl: "2",
+    example: {
+      zh: "浪漫電影和動作電影我都喜歡。",
+      pinyin: "Làngmàn diànyǐng hé dòngzuò diànyǐng wǒ dōu xǐhuān.",
+      en: "I like both romantic movies and action movies.",
+    },
+  },
+  {
+    traditional: "懂",
+    simplified: "懂",
+    pinyin: "dǒng",
+    english: "to understand / to know",
+    partOfSpeech: "Vst",
+    tbcl: "1*",
+    example: {
+      zh: "你很懂我的想法。",
+      pinyin: "Nǐ hěn dǒng wǒ de xiǎngfǎ.",
+      en: "You really understand what I'm thinking.",
+    },
+  },
+  {
+    traditional: "覺得",
+    simplified: "觉得",
+    pinyin: "juédé",
+    english: "to feel / to think",
+    partOfSpeech: "Vst",
+    tbcl: "1*",
+    example: {
+      zh: "我覺得你想看浪漫的。",
+      pinyin: "Wǒ juédé nǐ xiǎng kàn làngmàn de.",
+      en: "I think you want to watch a romantic one.",
+    },
+  },
+  {
+    traditional: "但",
+    simplified: "但",
+    pinyin: "dàn",
+    english: "but / however",
+    partOfSpeech: "Conj",
+    tbcl: "2",
+    example: {
+      zh: "浪漫電影和動作電影我都喜歡，但我覺得你想看浪漫的。",
+      pinyin: "Làngmàn diànyǐng hé dòngzuò diànyǐng wǒ dōu xǐhuān, dàn wǒ juédé nǐ xiǎng kàn làngmàn de.",
+      en: "I like both romantic movies and action movies, but I think you want to watch a romantic one.",
+    },
+  },
+  {
+    traditional: "想法",
+    simplified: "想法",
+    pinyin: "xiǎngfǎ",
+    english: "thought / idea",
+    partOfSpeech: "N",
+    tbcl: "2",
+    example: {
+      zh: "你很懂我的想法。",
+      pinyin: "Nǐ hěn dǒng wǒ de xiǎngfǎ.",
+      en: "You really understand what I'm thinking.",
+    },
+  },
+  {
+    traditional: "票",
+    simplified: "票",
+    pinyin: "piào",
+    english: "ticket",
+    partOfSpeech: "N",
+    tbcl: "2",
+    example: {
+      zh: "那我們去買票吧！",
+      pinyin: "Nà wǒmen qù mǎi piào ba!",
+      en: "Then let's go buy tickets!",
+    },
+  },
+  {
+    traditional: "請客",
+    simplified: "请客",
+    pinyin: "qǐngkè",
+    english: "to treat / to pay for someone",
+    partOfSpeech: "V-sep",
+    tbcl: "5",
+    example: {
+      zh: "今天我請客。",
+      pinyin: "Jīntiān wǒ qǐngkè.",
+      en: "Today I'm treating.",
+    },
+  },
+];
+
+type MovieChatState = {
+  messages: MovieMessage[];
   completed: boolean;
   selectedChoiceId: number | null;
 };
@@ -630,22 +889,11 @@ function BaPractice({
 
   return (
     <div className="mt-6 pt-6 border-t border-dashed border-border/50">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">請跟著唸：</span>
-          <span className="text-sm font-bold font-serif-chinese">
-            把香蕉給我
-          </span>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          className="gap-2"
-          onClick={resetPractice}
-        >
-          <RotateCcw className="w-4 h-4" />
-          重新開始
-        </Button>
+      <div className="flex items-center gap-2 mb-4">
+        <span className="text-sm text-muted-foreground">請跟著唸：</span>
+        <span className="text-sm font-bold font-serif-chinese">
+          把香蕉給我
+        </span>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-4 relative">
@@ -753,7 +1001,7 @@ function BaPractice({
       </div>
 
       <div className="flex flex-col items-center gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <Button
             size="lg"
             className={`rounded-full px-8 transition-all duration-300 ${
@@ -774,6 +1022,16 @@ function BaPractice({
                 開始 Start
               </>
             )}
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full px-6 gap-2"
+            onClick={resetPractice}
+          >
+            <RotateCcw className="w-5 h-5" />
+            重新 Reset
           </Button>
         </div>
 
@@ -1000,7 +1258,7 @@ function GrammarPointCard({
         {point.id === 4 && (
           <BaPractice
             dogImage={randyProfile}
-            personImage={xiaoyuProfile}
+            personImage={randyProfile}
           />
         )}
       </div>
@@ -1020,11 +1278,22 @@ export default function Chapter2() {
   // Message states for dining chat
   const [diningMessageStates, setDiningMessageStates] = useState<MessageState>({});
   
+  // Message states for movie chat
+  const [movieMessageStates, setMovieMessageStates] = useState<MessageState>({});
+  
   // Vocabulary list states
   const [diningVocabStates, setDiningVocabStates] = useState<{ [key: number]: boolean }>({});
+  const [movieVocabStates, setMovieVocabStates] = useState<{ [key: number]: boolean }>({});
   
   const toggleDiningVocabExample = (index: number) => {
     setDiningVocabStates((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+  
+  const toggleMovieVocabExample = (index: number) => {
+    setMovieVocabStates((prev) => ({
       ...prev,
       [index]: !prev[index],
     }));
@@ -1034,6 +1303,12 @@ export default function Chapter2() {
   const [diningChatState, setDiningChatState] = useState<DiningChatState>(() => {
     const saved = localStorage.getItem("chapter2_dining_chat_state");
     return saved ? JSON.parse(saved) : { messages: DINING_MESSAGES, completed: false, selectedChoiceId: null };
+  });
+  
+  // Movie chat state
+  const [movieChatState, setMovieChatState] = useState<MovieChatState>(() => {
+    const saved = localStorage.getItem("chapter2_movie_chat_state");
+    return saved ? JSON.parse(saved) : { messages: MOVIE_MESSAGES, completed: false, selectedChoiceId: null };
   });
   
   // Shared scenario state using localStorage
@@ -1077,6 +1352,67 @@ export default function Chapter2() {
         showPinyin: !prev[id]?.showPinyin,
       },
     }));
+  };
+  
+  const toggleMovieMessageEn = (id: number) => {
+    setMovieMessageStates((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showEn: !prev[id]?.showEn,
+      },
+    }));
+  };
+  
+  const toggleMovieMessagePinyin = (id: number) => {
+    setMovieMessageStates((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        showPinyin: !prev[id]?.showPinyin,
+      },
+    }));
+  };
+  
+  const handleMovieChoice = (choiceId: number) => {
+    const choice = MOVIE_CHOICES.find((c) => c.id === choiceId);
+    if (!choice) return;
+
+    // Update affinity state based on choice
+    setAffinity(choice.affinityChange);
+
+    const newMessages: MovieMessage[] = [
+      ...MOVIE_MESSAGES,
+      {
+        id: Date.now(),
+        sender: "randy",
+        text: choice.text,
+        en: choice.en,
+        pinyin: choice.pinyin,
+      },
+      {
+        id: Date.now() + 1,
+        sender: "xiaoyu",
+        text: choice.response,
+        en: choice.responseEn,
+        pinyin: choice.responsePinyin,
+      },
+    ];
+
+    setMovieChatState({
+      messages: newMessages,
+      completed: true,
+      selectedChoiceId: choiceId,
+    });
+  };
+  
+  const resetMovieChat = () => {
+    setMovieChatState({
+      messages: MOVIE_MESSAGES,
+      completed: false,
+      selectedChoiceId: null,
+    });
+    setMovieMessageStates({});
   };
   
   const handleDiningChoice = (choiceId: number) => {
@@ -1137,6 +1473,10 @@ export default function Chapter2() {
   useEffect(() => {
     localStorage.setItem("chapter2_dining_chat_state", JSON.stringify(diningChatState));
   }, [diningChatState]);
+  
+  useEffect(() => {
+    localStorage.setItem("chapter2_movie_chat_state", JSON.stringify(movieChatState));
+  }, [movieChatState]);
 
   const playAudio = async (text: string, isMale: boolean) => {
     try {
@@ -1902,14 +2242,323 @@ export default function Chapter2() {
               </div>
 
               <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
-                <div className="text-center py-12 text-muted-foreground">
-                  <p className="text-lg">電影院對話內容即將推出</p>
-                </div>
+                {movieChatState.messages.map((msg, index) => (
+                  <div key={msg.id}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={msg.sender === "narrator" ? "flex items-start gap-4" : "flex items-start gap-4"}
+                    >
+                      {msg.sender === "narrator" ? (
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border-2 border-slate-300 bg-slate-50">
+                          <motion.div
+                            animate={{
+                              rotate: [0, 14, -8, 14, -8, 0],
+                            }}
+                            transition={{
+                              duration: 0.6,
+                              repeat: Infinity,
+                              repeatDelay: 1,
+                              ease: "easeInOut",
+                            }}
+                            className="text-2xl"
+                          >
+                            👋
+                          </motion.div>
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md border-2 ${
+                            msg.sender === "randy" ? "border-blue-200" : "border-pink-200"
+                          }`}
+                        >
+                          <img
+                            src={msg.sender === "randy" ? randyProfile : xiaoyuProfile}
+                            alt={msg.sender === "randy" ? "Randy" : "Xiaoyu"}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className={msg.sender === "narrator" ? "flex-1" : "flex-1"}>
+                        {msg.sender !== "narrator" && (
+                          <div className="mb-1">
+                            <span className="text-xs text-muted-foreground font-medium">
+                              {msg.sender === "randy" ? "瑞迪" : "小雨"}
+                            </span>
+                          </div>
+                        )}
+                        <div className={`space-y-2 ${msg.sender === "narrator" ? "" : "mb-2"}`}>
+                          {movieMessageStates[msg.id]?.showPinyin && (
+                            <p className="text-sm text-primary font-medium border-b border-primary/10 pb-1 font-serif-chinese">
+                              {msg.pinyin}
+                            </p>
+                          )}
+                          <p className={`${msg.sender === "narrator" ? "text-sm italic text-slate-600" : "text-base font-medium"} leading-relaxed`}>
+                            {msg.text}
+                          </p>
+                          {movieMessageStates[msg.id]?.showEn && (
+                            <p className="text-sm text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                              {msg.en}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                              movieMessageStates[msg.id]?.showEn
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            }`}
+                            onClick={() => toggleMovieMessageEn(msg.id)}
+                          >
+                            <Languages className="w-3.5 h-3.5" />
+                            <span>翻譯</span>
+                          </Button>
+                          <div className="w-px h-3 bg-slate-200" />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                              movieMessageStates[msg.id]?.showPinyin
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            }`}
+                            onClick={() => toggleMovieMessagePinyin(msg.id)}
+                          >
+                            <Type className="w-3.5 h-3.5" />
+                            <span>拼音</span>
+                          </Button>
+                          {msg.sender !== "narrator" && (
+                            <>
+                              <div className="w-px h-3 bg-slate-200" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
+                                onClick={() => playAudio(msg.text, msg.sender === "randy")}
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                                <span>朗讀</span>
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Show choices after message 7 (index 6) */}
+                    {index === 6 && (
+                      <div className="ml-16 my-6 space-y-3 bg-slate-50/50 p-4 rounded-xl border border-dashed border-border/60">
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="text-sm font-medium text-muted-foreground">
+                            請選擇瑞迪的回答：
+                          </p>
+                          {movieChatState.completed && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={resetMovieChat}
+                              className="h-6 text-xs text-primary hover:text-primary hover:bg-primary/10 px-2"
+                            >
+                              <RotateCcw className="w-3 h-3 mr-1" />
+                              重新選擇
+                            </Button>
+                          )}
+                        </div>
+                        {MOVIE_CHOICES.map((choice) => (
+                          <button
+                            key={choice.id}
+                            onClick={() => handleMovieChoice(choice.id)}
+                            className={`w-full p-4 text-left shadow-sm transition-all rounded-xl border-2 ${
+                              movieChatState.completed &&
+                              movieChatState.messages.find(
+                                (m) => m.text === choice.text,
+                              )
+                                ? "bg-primary/5 border-primary ring-2 ring-primary/20"
+                                : "bg-white border-border hover:border-primary/50 hover:shadow-md"
+                            }`}
+                          >
+                            <span className="flex items-center gap-4">
+                              <span
+                                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                                  movieChatState.completed &&
+                                  movieChatState.messages.find(
+                                    (m) => m.text === choice.text,
+                                  )
+                                    ? "bg-primary text-white"
+                                    : "bg-slate-100 text-slate-500"
+                                }`}
+                              >
+                                {choice.id}
+                              </span>
+                              <div className="flex flex-col gap-1">
+                                <span className="font-medium text-lg text-foreground">
+                                  {choice.text}
+                                </span>
+                                <span className="text-sm text-muted-foreground">
+                                  {choice.en}
+                                </span>
+                              </div>
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </Card>
           </div>
 
-
+          {/* Movie Vocabulary List */}
+          <div className="mb-12">
+            <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                  <List className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg font-serif-chinese">
+                    {content.vocabulary.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {content.vocabulary.subtitle}
+                  </p>
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50/50 border-b border-border">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-auto min-w-[80px] border-r border-border/50 whitespace-nowrap">
+                        {content.vocabulary.columns.word}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[150px] border-r border-border/50">
+                        {content.vocabulary.columns.pinyin}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[40%] min-w-[200px] border-r border-border/50">
+                        {content.vocabulary.columns.english}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] border-r border-border/50 text-center">
+                        {content.vocabulary.columns.partOfSpeech}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] text-center">
+                        {content.vocabulary.columns.tbcl}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {MOVIE_VOCABULARY_LIST.map((word, index) => (
+                      <Fragment key={index}>
+                        <tr
+                          className="border-b-0 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                          onClick={() => toggleMovieVocabExample(index)}
+                        >
+                          <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                              >
+                                <ChevronDown
+                                  className={`w-4 h-4 transition-transform duration-200 ${movieVocabStates[index] ? "rotate-180" : ""}`}
+                                />
+                              </Button>
+                              <div className="flex flex-col">
+                                <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                  {word.traditional}
+                                </span>
+                                <span className="text-sm text-muted-foreground font-serif-chinese">
+                                  {word.simplified}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-4 border-r border-border/50 font-medium text-primary">
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  playAudio(word.traditional, true);
+                                }}
+                                title="播放"
+                              >
+                                <Volume2 className="w-4 h-4" />
+                              </Button>
+                              <span>{word.pinyin}</span>
+                            </div>
+                          </td>
+                          <td className="p-4 border-r border-border/50 text-slate-600">
+                            {word.english}
+                          </td>
+                          <td className="p-4 border-r border-border/50 text-center">
+                            <Badge
+                              variant="secondary"
+                              className="font-normal text-xs"
+                            >
+                              {word.partOfSpeech}
+                            </Badge>
+                          </td>
+                          <td className="p-4 text-center">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                              {word.tbcl}
+                            </span>
+                          </td>
+                        </tr>
+                        {/* Example sentence row */}
+                        <AnimatePresence>
+                          {movieVocabStates[index] && (
+                            <tr className="border-b border-border/50 bg-slate-50/30">
+                              <td colSpan={5} className="px-4 pb-4 pt-0">
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-6 w-6 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        playAudio(word.example.zh, true)
+                                      }}
+                                      title="播放例句"
+                                    >
+                                      <Volume2 className="w-4 h-4" />
+                                    </Button>
+                                    <div className="flex flex-col gap-1">
+                                      <span className="text-primary/80 font-serif-chinese text-sm">
+                                        {word.example.pinyin}
+                                      </span>
+                                      <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">
+                                        {word.example.zh}
+                                      </span>
+                                      <span className="text-slate-600 text-sm mt-1">
+                                        {word.example.en}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              </td>
+                            </tr>
+                          )}
+                        </AnimatePresence>
+                      </Fragment>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          </div>
 
         </motion.div>
       </main>
