@@ -1943,7 +1943,6 @@ export default function Chapter1() {
                   onClick={() => setShowStoryTranslation(!showStoryTranslation)}
                 >
                   <Languages className="w-4 h-4" />
-                  {showStoryTranslation ? "顯示原文" : "English Translation"}
                 </Button>
               </div>
               <div className="flex items-start gap-4">
@@ -2011,7 +2010,6 @@ export default function Chapter1() {
                   className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
                 >
                   <Languages className="w-4 h-4" />
-                  {lang === "zh" ? "English Translation" : "中文"}
                 </Button>
               </div>
 
@@ -2394,7 +2392,6 @@ export default function Chapter1() {
                           className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
                         >
                           <Languages className="w-4 h-4" />
-                          {lang === "zh" ? "English Translation" : "中文"}
                         </Button>
                       </div>
 
