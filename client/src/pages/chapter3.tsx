@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
@@ -7,6 +7,8 @@ import {
   Heart,
   Volume2,
   Type,
+  List,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -28,6 +30,8 @@ import xiaoyuFull from "@/assets/generated_images/xiaoyu_full.png";
 import chatBackground from "@/assets/generated_images/chat_background_no_clouds.png";
 // @ts-ignore
 import barChatBackground from "@/assets/generated_images/chapter3_bar_chat_bg.png";
+// @ts-ignore
+import summitChatBackground from "@/assets/generated_images/chapter3_summit_chat_bg.png";
 
 const chapterContent = {
   zh: {
@@ -42,6 +46,21 @@ const chapterContent = {
       xiaoyu: "小雨",
       affinity: "",
     },
+    vocabulary: {
+      title: "生詞列表",
+      subtitle: "手機觀看往右滑動可以看到完整資訊",
+      columns: {
+        word: "生詞",
+        pinyin: "拼音",
+        english: "英文翻譯",
+        partOfSpeech: "詞類",
+        tbcl: "TBCL",
+      },
+    },
+    grammar: {
+      title: "語法點",
+      subtitle: "重點語法解析",
+    },
   },
   en: {
     title: "Chapter 3",
@@ -55,8 +74,236 @@ const chapterContent = {
       xiaoyu: "Xiao Yu",
       affinity: "Xiao Yu's Affinity",
     },
+    vocabulary: {
+      title: "Vocabulary List",
+      subtitle: "Swipe right on mobile to see full information",
+      columns: {
+        word: "Word",
+        pinyin: "Pinyin",
+        english: "Meaning",
+        partOfSpeech: "POS",
+        tbcl: "TBCL",
+      },
+    },
+    grammar: {
+      title: "Grammar Points",
+      subtitle: "Key Grammar Explanations",
+    },
   },
 };
+
+type GrammarExample = {
+  zh: string;
+  pinyin: string;
+  en: string;
+};
+
+type GrammarPoint = {
+  id: number;
+  title: string;
+  function: { zh: string; en: string };
+  structure: { zh: string; en: string };
+  explanation: { zh: string; en: string };
+  examples: GrammarExample[];
+};
+
+const CHAPTER3_GRAMMAR_POINTS: GrammarPoint[] = [
+  {
+    id: 1,
+    title: "第一次",
+    function: {
+      zh: "表示某件事情是第一次發生。",
+      en: "Used to say that something happens for the first time.",
+    },
+    structure: {
+      zh: "主語 + 第一次 + 動詞",
+      en: "Subject + 第一次 + Verb",
+    },
+    explanation: {
+      zh: "用來說明某個行為或經驗是第一次。",
+      en: "Used to talk about doing something for the first time.",
+    },
+    examples: [
+      { zh: "這是我第一次來台北。", pinyin: "Zhè shì wǒ dì yī cì lái Táiběi.", en: "This is my first time coming to Taipei." },
+      { zh: "他第一次跟朋友一起出去吃飯。", pinyin: "Tā dì yī cì gēn péngyǒu yìqǐ chūqù chī fàn.", en: "It's his first time going out to eat with friends." },
+      { zh: "我第一次跟新朋友聊天，有一點緊張。", pinyin: "Wǒ dì yī cì gēn xīn péngyǒu liáotiān, yǒu yìdiǎn jǐnzhāng.", en: "It's my first time chatting with a new friend, so I'm a bit nervous." },
+    ],
+  },
+  {
+    id: 2,
+    title: "比",
+    function: {
+      zh: "用來比較兩個人或兩件事情。",
+      en: "Used to compare two people or things.",
+    },
+    structure: {
+      zh: "A + 比 + B + 形容詞",
+      en: "A + 比 + B + Adjective",
+    },
+    explanation: {
+      zh: "表示 A 在某方面超過 B。",
+      en: "Used to say that A is more (adjective) than B.",
+    },
+    examples: [
+      { zh: "聊天比喝酒重要。", pinyin: "Liáotiān bǐ hējiǔ zhòngyào.", en: "Chatting is more important than drinking." },
+      { zh: "今天比昨天冷。", pinyin: "Jīntiān bǐ zuótiān lěng.", en: "Today is colder than yesterday." },
+      { zh: "他覺得認識新朋友比吃飯有意思。", pinyin: "Tā juéde rènshi xīn péngyǒu bǐ chīfàn yǒu yìsi.", en: "He thinks meeting new friends is more interesting than eating." },
+    ],
+  },
+  {
+    id: 3,
+    title: "一邊⋯⋯一邊⋯⋯",
+    function: {
+      zh: "表示同時做兩個動作。",
+      en: "Used to describe doing two actions at the same time.",
+    },
+    structure: {
+      zh: "一邊 + 動作一，一邊 + 動作二",
+      en: "一邊 + Action 1, 一邊 + Action 2",
+    },
+    explanation: {
+      zh: "用來說明兩個動作同時進行。",
+      en: "Used when two actions happen at the same time.",
+    },
+    examples: [
+      { zh: "他們一邊走，一邊聊天。", pinyin: "Tāmen yìbiān zǒu, yìbiān liáotiān.", en: "They walk and chat at the same time." },
+      { zh: "我一邊吃飯，一邊看電視。", pinyin: "Wǒ yìbiān chīfàn, yìbiān kàn diànshì.", en: "I eat and watch TV at the same time." },
+      { zh: "她一邊喝咖啡，一邊跟朋友說話。", pinyin: "Tā yìbiān hē kāfēi, yìbiān gēn péngyǒu shuōhuà.", en: "She drinks coffee and talks with her friend at the same time." },
+    ],
+  },
+];
+
+function GrammarPointCard({
+  point,
+  playAudio,
+}: {
+  point: GrammarPoint;
+  playAudio: (text: string) => void;
+}) {
+  const [showFunctionEn, setShowFunctionEn] = useState(false);
+  const [showStructureEn, setShowStructureEn] = useState(false);
+  const [showExplanationEn, setShowExplanationEn] = useState(false);
+  const [exampleStates, setExampleStates] = useState<{
+    [key: number]: { showPinyin: boolean; showEn: boolean };
+  }>({});
+
+  const toggleExample = (index: number, type: "pinyin" | "en") => {
+    setExampleStates((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        showPinyin: type === "pinyin" ? !prev[index]?.showPinyin : prev[index]?.showPinyin ?? false,
+        showEn: type === "en" ? !prev[index]?.showEn : prev[index]?.showEn ?? false,
+      },
+    }));
+  };
+
+  return (
+    <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900 mb-6">
+      <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">
+            {point.id}
+          </div>
+          <h3 className="font-bold text-xl font-serif-chinese text-primary">
+            {point.title}
+          </h3>
+        </div>
+      </div>
+
+      <div className="p-6 space-y-6">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+              功能 Function
+            </h4>
+            <Button variant="ghost" size="sm" className="h-6 text-xs gap-1 text-primary" onClick={() => setShowFunctionEn(!showFunctionEn)}>
+              <Languages className="w-3 h-3" />
+              English
+            </Button>
+          </div>
+          <p className="text-lg font-medium">{point.function.zh}</p>
+          {showFunctionEn && (
+            <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="text-slate-500 text-sm">
+              {point.function.en}
+            </motion.p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+              結構 Structure
+            </h4>
+            <Button variant="ghost" size="sm" className="h-6 text-xs gap-1 text-primary" onClick={() => setShowStructureEn(!showStructureEn)}>
+              <Languages className="w-3 h-3" />
+              English
+            </Button>
+          </div>
+          <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 font-mono text-base whitespace-pre-line text-slate-700">
+            {point.structure.zh}
+          </div>
+          {showStructureEn && (
+            <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="text-slate-500 text-sm whitespace-pre-line">
+              {point.structure.en}
+            </motion.p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+              解釋 Explanation
+            </h4>
+            <Button variant="ghost" size="sm" className="h-6 text-xs gap-1 text-primary" onClick={() => setShowExplanationEn(!showExplanationEn)}>
+              <Languages className="w-3 h-3" />
+              English
+            </Button>
+          </div>
+          <p className="text-base whitespace-pre-line leading-relaxed">{point.explanation.zh}</p>
+          {showExplanationEn && (
+            <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="text-slate-500 text-sm whitespace-pre-line mt-1">
+              {point.explanation.en}
+            </motion.p>
+          )}
+        </div>
+
+        <div className="space-y-4 pt-4 border-t border-border/50">
+          <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
+            例句 Examples
+          </h4>
+          <div className="grid gap-3">
+            {point.examples.map((ex, idx) => (
+              <div key={idx} className="bg-slate-50/50 p-4 rounded-xl border border-border/50 hover:border-primary/20 transition-colors">
+                <div className="flex flex-col gap-2">
+                  {exampleStates[idx]?.showPinyin && (
+                    <p className="text-sm text-primary font-medium font-serif-chinese">{ex.pinyin}</p>
+                  )}
+                  <p className="text-lg font-medium text-slate-800">{ex.zh}</p>
+                  {exampleStates[idx]?.showEn && <p className="text-sm text-slate-500">{ex.en}</p>}
+                </div>
+                <div className="flex items-center gap-2 mt-3 pt-3 border-t border-dashed border-border/50">
+                  <Button variant="ghost" size="sm" className={`h-7 px-2 text-xs gap-1.5 ${exampleStates[idx]?.showPinyin ? "bg-primary/10 text-primary" : "text-slate-500"}`} onClick={() => toggleExample(idx, "pinyin")}>
+                    <Type className="w-3 h-3" />
+                    拼音
+                  </Button>
+                  <Button variant="ghost" size="sm" className={`h-7 px-2 text-xs gap-1.5 ${exampleStates[idx]?.showEn ? "bg-primary/10 text-primary" : "text-slate-500"}`} onClick={() => toggleExample(idx, "en")}>
+                    <Languages className="w-3 h-3" />
+                    英文
+                  </Button>
+                  <Button variant="ghost" size="sm" className="h-7 px-2 text-xs gap-1.5 text-slate-500 hover:text-primary" onClick={() => playAudio(ex.zh)}>
+                    <Volume2 className="w-3 h-3" />
+                    朗讀
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 type BarMessage = {
   id: number;
@@ -132,6 +379,37 @@ const BAR_MESSAGES: BarMessage[] = [
   },
 ];
 
+// 象山山頂對話：前半段共用，後半段依 affinity 顯示
+type SummitMessage = {
+  id: number;
+  sender: "randy" | "xiaoyu" | "narrator";
+  text: string;
+  en: string;
+  pinyin: string;
+};
+
+const SUMMIT_MESSAGES_COMMON: SummitMessage[] = [
+  { id: 1, sender: "xiaoyu", text: "瑞迪，你喜歡台北的風景嗎？", en: "Randy, do you like the view of Taipei?", pinyin: "Ruìdí, nǐ xǐhuān Táiběi de fēngjǐng ma?" },
+  { id: 2, sender: "randy", text: "我很喜歡，但我更喜歡的是你。", en: "I like it very much, but what I like more is you.", pinyin: "Wǒ hěn xǐhuān, dàn wǒ gèng xǐhuān de shì nǐ." },
+  { id: 3, sender: "narrator", text: "（小雨的臉變紅了。）", en: "(Xiaoyu's face turned red.)", pinyin: "(Xiǎoyǔ de liǎn biàn hóng le.)" },
+  { id: 4, sender: "xiaoyu", text: "真的嗎？", en: "Really?", pinyin: "Zhēn de ma?" },
+  { id: 5, sender: "randy", text: "其實我第一次看到你，就愛上你了。", en: "Actually, the first time I saw you, I fell in love with you.", pinyin: "Qíshí wǒ dì yī cì kàn dào nǐ, jiù àishàng nǐ le." },
+];
+
+const SUMMIT_MESSAGES_RED: SummitMessage[] = [
+  { id: 101, sender: "xiaoyu", text: "我也跟你一樣，我一見到你，就很喜歡你。", en: "I'm the same as you—I liked you as soon as I met you.", pinyin: "Wǒ yě gēn nǐ yīyàng, wǒ yī jiàn dào nǐ, jiù hěn xǐhuān nǐ." },
+  { id: 102, sender: "randy", text: "你願意當我的女朋友嗎？", en: "Will you be my girlfriend?", pinyin: "Nǐ yuànyì dāng wǒ de nǚ péngyǒu ma?" },
+  { id: 103, sender: "xiaoyu", text: "我願意。", en: "I do.", pinyin: "Wǒ yuànyì." },
+  { id: 104, sender: "randy", text: "謝謝你給我機會，我愛你！", en: "Thank you for giving me a chance, I love you!", pinyin: "Xièxiè nǐ gěi wǒ jīhuì, wǒ ài nǐ!" },
+];
+
+const SUMMIT_MESSAGES_GREEN: SummitMessage[] = [
+  { id: 201, sender: "xiaoyu", text: "謝謝你這樣說，但我認為這樣太快了。", en: "Thank you for saying that, but I think this is too fast.", pinyin: "Xièxiè nǐ zhèyàng shuō, dàn wǒ rènwéi zhèyàng tài kuài le." },
+  { id: 202, sender: "randy", text: "很快嗎？我們不是已經認識兩個月了嗎？", en: "Too fast? Haven't we known each other for two months already?", pinyin: "Hěn kuài ma? Wǒmen bù shì yǐjīng rènshí liǎng gè yuè le ma?" },
+  { id: 203, sender: "xiaoyu", text: "我們先當朋友比較好。", en: "It's better if we're just friends first.", pinyin: "Wǒmen xiān dāng péngyǒu bǐjiào hǎo." },
+  { id: 204, sender: "randy", text: "好的，那我當你最好的朋友。", en: "Okay, then I'll be your best friend.", pinyin: "Hǎo de, nà wǒ dāng nǐ zuì hǎo de péngyǒu." },
+];
+
 type MessageState = {
   [key: number]: {
     showEn: boolean;
@@ -139,13 +417,225 @@ type MessageState = {
   };
 };
 
+type VocabWord = {
+  traditional: string;
+  simplified: string;
+  pinyin: string;
+  english: string;
+  partOfSpeech: string;
+  tbcl: string;
+  example: {
+    zh: string;
+    pinyin: string;
+    en: string;
+  };
+};
+
+const BAR_VOCABULARY_LIST: VocabWord[] = [
+  {
+    traditional: "吃完",
+    simplified: "吃完",
+    pinyin: "chī wán",
+    english: "finish eating",
+    partOfSpeech: "V",
+    tbcl: "X",
+    example: { zh: "吃完晚餐以後，我們去喝酒。", pinyin: "Chī wán wǎncān yǐhòu, wǒmen qù hējiǔ.", en: "After finishing dinner, we went to drink." },
+  },
+  {
+    traditional: "之後",
+    simplified: "之后",
+    pinyin: "zhīhòu",
+    english: "after",
+    partOfSpeech: "N / Adv",
+    tbcl: "4",
+    example: { zh: "看完電影之後，他們一起聊天。", pinyin: "Kàn wán diànyǐng zhīhòu, tāmen yīqǐ liáotiān.", en: "After watching the movie, they chatted together." },
+  },
+  {
+    traditional: "看完",
+    simplified: "看完",
+    pinyin: "kàn wán",
+    english: "finish watching",
+    partOfSpeech: "V",
+    tbcl: "X",
+    example: { zh: "看完電影以後，我們走到酒吧。", pinyin: "Kàn wán diànyǐng yǐhòu, wǒmen zǒu dào jiǔbā.", en: "After watching the movie, we walked to the bar." },
+  },
+  {
+    traditional: "喝",
+    simplified: "喝",
+    pinyin: "hē",
+    english: "to drink",
+    partOfSpeech: "V",
+    tbcl: "1",
+    example: { zh: "我們一起喝酒吧。", pinyin: "Wǒmen yīqǐ hējiǔ ba.", en: "Let's drink together." },
+  },
+  {
+    traditional: "酒",
+    simplified: "酒",
+    pinyin: "jiǔ",
+    english: "alcohol",
+    partOfSpeech: "N",
+    tbcl: "1*",
+    example: { zh: "我不常喝酒。", pinyin: "Wǒ bù cháng hējiǔ.", en: "I don't drink often." },
+  },
+  {
+    traditional: "台北101",
+    simplified: "台北101",
+    pinyin: "Táiběi 101",
+    english: "Taipei 101",
+    partOfSpeech: "PN（專有名詞）",
+    tbcl: "X",
+    example: { zh: "台北101附近有很多酒吧。", pinyin: "Táiběi 101 fùjìn yǒu hěn duō jiǔbā.", en: "There are many bars near Taipei 101." },
+  },
+  {
+    traditional: "附近",
+    simplified: "附近",
+    pinyin: "fùjìn",
+    english: "nearby",
+    partOfSpeech: "N / Vs",
+    tbcl: "1*",
+    example: { zh: "這裡附近有一間酒吧。", pinyin: "Zhèlǐ fùjìn yǒu yī jiān jiǔbā.", en: "There is a bar nearby here." },
+  },
+  {
+    traditional: "酒吧",
+    simplified: "酒吧",
+    pinyin: "jiǔbā",
+    english: "bar",
+    partOfSpeech: "N",
+    tbcl: "4*",
+    example: { zh: "我們晚上去酒吧聊天。", pinyin: "Wǒmen wǎnshàng qù jiǔbā liáotiān.", en: "We go to the bar to chat at night." },
+  },
+  {
+    traditional: "聊天",
+    simplified: "聊天",
+    pinyin: "liáotiān",
+    english: "to chat",
+    partOfSpeech: "V-sep",
+    tbcl: "2",
+    example: { zh: "他們一邊喝酒，一邊聊天。", pinyin: "Tāmen yībiān hējiǔ, yībiān liáotiān.", en: "They drink and chat at the same time." },
+  },
+  {
+    traditional: "進入",
+    simplified: "进入",
+    pinyin: "jìnrù",
+    english: "to enter",
+    partOfSpeech: "V",
+    tbcl: "4",
+    example: { zh: "他們進入了一間酒吧。", pinyin: "Tāmen jìnrù le yī jiān jiǔbā.", en: "They entered a bar." },
+  },
+  {
+    traditional: "間",
+    simplified: "间",
+    pinyin: "jiān",
+    english: "(MW for rooms)",
+    partOfSpeech: "M",
+    tbcl: "2",
+    example: { zh: "這是一間小酒吧。", pinyin: "Zhè shì yī jiān xiǎo jiǔbā.", en: "This is a small bar." },
+  },
+  {
+    traditional: "又",
+    simplified: "又",
+    pinyin: "yòu",
+    english: "again / once more",
+    partOfSpeech: "Adv",
+    tbcl: "1*",
+    example: { zh: "進入酒吧以後，他們又開始聊天了。", pinyin: "Jìnrù jiǔbā yǐhòu, tāmen yòu kāishǐ liáotiān le.", en: "After entering the bar, they started chatting again." },
+  },
+  {
+    traditional: "開始",
+    simplified: "开始",
+    pinyin: "kāishǐ",
+    english: "to start",
+    partOfSpeech: "V",
+    tbcl: "2",
+    example: { zh: "他們坐下來，開始聊天。", pinyin: "Tāmen zuò xiàlái, kāishǐ liáotiān.", en: "They sat down and started chatting." },
+  },
+  {
+    traditional: "不一定",
+    simplified: "不一定",
+    pinyin: "bù yídìng",
+    english: "not necessarily",
+    partOfSpeech: "Adv",
+    tbcl: "X",
+    example: { zh: "第一次見面，不一定要喝酒。", pinyin: "Dì yī cì jiànmiàn, bù yídìng yào hējiǔ.", en: "The first time meeting, you don't necessarily have to drink." },
+  },
+  {
+    traditional: "但",
+    simplified: "但",
+    pinyin: "dàn",
+    english: "but",
+    partOfSpeech: "Conj",
+    tbcl: "2",
+    example: { zh: "我想喝酒，但不想喝太多。", pinyin: "Wǒ xiǎng hējiǔ, dàn bù xiǎng hē tài duō.", en: "I want to drink, but I don't want to drink too much." },
+  },
+  {
+    traditional: "想要",
+    simplified: "想要",
+    pinyin: "xiǎngyào",
+    english: "want to",
+    partOfSpeech: "Vaux",
+    tbcl: "2",
+    example: { zh: "我想要跟你聊天。", pinyin: "Wǒ xiǎngyào gēn nǐ liáotiān.", en: "I want to chat with you." },
+  },
+  {
+    traditional: "聊",
+    simplified: "聊",
+    pinyin: "liáo",
+    english: "to chat",
+    partOfSpeech: "V",
+    tbcl: "2",
+    example: { zh: "我想再跟你聊一聊。", pinyin: "Wǒ xiǎng zài gēn nǐ liáo yī liáo.", en: "I want to chat with you a bit more." },
+  },
+  {
+    traditional: "認識",
+    simplified: "认识",
+    pinyin: "rènshí",
+    english: "to get to know",
+    partOfSpeech: "Vst",
+    tbcl: "2",
+    example: { zh: "我想多認識你一點。", pinyin: "Wǒ xiǎng duō rènshí nǐ yīdiǎn.", en: "I want to get to know you a bit more." },
+  },
+  {
+    traditional: "更",
+    simplified: "更",
+    pinyin: "gèng",
+    english: "more",
+    partOfSpeech: "Adv",
+    tbcl: "2",
+    example: { zh: "認識你比喝酒更重要。", pinyin: "Rènshí nǐ bǐ hējiǔ gèng zhòngyào.", en: "Getting to know you is more important than drinking." },
+  },
+  {
+    traditional: "重要",
+    simplified: "重要",
+    pinyin: "zhòngyào",
+    english: "important",
+    partOfSpeech: "Vs",
+    tbcl: "2",
+    example: { zh: "對我來說，朋友很重要。", pinyin: "Duì wǒ lái shuō, péngyǒu hěn zhòngyào.", en: "To me, friends are very important." },
+  },
+  {
+    traditional: "乾杯",
+    simplified: "干杯",
+    pinyin: "gānbēi",
+    english: "cheers",
+    partOfSpeech: "V-sep",
+    tbcl: "X",
+    example: { zh: "我們一起喝酒，乾杯！", pinyin: "Wǒmen yīqǐ hējiǔ, gānbēi!", en: "Let's drink together, cheers!" },
+  },
+];
+
 export default function Chapter3() {
   const [lang, setLang] = useState<Language>("zh");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
+  const [showStory2Translation, setShowStory2Translation] = useState(false);
   const [barChatLang, setBarChatLang] = useState<Language>("zh");
   
   // Message states for bar chat
   const [barMessageStates, setBarMessageStates] = useState<MessageState>({});
+  // Message states for summit chat
+  const [summitMessageStates, setSummitMessageStates] = useState<MessageState>({});
+  const [summitChatLang, setSummitChatLang] = useState<Language>("zh");
+  // Vocabulary list states for bar
+  const [barVocabStates, setBarVocabStates] = useState<{ [key: number]: boolean }>({});
   
   // Bar chat state
   const [barChatState, setBarChatState] = useState<{ messages: BarMessage[] }>(() => {
@@ -238,6 +728,38 @@ export default function Chapter3() {
     }));
   };
 
+  const toggleSummitMessageEn = (id: number) => {
+    setSummitMessageStates((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], showEn: !prev[id]?.showEn },
+    }));
+  };
+
+  const toggleSummitMessagePinyin = (id: number) => {
+    setSummitMessageStates((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], showPinyin: !prev[id]?.showPinyin },
+    }));
+  };
+
+  const toggleSummitChatLang = () => {
+    setSummitChatLang((prev) => (prev === "zh" ? "en" : "zh"));
+  };
+
+  const toggleBarVocabExample = (index: number) => {
+    setBarVocabStates((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const playBarAudio = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "zh-TW";
+    utterance.rate = 0.8;
+    window.speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -305,6 +827,21 @@ export default function Chapter3() {
 
           {/* Bar Chat Interface */}
           <div ref={barChatRef} className="mb-12 relative max-w-4xl mx-auto scroll-mt-20">
+            {/* Floating Characters (Desktop only, same as chapter2) */}
+            <div className="hidden min-[1360px]:block fixed left-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
+              <img
+                src={randyFull}
+                alt="Randy Full Body"
+                className="w-full h-full object-contain object-bottom drop-shadow-2xl scale-110 origin-bottom"
+              />
+            </div>
+            <div className="hidden min-[1360px]:block fixed right-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
+              <img
+                src={xiaoyuFull}
+                alt="Xiao Yu Full Body"
+                className="w-full h-full object-contain object-bottom drop-shadow-2xl origin-bottom"
+              />
+            </div>
             <Card
               className="overflow-hidden border-2 border-primary/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
             >
@@ -472,6 +1009,330 @@ export default function Chapter3() {
               </div>
             </Card>
           </div>
+
+          {/* Bar Vocabulary List */}
+          <div className="mb-12">
+            <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                  <List className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg font-serif-chinese">
+                    {content.vocabulary.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {content.vocabulary.subtitle}
+                  </p>
+                </div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50/50 border-b border-border">
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-auto min-w-[80px] border-r border-border/50 whitespace-nowrap">
+                        {content.vocabulary.columns.word}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[20%] min-w-[150px] border-r border-border/50">
+                        {content.vocabulary.columns.pinyin}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[40%] min-w-[200px] border-r border-border/50">
+                        {content.vocabulary.columns.english}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] border-r border-border/50 text-center">
+                        {content.vocabulary.columns.partOfSpeech}
+                      </th>
+                      <th className="p-4 font-semibold text-sm text-muted-foreground w-[15%] min-w-[80px] text-center">
+                        {content.vocabulary.columns.tbcl}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {BAR_VOCABULARY_LIST.map((word, index) => (
+                      <Fragment key={index}>
+                        <tr
+                          className="border-b-0 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                          onClick={() => toggleBarVocabExample(index)}
+                        >
+                          <td className="p-4 border-r border-border/50 whitespace-nowrap w-min">
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6 rounded-full text-slate-400 hover:text-primary shrink-0"
+                              >
+                                <ChevronDown
+                                  className={`w-4 h-4 transition-transform duration-200 ${barVocabStates[index] ? "rotate-180" : ""}`}
+                                />
+                              </Button>
+                              <div className="flex flex-col">
+                                <span className="font-bold text-lg font-serif-chinese text-slate-800">
+                                  {word.traditional}
+                                </span>
+                                <span className="text-sm text-muted-foreground font-serif-chinese">
+                                  {word.simplified}
+                                </span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-4 border-r border-border/50 font-medium text-primary">
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  playBarAudio(word.traditional);
+                                }}
+                                title="播放"
+                              >
+                                <Volume2 className="w-4 h-4" />
+                              </Button>
+                              <span>{word.pinyin}</span>
+                            </div>
+                          </td>
+                          <td className="p-4 border-r border-border/50 text-slate-600">
+                            {word.english}
+                          </td>
+                          <td className="p-4 border-r border-border/50 text-center">
+                            <Badge
+                              variant="secondary"
+                              className="font-normal text-xs"
+                            >
+                              {word.partOfSpeech}
+                            </Badge>
+                          </td>
+                          <td className="p-4 text-center">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                              {word.tbcl}
+                            </span>
+                          </td>
+                        </tr>
+                        {/* Example sentence row */}
+                        <AnimatePresence>
+                          {barVocabStates[index] && (
+                            <tr className="border-b border-border/50 bg-slate-50/30">
+                              <td colSpan={5} className="px-4 pb-4 pt-0">
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-100/50 text-sm mt-2">
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-6 w-6 rounded-full opacity-70 hover:opacity-100 hover:bg-primary/10 hover:text-primary shrink-0"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        playBarAudio(word.example.zh);
+                                      }}
+                                      title="播放例句"
+                                    >
+                                      <Volume2 className="w-4 h-4" />
+                                    </Button>
+                                    <div className="flex flex-col gap-1">
+                                      <span className="text-primary/80 font-serif-chinese text-sm">
+                                        {word.example.pinyin}
+                                      </span>
+                                      <span className="font-bold text-lg text-slate-800 font-serif-chinese leading-relaxed">
+                                        {word.example.zh}
+                                      </span>
+                                      <span className="text-slate-600 text-sm mt-1">
+                                        {word.example.en}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              </td>
+                            </tr>
+                          )}
+                        </AnimatePresence>
+                      </Fragment>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          </div>
+
+          {/* Grammar Points Section */}
+          <div className="mb-12">
+            <div className="mb-6">
+              <Badge className="mb-2 bg-primary/10 text-primary border-primary/20">
+                <BookOpen className="w-3 h-3 mr-1" />
+                {content.grammar.title}
+              </Badge>
+              <h2 className="text-3xl font-bold font-serif-chinese">
+                {content.grammar.subtitle}
+              </h2>
+            </div>
+            <div className="space-y-6">
+              {CHAPTER3_GRAMMAR_POINTS.map((point) => (
+                <GrammarPointCard key={point.id} point={point} playAudio={playBarAudio} />
+              ))}
+            </div>
+          </div>
+
+          {/* 故事背景（後續）— 放在最下面 */}
+          <div className="mb-12">
+            <Card className="p-8 bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-sm relative">
+              <div className="absolute top-4 right-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                  onClick={() => setShowStory2Translation(!showStory2Translation)}
+                >
+                  <Languages className="w-4 h-4" />
+                </Button>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
+                    {showStory2Translation ? "Story Background" : "故事背景"}
+                  </h2>
+                  <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
+                    {showStory2Translation
+                      ? "Later, the two of them chatted every day and had meals together.\nTwo months later, they made plans to go hiking together.\nWhen they reached the top of Elephant Mountain, they started chatting."
+                      : "後來，他們兩個人每天都聊天、一起吃飯。\n兩個月以後，他們約好一起去爬山。\n到了象山的山頂，他們開始聊天。"
+                    }
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* 象山山頂對話框 — 依 affinity 顯示不同後續 */}
+          <div className="mb-12 relative max-w-4xl mx-auto">
+            <Card className="overflow-hidden border-2 border-primary/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full">
+              <div
+                className="absolute inset-0 z-0 opacity-90 pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${summitChatBackground})` }}
+              />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-violet-100/40 via-transparent to-violet-100/30" />
+              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">⛰️</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg font-serif-chinese">
+                      {content.chat.title} - {summitChatLang === "zh" ? "象山山頂" : "Elephant Mountain"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {content.chat.subtitle}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  onClick={toggleSummitChatLang}
+                  className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                >
+                  <Languages className="w-4 h-4" />
+                </Button>
+              </div>
+
+              <div className="overflow-visible p-8 space-y-6 bg-slate-100/50 dark:bg-slate-950/50 relative">
+                {[...SUMMIT_MESSAGES_COMMON, ...(affinity === "red" ? SUMMIT_MESSAGES_RED : SUMMIT_MESSAGES_GREEN)].map((msg) => (
+                  <div key={msg.id}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-start gap-4"
+                    >
+                      {msg.sender === "narrator" ? (
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border-2 border-slate-300 bg-slate-50">
+                          <span className="text-2xl">🌸</span>
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 shadow-md border-2 ${
+                            msg.sender === "randy" ? "border-blue-200" : "border-pink-200"
+                          }`}
+                        >
+                          <img
+                            src={msg.sender === "randy" ? randyProfile : xiaoyuProfile}
+                            alt={msg.sender === "randy" ? "Randy" : "Xiaoyu"}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        {msg.sender !== "narrator" && (
+                          <div className="mb-1">
+                            <span className="text-xs text-muted-foreground font-medium">
+                              {msg.sender === "randy" ? "瑞迪" : "小雨"}
+                            </span>
+                          </div>
+                        )}
+                        <div className={`space-y-2 ${msg.sender === "narrator" ? "" : "mb-2"}`}>
+                          {summitMessageStates[msg.id]?.showPinyin && (
+                            <p className="text-sm text-primary font-medium border-b border-primary/10 pb-1 font-serif-chinese">
+                              {msg.pinyin}
+                            </p>
+                          )}
+                          <p className={`${msg.sender === "narrator" ? "text-sm italic text-slate-600" : "text-base font-medium"} leading-relaxed`}>
+                            {msg.text}
+                          </p>
+                          {summitMessageStates[msg.id]?.showEn && (
+                            <p className="text-sm text-slate-500 mt-2 pt-2 border-t border-slate-200/60 font-sans">
+                              {msg.en}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                              summitMessageStates[msg.id]?.showEn ? "bg-primary/10 text-primary hover:bg-primary/20" : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            }`}
+                            onClick={() => toggleSummitMessageEn(msg.id)}
+                          >
+                            <Languages className="w-3.5 h-3.5" />
+                            <span>翻譯</span>
+                          </Button>
+                          <div className="w-px h-3 bg-slate-200" />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
+                              summitMessageStates[msg.id]?.showPinyin ? "bg-primary/10 text-primary hover:bg-primary/20" : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                            }`}
+                            onClick={() => toggleSummitMessagePinyin(msg.id)}
+                          >
+                            <Type className="w-3.5 h-3.5" />
+                            <span>拼音</span>
+                          </Button>
+                          {msg.sender !== "narrator" && (
+                            <>
+                              <div className="w-px h-3 bg-slate-200" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                                onClick={() => playBarAudio(msg.text)}
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                                <span>朗讀</span>
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
         </motion.div>
       </main>
 
@@ -500,14 +1361,14 @@ export default function Chapter3() {
         </div>
       </footer>
 
-      {/* Floating Affinity Meter - Fixed at bottom right */}
+      {/* Floating Affinity Meter - Fixed at bottom right，可手動切換心跳狀態 */}
       <div className="fixed bottom-8 right-8 z-[60] flex flex-col gap-3">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className={`flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
+            className={`flex items-center gap-3 px-5 py-3 rounded-full shadow-2xl backdrop-blur-md border-2 transition-colors duration-500 ${
               affinity === "green"
                 ? "bg-jade/90 border-jade text-white shadow-jade/20"
                 : "bg-red-500/90 border-red-500 text-white shadow-red-500/20"
@@ -515,25 +1376,28 @@ export default function Chapter3() {
           >
             {affinity === "green" ? (
               <div>
-                <Heart className={`w-6 h-6 fill-current`} />
+                <Heart className="w-6 h-6 fill-current" />
               </div>
             ) : (
               <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 0.7,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Heart className={`w-6 h-6 fill-current`} />
+                <Heart className="w-6 h-6 fill-current" />
               </motion.div>
             )}
-            <div className="flex flex-col">
-              <span className="text-xs opacity-90 font-medium">
-                {affinity === "green" ? "小雨的心跳普通" : "小雨的心跳加速"}
+            <span className="font-medium text-sm whitespace-nowrap">小雨心跳</span>
+            <div className="flex items-center gap-2 bg-white/20 rounded-full px-2 py-1 border border-white/30">
+              <span className={`text-xs font-medium transition-opacity ${affinity === "green" ? "opacity-100" : "opacity-50"}`}>
+                普通
+              </span>
+              <Switch
+                checked={affinity === "red"}
+                onCheckedChange={(checked) => setAffinity(checked ? "red" : "green")}
+                className="data-[state=checked]:bg-red-500"
+              />
+              <span className={`text-xs font-medium transition-opacity ${affinity === "red" ? "opacity-100" : "opacity-50"}`}>
+                加速
               </span>
             </div>
           </motion.div>
