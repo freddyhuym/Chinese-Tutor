@@ -26,6 +26,8 @@ import randyFull from "@/assets/generated_images/randy_full.png";
 import xiaoyuFull from "@/assets/generated_images/xiaoyu_full.png";
 // @ts-ignore
 import chatBackground from "@/assets/generated_images/chat_background_no_clouds.png";
+// @ts-ignore
+import barChatBackground from "@/assets/generated_images/chapter3_bar_chat_bg.png";
 
 const chapterContent = {
   zh: {
@@ -307,13 +309,14 @@ export default function Chapter3() {
               className="overflow-hidden border-2 border-primary/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
             >
               <div
-                className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
-                style={{ backgroundImage: `url(${chatBackground})` }}
+                className="absolute inset-0 z-0 opacity-90 pointer-events-none bg-cover bg-center"
+                style={{ backgroundImage: `url(${barChatBackground})` }}
               />
+              <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-violet-50/50 via-transparent to-violet-50/30" />
               <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">🍺</span>
+                    <span className="text-2xl">🍷</span>
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
