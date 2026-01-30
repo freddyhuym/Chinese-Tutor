@@ -1365,49 +1365,49 @@ const LISTENING_PRACTICE = [
   {
     id: 1,
     title: "聽力練習 1",
-    audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Placeholder
+    audioSrc: "/c1l1.mp3", // Audio file for listening practice 1
     questions: [
       {
         id: 1,
-        question: "瑞迪是哪國人？",
-        options: ["美國人", "台灣人", "英國人", "日本人"],
-        answer: 0,
-      },
-      {
-        id: 2,
-        question: "小雨喜歡做什麼？",
-        options: ["看書", "游泳", "打籃球", "睡覺"],
+        question: "說話的人在哪裡？",
+        options: ["教室", "圖書館", "咖啡店", "電影院"],
         answer: 1,
       },
       {
+        id: 2,
+        question: "大部分人在做什麼",
+        options: ["聊天", "看電影", "看書或用電腦學習", "睡覺"],
+        answer: 2,
+      },
+      {
         id: 3,
-        question: "他們最後決定去哪裡？",
-        options: ["去吃飯", "看電影", "去圖書館", "去公園"],
-        answer: 0,
+        question: "說話的人覺得今天怎麼樣？",
+        options: ["不喜歡", "覺得很吵", "沒什麼感覺", "很喜歡"],
+        answer: 3,
       },
     ],
   },
   {
     id: 2,
     title: "聽力練習 2",
-    audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Placeholder
+    audioSrc: "/c1l2.wav", // Audio file for listening practice 2
     questions: [
       {
         id: 1,
-        question: "他們約在幾點見面？",
-        options: ["五點", "六點", "七點", "八點"],
-        answer: 1,
+        question: "「我」覺得學中文怎麼樣？",
+        options: ["學中文很難", "學中文沒意思", "學中文很好，也很重要", "學中文不用練習"],
+        answer: 2,
       },
       {
         id: 2,
-        question: "他們約在哪裡見面？",
-        options: ["學校", "捷運站", "餐廳", "電影院"],
-        answer: 1,
+        question: "短文中，「我」現在可以做什麼？",
+        options: ["跟老師學中文", "跟朋友一起旅行", "跟台灣人聊天", "看中文電影"],
+        answer: 2,
       },
       {
         id: 3,
-        question: "瑞迪想認識誰？",
-        options: ["老師", "新朋友", "老闆", "醫生"],
+        question: "為什麼「我」要多一點練習？",
+        options: ["因為我很忙", "因為我說得還不太好", "因為我不喜歡中文", "因為我不想聊天"],
         answer: 1,
       },
     ],
@@ -1419,25 +1419,25 @@ const READING_PRACTICE = [
     id: 1,
     title: "閱讀測驗 1",
     content:
-      "瑞迪是美國人，他剛來台灣。他會說一點中文，但是說得不太好。他想認識新朋友，所以他常常去學校的圖書館。在那裡，他認識了小雨。小雨是台灣人，她想學習英文。",
+      "旅行的時候，跟人聊天很有意思，也可以了解文化。很多人想去別的地方，看風景，也吃當地的東西。路上大家在問路，在買東西，用簡單的話說明意思。平常有人看電影，有人聽音樂，一點一點練習生活中的用法。慢慢習慣以後，旅行也會很方便。",
     questions: [
       {
         id: 1,
-        question: "瑞迪為什麼去圖書館？",
-        options: ["他喜歡看書", "他想認識朋友", "他在那裡工作", "他在等公車"],
+        question: "旅行的時候，跟人聊天可以做什麼？",
+        options: ["看電影", "了解文化", "聽音樂", "買東西"],
         answer: 1,
       },
       {
         id: 2,
-        question: "小雨想學什麼？",
-        options: ["中文", "日文", "英文", "法文"],
+        question: "短文中提到，路上大家在做什麼？",
+        options: ["在看風景", "在聽音樂", "在問路和買東西", "在吃飯"],
         answer: 2,
       },
       {
         id: 3,
-        question: "瑞迪的中文說得怎麼樣？",
-        options: ["非常好", "不太好", "完全不會", "跟台灣人一樣"],
-        answer: 1,
+        question: "為什麼旅行會變得很方便？",
+        options: ["因為有很多朋友", "因為常常看電影", "因為慢慢習慣生活中的用法", "因為去了很多地方"],
+        answer: 2,
       },
     ],
   },
@@ -1445,25 +1445,25 @@ const READING_PRACTICE = [
     id: 2,
     title: "閱讀測驗 2",
     content:
-      "今天是星期六，瑞迪跟小雨約好一起去吃飯。他們約在台北101捷運站見面。瑞迪很喜歡吃牛肉麵，小雨知道一家很好吃的牛肉麵店。他們都很高興。",
+      "剛剛在車站跟朋友見面，一起去吃飯。這家店看起來很特別，人不多，但是大家都在聊天。菜不多，做法也很簡單，但是味道怎麼樣？因為用的東西很新鮮，所以吃起來不錯。吃完飯以後，跟朋友一起走一走，看看附近的店。這家店很好，那家呢？平常這裡很熱鬧，很多人喜歡來這裡見面。",
     questions: [
       {
         id: 1,
-        question: "今天是星期幾？",
-        options: ["星期五", "星期六", "星期日", "星期一"],
+        question: "短文一開始，事情發生在哪裡？",
+        options: ["在餐廳", "在車站", "在家裡", "在學校"],
         answer: 1,
       },
       {
         id: 2,
-        question: "他們要去吃什麼？",
-        options: ["餃子", "炒飯", "牛肉麵", "火鍋"],
+        question: "這家店的食物為什麼吃起來不錯？",
+        options: ["因為菜很多", "因為人很多", "因為用的東西很新鮮", "因為做法很特別"],
         answer: 2,
       },
       {
         id: 3,
-        question: "他們約在哪裡？",
-        options: ["學校", "公園", "捷運站", "電影院"],
-        answer: 2,
+        question: "「這家店很好，那家呢？」這句話想做什麼？",
+        options: ["問價錢", "想知道不同的店怎麼樣", "問路", "找朋友"],
+        answer: 1,
       },
     ],
   },
@@ -1496,39 +1496,39 @@ const SPEAKING_SENTENCES = [
 const GRAMMAR_PRACTICE = [
   {
     id: 1,
-    title: "情境 1：自我介紹",
-    scenario: "你要介紹自己是哪國人 (美國人)，你會怎麼說？",
-    answer: "我是美國人。",
+    title: "練習 1｜想 + V",
+    scenario: "你想做什麼？",
+    answer: "我想去旅行。",
   },
   {
     id: 2,
-    title: "情境 2：詢問興趣",
-    scenario: "你想問新朋友平常喜歡做什麼，你會怎麼問？",
-    answer: "你平常喜歡做什麼？",
+    title: "練習 2｜一點",
+    scenario: "你想不想喝水？",
+    answer: "我想喝一點水。",
   },
   {
     id: 3,
-    title: "情境 3：使用「最」",
-    scenario: "告訴朋友你最喜歡吃牛肉麵。",
-    answer: "我最喜歡吃牛肉麵。",
+    title: "練習 3｜也",
+    scenario: "他喜歡游泳，你呢？",
+    answer: "我也喜歡游泳。",
   },
   {
     id: 4,
-    title: "情境 4：使用「跟」",
-    scenario: "告訴朋友你要和同學去打籃球。",
-    answer: "我要跟同學去打籃球。",
+    title: "練習 4｜在 + V",
+    scenario: "他現在在做什麼？",
+    answer: "他在看書。",
   },
   {
     id: 5,
-    title: "情境 5：使用「呢」",
-    scenario: "你說你喜歡看書，然後想反問對方，你會怎麼說？",
-    answer: "我喜歡看書，你呢？",
+    title: "練習 5｜呢",
+    scenario: "你覺得電影好看嗎？",
+    answer: "我覺得電影很好看，你覺得呢？",
   },
   {
     id: 6,
-    title: "情境 6：約時間",
-    scenario: "建議明天見面，你會怎麼說？",
-    answer: "我們明天見面好嗎？ / 明天見。",
+    title: "練習 6｜跟 ",
+    scenario: "你喜歡一個人吃飯嗎？",
+    answer: "我喜歡跟朋友吃飯。",
   },
 ];
 
@@ -2797,11 +2797,33 @@ export default function Chapter1() {
                             variant="outline"
                             className="h-8 gap-2 text-primary"
                             onClick={() => {
-                              // Mock audio play
-                              playAudio(
-                                "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
-                                false,
-                              );
+                              if (practice.id === 1) {
+                                // Play actual audio file for listening practice 1
+                                const audio = new Audio("/c1l1.mp3");
+                                audio.play().catch((err) => {
+                                  console.error("Error playing audio:", err);
+                                  playAudio(
+                                    "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
+                                    false,
+                                  );
+                                });
+                              } else if (practice.id === 2) {
+                                // Play actual audio file for listening practice 2
+                                const audio = new Audio("/c1l2.mp3");
+                                audio.play().catch((err) => {
+                                  console.error("Error playing audio:", err);
+                                  playAudio(
+                                    "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
+                                    false,
+                                  );
+                                });
+                              } else {
+                                // Mock audio play for other practices
+                                playAudio(
+                                  "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
+                                  false,
+                                );
+                              }
                             }}
                           >
                             <Play className="w-3 h-3" />

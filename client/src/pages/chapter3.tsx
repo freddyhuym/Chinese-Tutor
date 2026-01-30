@@ -89,47 +89,40 @@ const BAR_MESSAGES: BarMessage[] = [
   {
     id: 4,
     sender: "narrator",
-    text: "他們走在路上，一邊走，一邊聊天。",
-    en: "They walked on the road, chatting as they walked.",
-    pinyin: "Tāmen zǒu zài lùshàng, yībiān zǒu, yībiān liáotiān.",
+    text: "他們走在路上，一邊走，一邊聊天。進入了一間店後，他們又開始說話了。",
+    en: "They walked on the road, chatting as they walked. After entering a shop, they started talking again.",
+    pinyin: "Tāmen zǒu zài lùshàng, yībiān zǒu, yībiān liáotiān. Jìnrù le yī jiān diàn hòu, tāmen yòu kāishǐ shuōhuà le.",
   },
   {
     id: 5,
-    sender: "narrator",
-    text: "進入了一間店後，他們開始聊天。",
-    en: "After entering a shop, they started chatting.",
-    pinyin: "Jìnrù le yī jiān diàn hòu, tāmen kāishǐ liáotiān.",
-  },
-  {
-    id: 6,
     sender: "xiaoyu",
     text: "你第一次跟新朋友出去，就喝酒嗎？",
     en: "Is this the first time you go out with a new friend and drink?",
     pinyin: "Nǐ dì yī cì gēn xīn péngyǒu chūqù, jiù hējiǔ ma?",
   },
   {
-    id: 7,
+    id: 6,
     sender: "randy",
     text: "不一定，但認識你比喝酒更重要。",
     en: "Not necessarily, but getting to know you is more important than drinking.",
     pinyin: "Bù yīdìng, dàn rènshí nǐ bǐ hējiǔ gèng zhòngyào.",
   },
   {
-    id: 8,
+    id: 7,
     sender: "xiaoyu",
     text: "你很會說話。",
     en: "You're very good at talking.",
     pinyin: "Nǐ hěn huì shuōhuà.",
   },
   {
-    id: 9,
+    id: 8,
     sender: "randy",
     text: "我們一邊喝酒，一邊聊天，乾杯。",
     en: "Let's drink and chat at the same time, cheers.",
     pinyin: "Wǒmen yībiān hējiǔ, yībiān liáotiān, gānbēi.",
   },
   {
-    id: 10,
+    id: 9,
     sender: "xiaoyu",
     text: "乾杯。",
     en: "Cheers.",
@@ -154,8 +147,21 @@ export default function Chapter3() {
   
   // Bar chat state
   const [barChatState, setBarChatState] = useState<{ messages: BarMessage[] }>(() => {
-    const saved = localStorage.getItem("chapter3_bar_chat_state");
-    return saved ? JSON.parse(saved) : { messages: BAR_MESSAGES };
+    const saved = localStorage.getItem("chapter3_bar_chat_state_v2");
+    if (!saved) return { messages: BAR_MESSAGES };
+    try {
+      const parsed = JSON.parse(saved);
+      // 若舊資料是合併前的格式（有 id 5 的 narrator），改用新的 BAR_MESSAGES
+      const hasOldNarrator5 = parsed.messages?.some(
+        (m: BarMessage) => m.id === 5 && m.sender === "narrator" && m.text?.includes("進入了一間店後，他們開始聊天")
+      );
+      if (hasOldNarrator5 || (parsed.messages?.length ?? 0) !== BAR_MESSAGES.length) {
+        return { messages: BAR_MESSAGES };
+      }
+      return parsed;
+    } catch {
+      return { messages: BAR_MESSAGES };
+    }
   });
   
   // Shared scenario state using localStorage
@@ -173,7 +179,6 @@ export default function Chapter3() {
   const t = getTranslations(lang);
   const content = chapterContent[lang];
 
-  const chatContainerRef = useRef<HTMLDivElement>(null);
   const barChatRef = useRef<HTMLDivElement>(null);
 
   // Save scenario to localStorage when it changes
@@ -190,7 +195,7 @@ export default function Chapter3() {
 
   // Save bar chat state to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem("chapter3_bar_chat_state", JSON.stringify(barChatState));
+    localStorage.setItem("chapter3_bar_chat_state_v2", JSON.stringify(barChatState));
   }, [barChatState]);
 
   // Scroll to top on mount
@@ -296,64 +301,6 @@ export default function Chapter3() {
             </Card>
           </div>
 
-          {/* Chat Interface */}
-          <div className="mb-12 relative max-w-4xl mx-auto">
-            {/* Floating Characters (Desktop only) */}
-            <div className="hidden min-[1360px]:block fixed left-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
-              <img
-                src={randyFull}
-                alt="Randy Full Body"
-                className="w-full h-full object-contain object-bottom drop-shadow-2xl scale-110 origin-bottom"
-              />
-            </div>
-
-            <div className="hidden min-[1360px]:block fixed right-[5%] bottom-0 h-[500px] w-64 z-40 pointer-events-none">
-              <img
-                src={xiaoyuFull}
-                alt="Xiao Yu Full Body"
-                className="w-full h-full object-contain object-bottom drop-shadow-2xl origin-bottom"
-              />
-            </div>
-
-            <Card
-              ref={chatContainerRef}
-              className="overflow-hidden border-2 border-border/50 shadow-lg bg-slate-50 dark:bg-slate-900 z-10 relative w-full"
-            >
-              <div
-                className="absolute inset-0 z-0 opacity-40 pointer-events-none bg-cover bg-center"
-                style={{ backgroundImage: `url(${chatBackground})` }}
-              />
-              <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📱</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {content.chat.subtitle}
-                    </p>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  onClick={toggleLang}
-                  className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 border border-transparent min-h-8 rounded-md px-3 text-xs gap-2 text-primary hover:text-primary hover:bg-primary/10"
-                >
-                  <Languages className="w-4 h-4" />
-                </Button>
-              </div>
-
-              <div className="overflow-visible p-8 space-y-4 bg-slate-100/50 dark:bg-slate-950/50 relative">
-                <div className="text-center py-12 text-muted-foreground">
-                  <p className="text-lg">內容即將推出</p>
-                </div>
-              </div>
-            </Card>
-          </div>
-
           {/* Bar Chat Interface */}
           <div ref={barChatRef} className="mb-12 relative max-w-4xl mx-auto scroll-mt-20">
             <Card
@@ -451,13 +398,13 @@ export default function Chapter3() {
                             </span>
                           </div>
                         )}
-                        <div className="space-y-2 mb-2">
+                        <div className={`space-y-2 ${msg.sender === "narrator" ? "" : "mb-2"}`}>
                           {barMessageStates[msg.id]?.showPinyin && (
                             <p className="text-sm text-primary font-medium border-b border-primary/10 pb-1 font-serif-chinese">
                               {msg.pinyin}
                             </p>
                           )}
-                          <p className={`${msg.sender === "narrator" ? "text-sm italic text-slate-600" : "text-base font-medium"} leading-relaxed font-serif-chinese`}>
+                          <p className={`${msg.sender === "narrator" ? "text-sm italic text-slate-600" : "text-base font-medium"} leading-relaxed`}>
                             {msg.text}
                           </p>
                           {barMessageStates[msg.id]?.showEn && (
@@ -510,6 +457,7 @@ export default function Chapter3() {
                                 }}
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
+                                <span>朗讀</span>
                               </Button>
                             </>
                           )}
