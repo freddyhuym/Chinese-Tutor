@@ -1625,9 +1625,14 @@ function SpeakingPracticeItem({
   return (
     <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
       <div className="flex items-start justify-between mb-4">
-        <div>
-          <h4 className="font-medium text-lg text-slate-800 dark:text-slate-200">{sentence.text}</h4>
-          <p className="text-slate-500 text-sm font-serif-chinese">{sentence.pinyin}</p>
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">
+            {sentence.id}
+          </div>
+          <div>
+            <h4 className="font-medium text-lg text-slate-800 dark:text-slate-200">{sentence.text}</h4>
+            <p className="text-slate-500 text-sm font-serif-chinese">{sentence.pinyin}</p>
+          </div>
         </div>
         <div className="flex gap-2">
             {matchState === "full" && <Check className="w-6 h-6 text-green-500" />}
@@ -2780,6 +2785,19 @@ export default function Chapter1() {
                 value="listening"
                 className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"
               >
+                <Card className="p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                      <Headphones className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">聽力練習 Listening Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請聽音檔並回答問題 &nbsp;Please listen to the audio and answer the questions
+                      </p>
+                    </div>
+                  </div>
+                </Card>
                 {LISTENING_PRACTICE.map((practice) => (
                   <Card
                     key={practice.id}
@@ -2886,6 +2904,19 @@ export default function Chapter1() {
                 value="reading"
                 className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"
               >
+                <Card className="p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                      <BookOpenText className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">閱讀練習 Reading Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請閱讀短文並回答問題 &nbsp;Please read the passage and answer the questions
+                      </p>
+                    </div>
+                  </div>
+                </Card>
                 {READING_PRACTICE.map((practice) => (
                   <Card
                     key={practice.id}
@@ -2952,21 +2983,21 @@ export default function Chapter1() {
                 value="speaking"
                 className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"
               >
-                <Card className="p-6 border-2 border-border/50">
-                  <div className="flex items-center gap-3 mb-6">
+                <Card className="rounded-xl bg-card text-card-foreground shadow p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                       <Mic className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-lg">
-                        口語練習 Speaking Practice
-                      </h4>
+                      <h4 className="font-bold text-lg">說話練習 Speaking Practice</h4>
                       <p className="text-slate-500 text-sm">
-                        請唸出下列句子 Please read the following sentences aloud
+                        請唸出下列句子 &nbsp;Please read the following sentences aloud
                       </p>
                     </div>
                   </div>
+                </Card>
 
+                <Card className="p-6 border-2 border-border/50">
                   <div className="grid gap-6">
                     {SPEAKING_SENTENCES.map((sentence) => (
                       <SpeakingPracticeItem
@@ -2983,6 +3014,19 @@ export default function Chapter1() {
                 value="grammar"
                 className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"
               >
+                <Card className="p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                      <PenTool className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">文法練習 Grammar Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請用中文作答並參考答案練習 &nbsp;Please write your answer in Chinese and check the reference
+                      </p>
+                    </div>
+                  </div>
+                </Card>
                 <div className="grid gap-6">
                   {GRAMMAR_PRACTICE.map((item) => (
                     <Card

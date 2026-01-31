@@ -5,6 +5,7 @@ import {
   Languages,
   BookOpen,
   Heart,
+  X,
   Volume2,
   Type,
   List,
@@ -745,6 +746,9 @@ export default function Chapter3() {
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [showStory2Translation, setShowStory2Translation] = useState(false);
   const [showLoveChoiceTranslation, setShowLoveChoiceTranslation] = useState(false);
+  const [xiaoyuThoughtToastOpen, setXiaoyuThoughtToastOpen] = useState(false);
+  const [xiaoyuThoughtToastShowEn, setXiaoyuThoughtToastShowEn] = useState(false);
+  const [xiaoyuThoughtToastAffinity, setXiaoyuThoughtToastAffinity] = useState<"green" | "red">("green");
   const [barChatLang, setBarChatLang] = useState<Language>("zh");
   
   // Message states for bar chat
@@ -796,9 +800,6 @@ export default function Chapter3() {
     const saved = localStorage.getItem("affinity_state");
     return (saved === "green" || saved === "red") ? saved : "green";
   });
-
-  // 進入頁面前先記錄小雨心跳狀態（避免被後續強制改變覆蓋）
-  const affinityOnEnterRef = useRef<"green" | "red">(affinity);
   
   const t = getTranslations(lang);
   const content = chapterContent[lang];
@@ -1412,7 +1413,7 @@ export default function Chapter3() {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title} - {summitChatLang === "zh" ? "象山山頂" : "Elephant Mountain"}
+                      {content.chat.title} - {summitChatLang === "zh" ? "象山情境" : "Elephant Mountain"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       {content.chat.subtitle}
@@ -1539,7 +1540,7 @@ export default function Chapter3() {
                               </Button>
                             </div>
                             <p className="font-bold font-serif-chinese text-slate-800 dark:text-slate-100 mb-3 pr-10">
-                              {showLoveChoiceTranslation ? "Do you want to be with Xiaoyu?" : "瑞迪想跟小雨在一起嗎?"}
+                              {showLoveChoiceTranslation ? "Do you want Randy and Xiaoyu to be together?" : "你希望瑞迪和小雨在一起嗎？"}
                             </p>
                             <div className="flex flex-col sm:flex-row gap-2">
                               <Button
@@ -1547,21 +1548,22 @@ export default function Chapter3() {
                                 className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
                                 onClick={() => setAffinity("red")}
                               >
-                                {showLoveChoiceTranslation ? "❤️ Yes" : "❤️想"}
+                                {showLoveChoiceTranslation ? "💖 Be together" : "💖 在一起"}
                               </Button>
                               <Button
                                 size="sm"
                                 className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
                                 onClick={() => setAffinity("green")}
                               >
-                                {showLoveChoiceTranslation ? "💔 No" : "💔不想"}
+                                {showLoveChoiceTranslation ? "💔 Just be friends" : "💔 當朋友就好"}
                               </Button>
                               <Button
                                 size="sm"
                                 className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
                                 onClick={() => {
-                                  const original = affinityOnEnterRef.current;
-                                  if (original !== affinity) setAffinity(original);
+                                  setXiaoyuThoughtToastAffinity(affinity);
+                                  setXiaoyuThoughtToastShowEn(false);
+                                  setXiaoyuThoughtToastOpen(true);
                                 }}
                               >
                                 {showLoveChoiceTranslation ? "🔮 See what Xiaoyu thinks" : "🔮看小雨的想法"}
@@ -1971,6 +1973,60 @@ export default function Chapter3() {
           </div>
         </motion.div>
       </main>
+
+      {/* 右上角提示：看小雨的想法（依當下心跳顯示文字，含翻譯/關閉） */}
+      <AnimatePresence>
+        {xiaoyuThoughtToastOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="fixed top-6 right-6 z-[90] w-[min(92vw,460px)]"
+            role="status"
+            aria-live="polite"
+          >
+            <div className="relative rounded-2xl border border-primary/20 bg-white/90 dark:bg-slate-950/80 backdrop-blur shadow-2xl p-4">
+              <div className="absolute top-2 right-2 flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-primary hover:text-primary hover:bg-primary/10 dark:text-slate-100 dark:hover:bg-slate-800/60"
+                  onClick={() => setXiaoyuThoughtToastShowEn((prev) => !prev)}
+                  aria-label={xiaoyuThoughtToastShowEn ? "切換回中文" : "翻譯"}
+                >
+                  <Languages className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800/60"
+                  onClick={() => setXiaoyuThoughtToastOpen(false)}
+                  aria-label="關閉"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+
+              <p className="font-bold font-serif-chinese text-slate-800 dark:text-slate-100 pr-16">
+                {xiaoyuThoughtToastShowEn ? "What Xiaoyu thinks" : "小雨的想法"}
+              </p>
+
+              <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-200 pr-2">
+                {xiaoyuThoughtToastShowEn ? (
+                  xiaoyuThoughtToastAffinity === "green"
+                    ? "Because Randy didn’t pay for Xiaoyu and the conversation was too boring, Xiaoyu doesn’t want to be with Randy."
+                    : "Because Randy paid for Xiaoyu and the conversation was interesting, Xiaoyu wants to be with Randy."
+                ) : xiaoyuThoughtToastAffinity === "green" ? (
+                  "因為沒幫小雨付錢，而且說話太無聊，所以小雨不想跟瑞迪在一起"
+                ) : (
+                  "因為有幫小雨付錢，而且說話很有意思，所以小雨想跟瑞迪在一起"
+                )}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <footer className="py-12 border-t border-border bg-muted/20 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
