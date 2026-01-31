@@ -2640,11 +2640,11 @@ export default function Chapter2() {
               </h2>
             </div>
 
-            {CHAPTER2_GRAMMAR_POINTS.map((point) => (
-              <Fragment key={point.id}>
-                <GrammarPointCard point={point} playAudio={playAudio} />
-              </Fragment>
-            ))}
+            {CHAPTER2_GRAMMAR_POINTS.filter((point) => point.id === 1 || point.id === 2 || point.id === 3 || point.id === 4 ).map((point) => (
+                <Fragment key={point.id}>
+                  <GrammarPointCard point={point} playAudio={playAudio} />
+                </Fragment>
+              ))}
           </div>
 
           {/* Movie Theater Chat Interface */}
@@ -3353,11 +3353,11 @@ export default function Chapter2() {
               />
               <div className="px-2 py-1 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-xs font-bold font-chinese text-primary-foreground">
-                  心動中文
+                  說中文吧：約會篇
                 </span>
               </div>
-              <span className="font-semibold font-serif-chinese">
-                Heartbeat Chinese
+              <span>
+                Let’s Speak Chinese: Dating Edition
               </span>
             </div>
             <p className="text-sm text-muted-foreground">

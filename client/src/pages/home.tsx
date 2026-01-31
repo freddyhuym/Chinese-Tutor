@@ -889,10 +889,10 @@ export default function Home() {
               />
               <div className="px-2 py-1 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-xs font-bold font-chinese text-primary-foreground">
-                  心動中文
+                  說中文吧：約會篇
                 </span>
               </div>
-              <span className="font-semibold font-serif-chinese">
+              <span>
                 Let’s Speak Chinese: Dating Edition
               </span>
             </div>

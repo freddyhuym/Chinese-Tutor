@@ -28,7 +28,7 @@ export function Header() {
             <div className="relative">
               <img 
                 src={logo} 
-                alt="心動中文 Heartbeat Chinese Logo" 
+                alt="說中文吧：約會篇 Let’s Speak Chinese: Dating Edition" 
                 className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-2 drop-shadow-md"
               />
               <div className="absolute inset-0 bg-rose-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

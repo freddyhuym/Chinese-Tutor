@@ -744,6 +744,7 @@ export default function Chapter3() {
   const [lang, setLang] = useState<Language>("zh");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
   const [showStory2Translation, setShowStory2Translation] = useState(false);
+  const [showLoveChoiceTranslation, setShowLoveChoiceTranslation] = useState(false);
   const [barChatLang, setBarChatLang] = useState<Language>("zh");
   
   // Message states for bar chat
@@ -795,6 +796,9 @@ export default function Chapter3() {
     const saved = localStorage.getItem("affinity_state");
     return (saved === "green" || saved === "red") ? saved : "green";
   });
+
+  // 進入頁面前先記錄小雨心跳狀態（避免被後續強制改變覆蓋）
+  const affinityOnEnterRef = useRef<"green" | "red">(affinity);
   
   const t = getTranslations(lang);
   const content = chapterContent[lang];
@@ -1521,6 +1525,50 @@ export default function Chapter3() {
                             </>
                           )}
                         </div>
+                        {msg.id === 5 && msg.sender === "randy" && (
+                          <div className="mt-3 rounded-2xl border border-white/40 bg-white/70 dark:bg-slate-900/70 backdrop-blur p-4 shadow-sm relative">
+                            <div className="absolute top-3 right-3">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0 text-primary hover:text-primary hover:bg-primary/10 dark:text-slate-100 dark:hover:bg-slate-800/60"
+                                onClick={() => setShowLoveChoiceTranslation((prev) => !prev)}
+                                aria-label={showLoveChoiceTranslation ? "切換回中文" : "翻譯"}
+                              >
+                                <Languages className="w-4 h-4" />
+                              </Button>
+                            </div>
+                            <p className="font-bold font-serif-chinese text-slate-800 dark:text-slate-100 mb-3 pr-10">
+                              {showLoveChoiceTranslation ? "Do you want to be with Xiaoyu?" : "你想跟小雨在一起嗎?"}
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                              <Button
+                                size="sm"
+                                className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
+                                onClick={() => setAffinity("red")}
+                              >
+                                {showLoveChoiceTranslation ? "❤️ Yes" : "❤️想"}
+                              </Button>
+                              <Button
+                                size="sm"
+                                className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
+                                onClick={() => setAffinity("green")}
+                              >
+                                {showLoveChoiceTranslation ? "💔 No" : "💔不想"}
+                              </Button>
+                              <Button
+                                size="sm"
+                                className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
+                                onClick={() => {
+                                  const original = affinityOnEnterRef.current;
+                                  if (original !== affinity) setAffinity(original);
+                                }}
+                              >
+                                {showLoveChoiceTranslation ? "🔮 See what Xiaoyu thinks" : "🔮看小雨的想法"}
+                              </Button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   </div>
@@ -1935,11 +1983,11 @@ export default function Chapter3() {
               />
               <div className="px-2 py-1 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-xs font-bold font-chinese text-primary-foreground">
-                  心動中文
+                  說中文吧：約會篇
                 </span>
               </div>
-              <span className="font-semibold font-serif-chinese">
-                Heartbeat Chinese
+              <span>
+                Let’s Speak Chinese: Dating Edition
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
@@ -1949,14 +1997,14 @@ export default function Chapter3() {
         </div>
       </footer>
 
-      {/* Floating Affinity Meter - Fixed at bottom right，可手動切換心跳狀態 */}
+      {/* Floating Affinity Meter - Fixed at bottom right */}
       <div className="fixed bottom-8 right-8 z-[60] flex flex-col gap-3">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className={`flex items-center gap-3 px-5 py-3 rounded-full shadow-2xl backdrop-blur-md border-2 transition-colors duration-500 ${
+            className={`flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl backdrop-blur-md border-2 cursor-pointer transition-colors duration-500 ${
               affinity === "green"
                 ? "bg-jade/90 border-jade text-white shadow-jade/20"
                 : "bg-red-500/90 border-red-500 text-white shadow-red-500/20"
@@ -1974,18 +2022,9 @@ export default function Chapter3() {
                 <Heart className="w-6 h-6 fill-current" />
               </motion.div>
             )}
-            <span className="font-medium text-sm whitespace-nowrap">小雨心跳</span>
-            <div className="flex items-center gap-2 bg-white/20 rounded-full px-2 py-1 border border-white/30">
-              <span className={`text-xs font-medium transition-opacity ${affinity === "green" ? "opacity-100" : "opacity-50"}`}>
-                普通
-              </span>
-              <Switch
-                checked={affinity === "red"}
-                onCheckedChange={(checked) => setAffinity(checked ? "red" : "green")}
-                className="data-[state=checked]:bg-red-500"
-              />
-              <span className={`text-xs font-medium transition-opacity ${affinity === "red" ? "opacity-100" : "opacity-50"}`}>
-                加速
+            <div className="flex flex-col">
+              <span className="text-xs opacity-90 font-medium">
+                {affinity === "green" ? "小雨的心跳普通" : "小雨的心跳加速"}
               </span>
             </div>
           </motion.div>

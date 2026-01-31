@@ -92,9 +92,9 @@ export default function Philosophy() {
             <div className="flex items-center gap-3">
               <img src={appLogo} alt="Logo" className="w-8 h-8 rounded-lg bg-white/90 p-1" />
               <div className="px-2 py-1 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-xs font-bold font-chinese text-primary-foreground">心動中文</span>
+                <span className="text-xs font-bold font-chinese text-primary-foreground">說中文吧：約會篇</span>
               </div>
-              <span className="font-semibold font-serif-chinese">Let’s Speak Chinese: Dating Edition</span>
+              <span>Let’s Speak Chinese: Dating Edition</span>
             </div>
             <p className="text-sm text-muted-foreground">
               {t.footer.copyright}
