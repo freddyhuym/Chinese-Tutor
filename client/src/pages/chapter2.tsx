@@ -679,41 +679,72 @@ const READING_PRACTICE = [
     id: 1,
     title: "閱讀測驗 1",
     content:
-      "旅行的時候，跟人聊天很有意思，也可以了解文化。很多人想去別的地方，看風景，也吃當地的東西。路上大家在問路，在買東西，用簡單的話說明意思。平常有人看電影，有人聽音樂，一點一點練習生活中的用法。慢慢習慣以後，旅行也會很方便。",
+      "昨天，我跟朋友已經約好一起去看一部電影。他的動作很快，把票先買好給我。我覺得他的想法不錯，因為想看這部電影的人很多。不過電影院真的太多人，我有一點緊張。他說如果覺得緊張，就在外面休息一下再進去。我也懂他的意思，因為這樣的安排很輕鬆。",
     questions: [
-      { id: 1, question: "旅行的時候，跟人聊天可以做什麼？", options: ["看電影", "了解文化", "聽音樂", "買東西"], answer: 1 },
-      { id: 2, question: "短文中提到，路上大家在做什麼？", options: ["在看風景", "在聽音樂", "在問路和買東西", "在吃飯"], answer: 2 },
-      { id: 3, question: "為什麼旅行會變得很方便？", options: ["因為有很多朋友", "因為常常看電影", "因為慢慢習慣生活中的用法", "因為去了很多地方"], answer: 2 },
+      { id: 1, question: "這個人想說什麼？", options: ["一個人去看電影", "這個人跟朋友一起去看電影", "這個人不喜歡看電影", "這個人在電影院工作"], answer: 1 },
+      { id: 2, question: "為什麼這個人覺得朋友的想法不錯？", options: ["因為電影很短", "因為電影院很安靜", "因為想看這部電影的人很多", "因為票很便宜"], answer: 2 },
+      { id: 3, question: "如果這個人覺得緊張，他們可能會怎麼做？", options: ["回家", "不看電影", "在外面休息一下", "請別人幫忙買票"], answer: 2 },
     ],
   },
   {
     id: 2,
     title: "閱讀測驗 2",
     content:
-      "剛剛在車站跟朋友見面，一起去吃飯。這家店看起來很特別，人不多，但是大家都在聊天。菜不多，做法也很簡單，但是味道怎麼樣？因為用的東西很新鮮，所以吃起來不錯。吃完飯以後，跟朋友一起走一走，看看附近的店。這家店很好，那家呢？平常這裡很熱鬧，很多人喜歡來這裡見面。",
+      "下午，有幾個學生在教室上課。天氣太熱了，大家有一點不認真。老師把書和紙放在桌上，請學生一起看。上課的時候，有人覺得有點累，就不小心睡著了。下課前，大家把東西收進包包，要離開教室。雖然上課有一點累，但學生都很開心。",
     questions: [
-      { id: 1, question: "短文一開始，事情發生在哪裡？", options: ["在餐廳", "在車站", "在家裡", "在學校"], answer: 1 },
-      { id: 2, question: "這家店的食物為什麼吃起來不錯？", options: ["因為菜很多", "因為人很多", "因為用的東西很新鮮", "因為做法很特別"], answer: 2 },
-      { id: 3, question: "「這家店很好，那家呢？」這句話想做什麼？", options: ["問價錢", "想知道不同的店怎麼樣", "問路", "找朋友"], answer: 1 },
+      { id: 1, question: "這段短文主要在說什麼？", options: ["學生在家裡學習", "學生下午在教室上課", "老師在準備考試", "學生放學後去玩"], answer: 1 },
+      { id: 2, question: "為什麼學生上課時不太認真？", options: ["因為老師不在", "因為功課太難", "因為天氣太熱", "因為下課了"], answer: 2 },
+      { id: 3, question: "下課前，學生做了什麼？", options: ["在教室睡覺", "把書和紙放在桌上", "把東西收進包包", "跟老師聊天"], answer: 2 },
     ],
   },
 ];
 
 const SPEAKING_SENTENCES = [
-  { id: 1, text: "我喜歡跟朋友出去吃飯。", pinyin: "Wǒ xǐhuān gēn péngyǒu chūqù chīfàn." },
-  { id: 2, text: "明天下午六點怎麼樣？", pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?" },
-  { id: 3, text: "我們在捷運站見面。", pinyin: "Wǒmen zài jiéyùn zhàn jiànmiàn." },
-  { id: 4, text: "你平常喜歡做什麼？", pinyin: "Nǐ píngcháng xǐhuān zuò shénme?" },
-  { id: 5, text: "這部電影很好看。", pinyin: "Zhè bù diànyǐng hěn hǎokàn." },
+  { id: 1, text: "你想看浪漫電影還是動作電影？", pinyin: "Nǐ xiǎng kàn làngmàn diànyǐng háishì dòngzuò diànyǐng?" },
+  { id: 2, text: "浪漫電影和動作電影我都喜歡。", pinyin: "Làngmàn diànyǐng hé dòngzuò diànyǐng wǒ dōu xǐhuān." },
+  { id: 3, text: "我覺得你想看浪漫的。", pinyin: "Wǒ juéde nǐ xiǎng kàn làngmàn de." },
+  { id: 4, text: "那我們去買票吧！", pinyin: "Nà wǒmen qù mǎi piào ba!" },
+  { id: 5, text: "不用，把帳單給我。", pinyin: "Bùyòng, bǎ zhàngdān gěi wǒ." },
+  { id: 6, text: "哇，真的嗎？好，謝謝你，你人很好。", pinyin: "Wa, zhēn de ma? Hǎo, xièxiè nǐ, nǐ rén hěn hǎo." },
 ];
 
 const GRAMMAR_PRACTICE = [
-  { id: 1, title: "練習 1｜想 + V", scenario: "你想做什麼？", answer: "我想去旅行。" },
-  { id: 2, title: "練習 2｜一點", scenario: "你想不想喝水？", answer: "我想喝一點水。" },
-  { id: 3, title: "練習 3｜也", scenario: "他喜歡游泳，你呢？", answer: "我也喜歡游泳。" },
-  { id: 4, title: "練習 4｜在 + V", scenario: "他現在在做什麼？", answer: "他在看書。" },
-  { id: 5, title: "練習 5｜呢", scenario: "你覺得電影好看嗎？", answer: "我覺得電影很好看，你覺得呢？" },
-  { id: 6, title: "練習 6｜跟", scenario: "你喜歡一個人吃飯嗎？", answer: "我喜歡跟朋友吃飯。" },
+  {
+    id: 1,
+    title: "練習 1｜VV 看",
+    scenario: "你想請朋友試試看一杯新的奶茶，你會怎麼說？",
+    answer: "這杯奶茶，你喝喝看。",
+  },
+  {
+    id: 2,
+    title: "練習 2｜如果…",
+    scenario: "請..錢..用造一個句子",
+    answer: "如果我有錢，我想去日本",
+  },
+  {
+    id: 3,
+    title: "練習 3｜太…了",
+    scenario: "你覺得今天很熱，你會怎麼說？",
+    answer: "今天天氣太熱了。",
+  },
+  {
+    id: 4,
+    title: "練習 4｜把",
+    scenario: "你想叫小明給你籃球，你怎麼說？",
+    answer: "把籃球給我。",
+  },
+  {
+    id: 5,
+    title: "練習 5｜還是",
+    scenario: "你到便利商店買咖啡，店員想知道你喝多大杯的咖啡，你覺得他會怎麼說",
+    answer: "大杯還是中杯？",
+  },
+  {
+    id: 6,
+    title: "練習 6｜都",
+    scenario: "你想說你喜歡蘋果和香蕉，你會怎麼說？",
+    answer: "蘋果和香蕉，我都喜歡。",
+  },
 ];
 
 type MovieChatState = {
@@ -2031,88 +2062,6 @@ export default function Chapter2() {
             </motion.div>
           </div>
 
-          {/* Movie Theater Scenario */}
-          <div ref={movieScenarioRef} className="mb-12 relative scroll-mt-20">
-            {/* Highlight indicator */}
-            {appScenario === "movie" && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="absolute -top-8 left-0 z-10"
-              >
-                <Badge className="bg-purple-500 text-white border-purple-500 shadow-lg">
-                  <span className="text-xs font-medium">
-                    {lang === "zh" ? "✨ 請看這個故事" : "✨ Please read this story"}
-                  </span>
-                </Badge>
-              </motion.div>
-            )}
-            <motion.div
-              animate={
-                appScenario === "movie"
-                  ? {
-                      boxShadow: [
-                        "0 0 0px rgba(168, 85, 247, 0)",
-                        "0 0 20px rgba(168, 85, 247, 0.5)",
-                        "0 0 40px rgba(168, 85, 247, 0.8)",
-                        "0 0 20px rgba(168, 85, 247, 0.5)",
-                        "0 0 0px rgba(168, 85, 247, 0)",
-                      ],
-                    }
-                  : {}
-              }
-              transition={{
-                duration: 2,
-                repeat: appScenario === "movie" ? Infinity : 0,
-                ease: "easeInOut",
-              }}
-              className="relative"
-            >
-              <Card
-                className={`p-8 backdrop-blur-sm border-2 shadow-sm relative transition-all duration-300 ${
-                  appScenario === "movie"
-                    ? "bg-purple-50/90 border-purple-400 shadow-purple-200"
-                    : "bg-card/50 border-primary/20"
-                }`}
-              >
-                <div className="absolute top-4 right-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
-                    onClick={() => setShowMovieTranslation(!showMovieTranslation)}
-                  >
-                    <Languages className="w-4 h-4" />
-                  </Button>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                    <BookOpen className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
-                      {showMovieTranslation ? chapterContent.en.scenarios.movie.title : chapterContent.zh.scenarios.movie.title}
-                    </h2>
-                    <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
-                      {showMovieTranslation ? chapterContent.en.scenarios.movie.content : chapterContent.zh.scenarios.movie.content}
-                    </p>
-                  </div>
-                </div>
-                {appScenario === "movie" && (
-                  <div className="mt-6 flex justify-center">
-                    <Button
-                      onClick={scrollToMovieChat}
-                      className="bg-purple-500 hover:bg-purple-600 text-white shadow-lg"
-                    >
-                      <ArrowDown className="w-4 h-4 mr-2" />
-                      {lang === "zh" ? "開始對話" : "Start Chat"}
-                    </Button>
-                  </div>
-                )}
-              </Card>
-            </motion.div>
-          </div>
-
           {/* Restaurant Chat Interface */}
           <div ref={diningChatRef} className="mb-12 relative max-w-4xl mx-auto scroll-mt-20">
             {/* Floating Characters (Desktop only) */}
@@ -2498,6 +2447,88 @@ export default function Chapter2() {
                   <GrammarPointCard point={point} playAudio={playAudio} />
                 </Fragment>
               ))}
+          </div>
+
+          {/* Movie Theater Scenario */}
+          <div ref={movieScenarioRef} className="mb-12 relative scroll-mt-20">
+            {/* Highlight indicator */}
+            {appScenario === "movie" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -top-8 left-0 z-10"
+              >
+                <Badge className="bg-purple-500 text-white border-purple-500 shadow-lg">
+                  <span className="text-xs font-medium">
+                    {lang === "zh" ? "✨ 請看這個故事" : "✨ Please read this story"}
+                  </span>
+                </Badge>
+              </motion.div>
+            )}
+            <motion.div
+              animate={
+                appScenario === "movie"
+                  ? {
+                      boxShadow: [
+                        "0 0 0px rgba(168, 85, 247, 0)",
+                        "0 0 20px rgba(168, 85, 247, 0.5)",
+                        "0 0 40px rgba(168, 85, 247, 0.8)",
+                        "0 0 20px rgba(168, 85, 247, 0.5)",
+                        "0 0 0px rgba(168, 85, 247, 0)",
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 2,
+                repeat: appScenario === "movie" ? Infinity : 0,
+                ease: "easeInOut",
+              }}
+              className="relative"
+            >
+              <Card
+                className={`p-8 backdrop-blur-sm border-2 shadow-sm relative transition-all duration-300 ${
+                  appScenario === "movie"
+                    ? "bg-purple-50/90 border-purple-400 shadow-purple-200"
+                    : "bg-card/50 border-primary/20"
+                }`}
+              >
+                <div className="absolute top-4 right-4">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="gap-2 text-primary hover:text-primary hover:bg-primary/10"
+                    onClick={() => setShowMovieTranslation(!showMovieTranslation)}
+                  >
+                    <Languages className="w-4 h-4" />
+                  </Button>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                    <BookOpen className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold font-serif-chinese mb-4 text-primary">
+                      {showMovieTranslation ? chapterContent.en.scenarios.movie.title : chapterContent.zh.scenarios.movie.title}
+                    </h2>
+                    <p className="text-lg leading-relaxed text-muted-foreground whitespace-pre-line font-serif-chinese">
+                      {showMovieTranslation ? chapterContent.en.scenarios.movie.content : chapterContent.zh.scenarios.movie.content}
+                    </p>
+                  </div>
+                </div>
+                {appScenario === "movie" && (
+                  <div className="mt-6 flex justify-center">
+                    <Button
+                      onClick={scrollToMovieChat}
+                      className="bg-purple-500 hover:bg-purple-600 text-white shadow-lg"
+                    >
+                      <ArrowDown className="w-4 h-4 mr-2" />
+                      {lang === "zh" ? "開始對話" : "Start Chat"}
+                    </Button>
+                  </div>
+                )}
+              </Card>
+            </motion.div>
           </div>
 
           {/* Movie Theater Chat Interface */}
