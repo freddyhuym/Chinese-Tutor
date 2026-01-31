@@ -918,12 +918,42 @@ const SPEAKING_SENTENCES = [
 ];
 
 const GRAMMAR_PRACTICE = [
-  { id: 1, title: "練習 1｜想 + V", scenario: "你想做什麼？", answer: "我想去旅行。" },
-  { id: 2, title: "練習 2｜一點", scenario: "你想不想喝水？", answer: "我想喝一點水。" },
-  { id: 3, title: "練習 3｜也", scenario: "他喜歡游泳，你呢？", answer: "我也喜歡游泳。" },
-  { id: 4, title: "練習 4｜在 + V", scenario: "他現在在做什麼？", answer: "他在看書。" },
-  { id: 5, title: "練習 5｜呢", scenario: "你覺得電影好看嗎？", answer: "我覺得電影很好看，你覺得呢？" },
-  { id: 6, title: "練習 6｜跟", scenario: "你喜歡一個人吃飯嗎？", answer: "我喜歡跟朋友吃飯。" },
+  {
+    id: 1,
+    title: "練習 1｜第一次",
+    scenario: "你第一次跟新朋友出去，會喝酒嗎？",
+    answer: "不一定，要看跟誰。\n我第一次跟新朋友出去，就會聊天。",
+  },
+  {
+    id: 2,
+    title: "練習 2｜比",
+    scenario: "你覺得聊天重要，還是喝酒重要？",
+    answer: "我覺得聊天比喝酒重要。\n認識朋友比喝酒重要。",
+  },
+  {
+    id: 3,
+    title: "練習 3｜一邊⋯⋯一邊⋯⋯",
+    scenario: "你們現在在走去酒吧，你們在做什麼？",
+    answer: "我們一邊走，一邊聊天。",
+  },
+  {
+    id: 4,
+    title: "練習 4｜更",
+    scenario: "你喜歡台北的風景嗎？",
+    answer: "我很喜歡，但我更喜歡的是你。\n我喜歡風景，但更喜歡聊天。",
+  },
+  {
+    id: 5,
+    title: "練習 5｜跟⋯⋯一樣",
+    scenario: "我很喜歡爬山，你呢？",
+    answer: "我也跟你一樣。\n我跟你一樣，很喜歡爬山。",
+  },
+  {
+    id: 6,
+    title: "練習 6｜跟⋯⋯一樣",
+    scenario: "你第一次看到喜歡的人，會怎麼樣？",
+    answer: "我一看到你，就很開心。\n我一見到你，就很喜歡你。",
+  },
 ];
 
 function SpeakingPracticeItem({
