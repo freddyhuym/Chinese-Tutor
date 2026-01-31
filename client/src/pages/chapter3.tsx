@@ -1539,7 +1539,7 @@ export default function Chapter3() {
                               </Button>
                             </div>
                             <p className="font-bold font-serif-chinese text-slate-800 dark:text-slate-100 mb-3 pr-10">
-                              {showLoveChoiceTranslation ? "Do you want to be with Xiaoyu?" : "你想跟小雨在一起嗎?"}
+                              {showLoveChoiceTranslation ? "Do you want to be with Xiaoyu?" : "瑞迪想跟小雨在一起嗎?"}
                             </p>
                             <div className="flex flex-col sm:flex-row gap-2">
                               <Button
