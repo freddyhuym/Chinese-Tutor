@@ -5,18 +5,29 @@ import {
   Languages,
   BookOpen,
   Heart,
+  Play,
+  CheckCircle2,
   X,
   Volume2,
   Type,
   List,
   ChevronDown,
   Mic,
+  MicOff,
   RotateCcw,
+  Headphones,
+  BookOpenText,
+  PenTool,
+  Check,
+  BicepsFlexed,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import appLogo from "@/assets/generated_images/app_logo.png";
 import { type Language, getTranslations } from "@/lib/i18n";
 import { Link } from "wouter";
@@ -436,7 +447,7 @@ function GrammarPointCard({
                       <span className="text-sm font-bold font-serif-chinese">他一吃飯就想喝水</span>
                     </div>
 
-                    <div className="grid grid-cols-1 max-w-sm mx-auto gap-4 mb-4 relative">
+                    <div className="grid grid-cols-1 max-w-[240px] sm:max-w-sm mx-auto gap-4 mb-4 relative">
                       <div className="flex flex-col items-center gap-2">
                         <div className="w-full relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
                           <AnimatePresence mode="wait">
@@ -849,6 +860,196 @@ const SUMMIT_VOCABULARY_LIST: VocabWord[] = [
   { traditional: "認為", simplified: "认为", pinyin: "rènwéi", english: "to think / to consider", partOfSpeech: "Vst", tbcl: "2", example: { zh: "我認為他是一個好人。", pinyin: "Wǒ rènwéi tā shì yī gè hǎo rén.", en: "I think he is a good person." } },
 ];
 
+// Practice Data（複製自 chapter1，之後可在這裡改內容）
+const LISTENING_PRACTICE = [
+  {
+    id: 1,
+    title: "聽力練習 1",
+    audioSrc: "/c1l1.mp3",
+    questions: [
+      { id: 1, question: "說話的人在哪裡？", options: ["教室", "圖書館", "咖啡店", "電影院"], answer: 1 },
+      { id: 2, question: "大部分人在做什麼", options: ["聊天", "看電影", "看書或用電腦學習", "睡覺"], answer: 2 },
+      { id: 3, question: "說話的人覺得今天怎麼樣？", options: ["不喜歡", "覺得很吵", "沒什麼感覺", "很喜歡"], answer: 3 },
+    ],
+  },
+  {
+    id: 2,
+    title: "聽力練習 2",
+    audioSrc: "/c1l2.wav",
+    questions: [
+      { id: 1, question: "「我」覺得學中文怎麼樣？", options: ["學中文很難", "學中文沒意思", "學中文很好，也很重要", "學中文不用練習"], answer: 2 },
+      { id: 2, question: "短文中，「我」現在可以做什麼？", options: ["跟老師學中文", "跟朋友一起旅行", "跟台灣人聊天", "看中文電影"], answer: 2 },
+      { id: 3, question: "為什麼「我」要多一點練習？", options: ["因為我很忙", "因為我說得還不太好", "因為我不喜歡中文", "因為我不想聊天"], answer: 1 },
+    ],
+  },
+];
+
+const READING_PRACTICE = [
+  {
+    id: 1,
+    title: "閱讀測驗 1",
+    content:
+      "旅行的時候，跟人聊天很有意思，也可以了解文化。很多人想去別的地方，看風景，也吃當地的東西。路上大家在問路，在買東西，用簡單的話說明意思。平常有人看電影，有人聽音樂，一點一點練習生活中的用法。慢慢習慣以後，旅行也會很方便。",
+    questions: [
+      { id: 1, question: "旅行的時候，跟人聊天可以做什麼？", options: ["看電影", "了解文化", "聽音樂", "買東西"], answer: 1 },
+      { id: 2, question: "短文中提到，路上大家在做什麼？", options: ["在看風景", "在聽音樂", "在問路和買東西", "在吃飯"], answer: 2 },
+      { id: 3, question: "為什麼旅行會變得很方便？", options: ["因為有很多朋友", "因為常常看電影", "因為慢慢習慣生活中的用法", "因為去了很多地方"], answer: 2 },
+    ],
+  },
+  {
+    id: 2,
+    title: "閱讀測驗 2",
+    content:
+      "剛剛在車站跟朋友見面，一起去吃飯。這家店看起來很特別，人不多，但是大家都在聊天。菜不多，做法也很簡單，但是味道怎麼樣？因為用的東西很新鮮，所以吃起來不錯。吃完飯以後，跟朋友一起走一走，看看附近的店。這家店很好，那家呢？平常這裡很熱鬧，很多人喜歡來這裡見面。",
+    questions: [
+      { id: 1, question: "短文一開始，事情發生在哪裡？", options: ["在餐廳", "在車站", "在家裡", "在學校"], answer: 1 },
+      { id: 2, question: "這家店的食物為什麼吃起來不錯？", options: ["因為菜很多", "因為人很多", "因為用的東西很新鮮", "因為做法很特別"], answer: 2 },
+      { id: 3, question: "「這家店很好，那家呢？」這句話想做什麼？", options: ["問價錢", "想知道不同的店怎麼樣", "問路", "找朋友"], answer: 1 },
+    ],
+  },
+];
+
+const SPEAKING_SENTENCES = [
+  { id: 1, text: "我喜歡跟朋友出去吃飯。", pinyin: "Wǒ xǐhuān gēn péngyǒu chūqù chīfàn." },
+  { id: 2, text: "明天下午六點怎麼樣？", pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?" },
+  { id: 3, text: "我們在捷運站見面。", pinyin: "Wǒmen zài jiéyùn zhàn jiànmiàn." },
+  { id: 4, text: "你平常喜歡做什麼？", pinyin: "Nǐ píngcháng xǐhuān zuò shénme?" },
+  { id: 5, text: "這部電影很好看。", pinyin: "Zhè bù diànyǐng hěn hǎokàn." },
+];
+
+const GRAMMAR_PRACTICE = [
+  { id: 1, title: "練習 1｜想 + V", scenario: "你想做什麼？", answer: "我想去旅行。" },
+  { id: 2, title: "練習 2｜一點", scenario: "你想不想喝水？", answer: "我想喝一點水。" },
+  { id: 3, title: "練習 3｜也", scenario: "他喜歡游泳，你呢？", answer: "我也喜歡游泳。" },
+  { id: 4, title: "練習 4｜在 + V", scenario: "他現在在做什麼？", answer: "他在看書。" },
+  { id: 5, title: "練習 5｜呢", scenario: "你覺得電影好看嗎？", answer: "我覺得電影很好看，你覺得呢？" },
+  { id: 6, title: "練習 6｜跟", scenario: "你喜歡一個人吃飯嗎？", answer: "我喜歡跟朋友吃飯。" },
+];
+
+function SpeakingPracticeItem({
+  sentence,
+}: {
+  sentence: { id: number; text: string; pinyin: string };
+}) {
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [matchState, setMatchState] = useState<"none" | "partial" | "full">("none");
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let recognition: any = null;
+
+    if (isListening) {
+      if ("webkitSpeechRecognition" in window) {
+        // @ts-ignore
+        recognition = new window.webkitSpeechRecognition();
+      } else if ("SpeechRecognition" in window) {
+        // @ts-ignore
+        recognition = new window.SpeechRecognition();
+      } else {
+        setError("Your browser does not support speech recognition.");
+        setIsListening(false);
+        return;
+      }
+
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = "zh-TW";
+
+      recognition.onresult = (event: any) => {
+        let sessionTranscript = "";
+        for (let i = 0; i < event.results.length; ++i) {
+          sessionTranscript += event.results[i][0].transcript;
+        }
+
+        setTranscript(sessionTranscript);
+
+        // Simple matching logic (remove punctuation)
+        const cleanTranscript = sessionTranscript.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()。，？]/g, "");
+        const cleanTarget = sentence.text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()。，？]/g, "");
+
+        if (cleanTranscript.includes(cleanTarget)) {
+          setMatchState("full");
+        } else if (
+          cleanTranscript.length > 0 &&
+          cleanTarget.includes(cleanTranscript.substring(0, Math.min(cleanTranscript.length, 2)))
+        ) {
+          setMatchState("partial");
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error("Speech recognition error", event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    }
+
+    return () => {
+      if (recognition) recognition.stop();
+    };
+  }, [isListening, sentence.text]);
+
+  const toggleListening = () => {
+    if (isListening) {
+      setIsListening(false);
+    } else {
+      setTranscript("");
+      setMatchState("none");
+      setIsListening(true);
+      setError(null);
+    }
+  };
+
+  const resetPractice = () => {
+    setIsListening(false);
+    setTranscript("");
+    setMatchState("none");
+    setError(null);
+  };
+
+  return (
+    <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">
+            {sentence.id}
+          </div>
+          <div>
+            <h4 className="font-medium text-lg text-slate-800 dark:text-slate-200">{sentence.text}</h4>
+            <p className="text-slate-500 text-sm font-serif-chinese">{sentence.pinyin}</p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          {matchState === "full" && <Check className="w-6 h-6 text-green-500" />}
+          {matchState === "partial" && <BicepsFlexed className="w-6 h-6 text-orange-500" />}
+        </div>
+      </div>
+
+      <div className="bg-slate-50 dark:bg-slate-900 p-3 rounded-lg min-h-[60px] mb-4 text-slate-600 dark:text-slate-400">
+        {transcript || <span className="text-slate-400 text-sm">點擊麥克風開始說話...</span>}
+      </div>
+
+      <div className="flex gap-2">
+        <Button variant={isListening ? "destructive" : "default"} size="sm" onClick={toggleListening} className="gap-2">
+          {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          {isListening ? "停止錄音" : "開始練習"}
+        </Button>
+        <Button variant="outline" size="sm" onClick={resetPractice} className="gap-2">
+          <RotateCcw className="w-4 h-4" />
+          重來
+        </Button>
+      </div>
+      {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+    </div>
+  );
+}
+
 export default function Chapter3() {
   const [lang, setLang] = useState<Language>("zh");
   const [showStoryTranslation, setShowStoryTranslation] = useState(false);
@@ -872,6 +1073,12 @@ export default function Chapter3() {
   const [summitVocabStates, setSummitVocabStates] = useState<{ [key: number]: boolean }>({});
   // Language Tip 顯示語言（依生詞列 index）；不分成兩區塊，用按鈕切換
   const [summitTipLangByIndex, setSummitTipLangByIndex] = useState<Record<number, "zh" | "en">>({});
+
+  // Practice States（複製自 chapter1）
+  const [listeningAnswers, setListeningAnswers] = useState<{ [key: string]: number }>({});
+  const [readingAnswers, setReadingAnswers] = useState<{ [key: string]: number }>({});
+  const [grammarInputs, setGrammarInputs] = useState<{ [key: number]: string }>({});
+  const [showGrammarAnswers, setShowGrammarAnswers] = useState<{ [key: number]: boolean }>({});
   
   // Bar chat state
   const [barChatState, setBarChatState] = useState<{ messages: BarMessage[] }>(() => {
@@ -1009,6 +1216,20 @@ export default function Chapter3() {
     setSummitVocabStates((prev) => ({
       ...prev,
       [index]: !prev[index],
+    }));
+  };
+
+  const handleListeningAnswer = (practiceId: number, qId: number, answer: number) => {
+    setListeningAnswers((prev) => ({
+      ...prev,
+      [`${practiceId}-${qId}`]: answer,
+    }));
+  };
+
+  const handleReadingAnswer = (practiceId: number, qId: number, answer: number) => {
+    setReadingAnswers((prev) => ({
+      ...prev,
+      [`${practiceId}-${qId}`]: answer,
     }));
   };
 
@@ -1948,6 +2169,308 @@ export default function Chapter3() {
                 <GrammarPointCard key={point.id} point={point} playAudio={playBarAudio} />
               ))}
             </div>
+          </div>
+
+          {/* Interactive Practice Tabs（複製自 chapter1，之後可在這裡改內容） */}
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold font-serif-chinese mb-6 text-slate-800 dark:text-slate-200">
+              綜合練習 Practice
+            </h3>
+            <Tabs defaultValue="listening" className="w-full">
+              <TabsList className="grid w-full grid-cols-4 mb-8 h-auto p-1 bg-slate-100 dark:bg-slate-800 rounded-xl">
+                <TabsTrigger
+                  value="listening"
+                  className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all gap-2"
+                >
+                  <Headphones className="w-4 h-4" />
+                  <span className="hidden sm:inline">聽力練習</span>
+                  <span className="sm:hidden">聽力</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="reading"
+                  className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all gap-2"
+                >
+                  <BookOpenText className="w-4 h-4" />
+                  <span className="hidden sm:inline">閱讀練習</span>
+                  <span className="sm:hidden">閱讀</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="speaking"
+                  className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all gap-2"
+                >
+                  <Mic className="w-4 h-4" />
+                  <span className="hidden sm:inline">說話練習</span>
+                  <span className="sm:hidden">說話</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="grammar"
+                  className="py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all gap-2"
+                >
+                  <PenTool className="w-4 h-4" />
+                  <span className="hidden sm:inline">文法練習</span>
+                  <span className="sm:hidden">文法</span>
+                </TabsTrigger>
+              </TabsList>
+
+              {/* Listening Tab */}
+              <TabsContent value="listening" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <Card className="p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                      <Headphones className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">聽力練習 Listening Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請聽音檔並回答問題 &nbsp;Please listen to the audio and answer the questions
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                {LISTENING_PRACTICE.map((practice) => (
+                  <Card key={practice.id} className="p-6 border-2 border-border/50">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+                          {practice.id}
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-8 gap-2 text-primary"
+                          onClick={() => {
+                            const audio = new Audio(practice.audioSrc);
+                            audio.play().catch((err) => {
+                              console.error("Error playing audio:", err);
+                              // fallback: TTS
+                              playBarAudio("播放音檔失敗，請稍後再試。");
+                            });
+                          }}
+                        >
+                          <Play className="w-3 h-3" />
+                          播放音檔
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-6 pl-4 border-l-2 border-slate-100 dark:border-slate-800 ml-5">
+                      {practice.questions.map((q) => {
+                        const answerKey = `${practice.id}-${q.id}`;
+                        const selected = listeningAnswers[answerKey];
+                        const isCorrect = selected === q.answer;
+
+                        return (
+                          <div key={q.id} className="space-y-3">
+                            <p className="font-medium text-lg">
+                              {q.id}. {q.question}
+                            </p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              {q.options.map((option, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => handleListeningAnswer(practice.id, q.id, idx)}
+                                  className={`text-left p-3 rounded-lg border transition-all flex items-center justify-between ${
+                                    selected === idx
+                                      ? isCorrect
+                                        ? "bg-green-50 border-green-200 text-green-800"
+                                        : "bg-red-50 border-red-200 text-red-800"
+                                      : "bg-white hover:bg-slate-50 border-slate-200"
+                                  }`}
+                                >
+                                  <span>{option}</span>
+                                  {selected === idx &&
+                                    (isCorrect ? (
+                                      <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    ) : (
+                                      <X className="w-4 h-4 text-red-600" />
+                                    ))}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Card>
+                ))}
+              </TabsContent>
+
+              {/* Reading Tab */}
+              <TabsContent value="reading" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <Card className="p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                      <BookOpenText className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">閱讀練習 Reading Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請閱讀短文並回答問題 &nbsp;Please read the passage and answer the questions
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                {READING_PRACTICE.map((practice) => (
+                  <Card key={practice.id} className="p-6 border-2 border-border/50">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="w-full">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">
+                            {practice.id}
+                          </div>
+                          <div className="flex-1 p-6 bg-orange-50/50 rounded-xl border border-orange-100 text-lg leading-relaxed font-serif-chinese text-slate-800">
+                            {practice.content}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-6 pl-4 border-l-2 border-slate-100 dark:border-slate-800 ml-5">
+                      {practice.questions.map((q) => {
+                        const answerKey = `${practice.id}-${q.id}`;
+                        const selected = readingAnswers[answerKey];
+                        const isCorrect = selected === q.answer;
+
+                        return (
+                          <div key={q.id} className="space-y-3">
+                            <p className="font-medium text-lg">
+                              {q.id}. {q.question}
+                            </p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              {q.options.map((option, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => handleReadingAnswer(practice.id, q.id, idx)}
+                                  className={`text-left p-3 rounded-lg border transition-all flex items-center justify-between ${
+                                    selected === idx
+                                      ? isCorrect
+                                        ? "bg-green-50 border-green-200 text-green-800"
+                                        : "bg-red-50 border-red-200 text-red-800"
+                                      : "bg-white hover:bg-slate-50 border-slate-200"
+                                  }`}
+                                >
+                                  <span>{option}</span>
+                                  {selected === idx &&
+                                    (isCorrect ? (
+                                      <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                    ) : (
+                                      <X className="w-4 h-4 text-red-600" />
+                                    ))}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Card>
+                ))}
+              </TabsContent>
+
+              {/* Speaking Tab */}
+              <TabsContent value="speaking" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <Card className="rounded-xl bg-card text-card-foreground shadow p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                      <Mic className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">說話練習 Speaking Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請唸出下列句子 &nbsp;Please read the following sentences aloud
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                <div className="grid gap-6">
+                  {SPEAKING_SENTENCES.map((sentence) => (
+                    <SpeakingPracticeItem key={sentence.id} sentence={sentence} />
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* Grammar Tab */}
+              <TabsContent value="grammar" className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <Card className="p-6 border-2 border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                      <PenTool className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">文法練習 Grammar Practice</h4>
+                      <p className="text-slate-500 text-sm">
+                        請用中文作答並參考答案練習 &nbsp;Please write your answer in Chinese and check the reference
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+
+                <div className="grid gap-6">
+                  {GRAMMAR_PRACTICE.map((item) => (
+                    <Card key={item.id} className="p-6 border-2 border-border/50 hover:border-primary/20 transition-colors">
+                      <div className="flex items-start gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-sm shrink-0">
+                          {item.id}
+                        </div>
+                        <div className="space-y-4 w-full">
+                          <div>
+                            <h4 className="font-bold text-lg text-slate-800">{item.title}</h4>
+                            <p className="text-slate-600 mt-1 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                              {item.scenario}
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor={`chapter3-grammar-${item.id}`}>你的回答 Your Answer:</Label>
+                            <Textarea
+                              id={`chapter3-grammar-${item.id}`}
+                              placeholder="請在這裡輸入中文..."
+                              value={grammarInputs[item.id] || ""}
+                              onChange={(e) =>
+                                setGrammarInputs((prev) => ({
+                                  ...prev,
+                                  [item.id]: e.target.value,
+                                }))
+                              }
+                              className="font-serif-chinese text-lg min-h-[80px]"
+                            />
+                          </div>
+
+                          <div className="pt-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() =>
+                                setShowGrammarAnswers((prev) => ({
+                                  ...prev,
+                                  [item.id]: !prev[item.id],
+                                }))
+                              }
+                              className="text-slate-500 hover:text-purple-600"
+                            >
+                              {showGrammarAnswers[item.id] ? "隱藏參考答案 Hide Answer" : "顯示參考答案 Show Answer"}
+                            </Button>
+
+                            {showGrammarAnswers[item.id] && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                className="mt-3 p-3 bg-purple-50 text-purple-800 rounded-lg text-lg font-medium font-serif-chinese"
+                              >
+                                {item.answer}
+                              </motion.div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </motion.div>
       </main>
