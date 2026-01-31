@@ -2332,7 +2332,7 @@ export default function Chapter2() {
                             }}
                             className="text-2xl"
                           >
-                            👋
+                            🙋🏼
                           </motion.div>
                         </div>
                       ) : (

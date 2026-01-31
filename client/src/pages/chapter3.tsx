@@ -9,6 +9,8 @@ import {
   Type,
   List,
   ChevronDown,
+  Mic,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -32,6 +34,10 @@ import chatBackground from "@/assets/generated_images/chat_background_no_clouds.
 import barChatBackground from "@/assets/generated_images/chapter3_bar_chat_bg.png";
 // @ts-ignore
 import summitChatBackground from "@/assets/generated_images/chapter3_summit_chat_bg.png";
+// @ts-ignore
+import personEatingImg from "@/assets/generated_images/chapter3_person_eating.png";
+// @ts-ignore
+import personEatingDrinkingImg from "@/assets/generated_images/chapter3_person_eating_drinking.png";
 
 const chapterContent = {
   zh: {
@@ -66,6 +72,11 @@ const chapterContent = {
       badge: "僅在心跳加速時解鎖",
       heartbeatLabel: "心跳加速結局",
     },
+    endingVideoGreen: {
+      title: "普通結局 · 獨家影片",
+      badge: "心跳普通時的解鎖內容",
+      heartbeatLabel: "普通結局",
+    },
   },
   en: {
     title: "Chapter 3",
@@ -98,6 +109,11 @@ const chapterContent = {
       title: "Special Ending · Exclusive Video",
       badge: "Unlocked when Xiaoyu's heart beats faster",
       heartbeatLabel: "Heartbeat Ending",
+    },
+    endingVideoGreen: {
+      title: "Normal Ending · Exclusive Video",
+      badge: "Unlocked when Xiaoyu's heart is calm",
+      heartbeatLabel: "Normal Ending",
     },
   },
 };
@@ -179,6 +195,73 @@ const CHAPTER3_GRAMMAR_POINTS: GrammarPoint[] = [
       { zh: "他們一邊走，一邊聊天。", pinyin: "Tāmen yìbiān zǒu, yìbiān liáotiān.", en: "They walk and chat at the same time." },
       { zh: "我一邊吃飯，一邊看電視。", pinyin: "Wǒ yìbiān chīfàn, yìbiān kàn diànshì.", en: "I eat and watch TV at the same time." },
       { zh: "她一邊喝咖啡，一邊跟朋友說話。", pinyin: "Tā yìbiān hē kāfēi, yìbiān gēn péngyǒu shuōhuà.", en: "She drinks coffee and talks with her friend at the same time." },
+    ],
+  },
+];
+
+// 語法點（最下面區塊）— 放在第二個生詞列表下方
+const CHAPTER3_GRAMMAR_POINTS_BOTTOM: GrammarPoint[] = [
+  {
+    id: 4,
+    title: "更",
+    function: {
+      zh: "表示程度更高。",
+      en: "Used to express a higher degree.",
+    },
+    structure: {
+      zh: "更 + 形容詞",
+      en: "更 + Adjective",
+    },
+    explanation: {
+      zh: "用來比較，表示比之前或比另一個更高的程度。",
+      en: "Used to say that something is even more (adjective).",
+    },
+    examples: [
+      { zh: "我很喜歡台北，但我更喜歡你。", pinyin: "Wǒ hěn xǐhuān Táiběi, dàn wǒ gèng xǐhuān nǐ.", en: "I like Taipei, but I like you more." },
+      { zh: "今天很忙，明天會更忙。", pinyin: "Jīntiān hěn máng, míngtiān huì gèng máng.", en: "Today is busy; tomorrow will be even busier." },
+      { zh: "這家店很好吃，那一家更好吃。", pinyin: "Zhè jiā diàn hěn hǎochī, nà yì jiā gèng hǎochī.", en: "This restaurant is good, but that one is even better." },
+    ],
+  },
+  {
+    id: 5,
+    title: "跟⋯⋯一樣",
+    function: {
+      zh: "表示兩個人或事物相同。",
+      en: "Used to say that two people or things are the same.",
+    },
+    structure: {
+      zh: "A + 跟 + B + 一樣",
+      en: "A + 跟 + B + 一樣",
+    },
+    explanation: {
+      zh: "用來表示想法、感覺或情況相同。",
+      en: "Used to express having the same idea or feeling.",
+    },
+    examples: [
+      { zh: "我也跟你一樣。", pinyin: "Wǒ yě gēn nǐ yíyàng.", en: "I'm the same as you." },
+      { zh: "她跟朋友一樣喜歡看電影。", pinyin: "Tā gēn péngyǒu yíyàng xǐhuān kàn diànyǐng.", en: "She likes watching movies just like her friend." },
+      { zh: "我們的想法跟老師一樣。", pinyin: "Wǒmen de xiǎngfǎ gēn lǎoshī yíyàng.", en: "Our ideas are the same as the teacher's." },
+    ],
+  },
+  {
+    id: 6,
+    title: "一⋯⋯就⋯⋯",
+    function: {
+      zh: "表示一個動作發生後，馬上發生另一個動作。",
+      en: "Used to show that one action happens immediately after another.",
+    },
+    structure: {
+      zh: "一 + 動作一，就 + 動作二",
+      en: "一 + Action 1, 就 + Action 2",
+    },
+    explanation: {
+      zh: "用來表示很快、立刻發生的結果。",
+      en: "Used to express an immediate result.",
+    },
+    examples: [
+      { zh: "我一看到你，就很開心。", pinyin: "Wǒ yí kàndào nǐ, jiù hěn kāixīn.", en: "As soon as I see you, I feel happy." },
+      { zh: "她一下課，就回家。", pinyin: "Tā yí xià kè, jiù huí jiā.", en: "As soon as class ends, she goes home." },
+      { zh: "我一聽到這個消息，就想告訴朋友。", pinyin: "Wǒ yí tīngdào zhège xiāoxi, jiù xiǎng gàosu péngyǒu.", en: "As soon as I hear this news, I want to tell my friend." },
     ],
   },
 ];
@@ -401,7 +484,7 @@ type SummitMessage = {
 const SUMMIT_MESSAGES_COMMON: SummitMessage[] = [
   { id: 1, sender: "xiaoyu", text: "瑞迪，你喜歡台北的風景嗎？", en: "Randy, do you like the view of Taipei?", pinyin: "Ruìdí, nǐ xǐhuān Táiběi de fēngjǐng ma?" },
   { id: 2, sender: "randy", text: "我很喜歡，但我更喜歡的是你。", en: "I like it very much, but what I like more is you.", pinyin: "Wǒ hěn xǐhuān, dàn wǒ gèng xǐhuān de shì nǐ." },
-  { id: 3, sender: "narrator", text: "（小雨的臉變紅了。）", en: "(Xiaoyu's face turned red.)", pinyin: "(Xiǎoyǔ de liǎn biàn hóng le.)" },
+  { id: 3, sender: "narrator", text: "小雨的臉變紅了。", en: "(Xiaoyu's face turned red.)", pinyin: "(Xiǎoyǔ de liǎn biàn hóng le.)" },
   { id: 4, sender: "xiaoyu", text: "真的嗎？", en: "Really?", pinyin: "Zhēn de ma?" },
   { id: 5, sender: "randy", text: "其實我第一次看到你，就愛上你了。", en: "Actually, the first time I saw you, I fell in love with you.", pinyin: "Qíshí wǒ dì yī cì kàn dào nǐ, jiù àishàng nǐ le." },
 ];
@@ -439,6 +522,8 @@ type VocabWord = {
     pinyin: string;
     en: string;
   };
+  /** 選用：例句下方顯示的 Language Tip（中文 + 英文） */
+  languageTip?: { zh: string; en: string };
 };
 
 const BAR_VOCABULARY_LIST: VocabWord[] = [
@@ -536,7 +621,7 @@ const BAR_VOCABULARY_LIST: VocabWord[] = [
     traditional: "間",
     simplified: "间",
     pinyin: "jiān",
-    english: "(MW for rooms)",
+    english: "(Measure word for rooms)",
     partOfSpeech: "M",
     tbcl: "2",
     example: { zh: "這是一間小酒吧。", pinyin: "Zhè shì yī jiān xiǎo jiǔbā.", en: "This is a small bar." },
@@ -633,26 +718,26 @@ const BAR_VOCABULARY_LIST: VocabWord[] = [
   },
 ];
 
-// 象山／結局生詞列表（依順序，格式同上）
+// 象山／結局生詞列表（依順序，格式同上；TBCL 為等級數字；例句依使用者提供）
 const SUMMIT_VOCABULARY_LIST: VocabWord[] = [
-  { traditional: "後來", simplified: "后来", pinyin: "hòulái", english: "later / afterwards", partOfSpeech: "N / Adv", tbcl: "時間名詞（如「從那以後」）或副詞（如「後來他走了」）", example: { zh: "後來他們一起去爬山。", pinyin: "Hòulái tāmen yīqǐ qù páshān.", en: "Later they went hiking together." } },
-  { traditional: "約好", simplified: "约好", pinyin: "yuē hǎo", english: "to make an appointment", partOfSpeech: "V (短語)", tbcl: "動作動詞，含結果補語「好」", example: { zh: "他們約好下週見面。", pinyin: "Tāmen yuē hǎo xià zhōu jiànmiàn.", en: "They made an appointment to meet next week." } },
-  { traditional: "爬山", simplified: "爬山", pinyin: "pá shān", english: "to go hiking", partOfSpeech: "V-sep", tbcl: "可分離動詞（離合詞），如「爬過山」", example: { zh: "我們週末去爬山。", pinyin: "Wǒmen zhōumò qù pá shān.", en: "We go hiking on the weekend." } },
-  { traditional: "象山", simplified: "象山", pinyin: "Xiàngshān", english: "Elephant Mountain", partOfSpeech: "PN", tbcl: "專有名詞（地名）", example: { zh: "象山在台北。", pinyin: "Xiàngshān zài Táiběi.", en: "Elephant Mountain is in Taipei." } },
-  { traditional: "山頂", simplified: "山顶", pinyin: "shān dǐng", english: "mountaintop", partOfSpeech: "N", tbcl: "名詞", example: { zh: "他們到了山頂。", pinyin: "Tāmen dào le shān dǐng.", en: "They reached the mountaintop." } },
-  { traditional: "風景", simplified: "风景", pinyin: "fēngjǐng", english: "scenery / view", partOfSpeech: "N", tbcl: "名詞", example: { zh: "這裡的風景很美。", pinyin: "Zhèlǐ de fēngjǐng hěn měi.", en: "The scenery here is very beautiful." } },
-  { traditional: "臉", simplified: "脸", pinyin: "liǎn", english: "face", partOfSpeech: "N", tbcl: "名詞", example: { zh: "小雨的臉紅了。", pinyin: "Xiǎoyǔ de liǎn hóng le.", en: "Xiaoyu's face turned red." } },
-  { traditional: "紅", simplified: "红", pinyin: "hóng", english: "red", partOfSpeech: "Vs", tbcl: "狀態動詞（形容詞）", example: { zh: "她的臉變紅了。", pinyin: "Tā de liǎn biàn hóng le.", en: "Her face turned red." } },
-  { traditional: "變", simplified: "变", pinyin: "biàn", english: "to become", partOfSpeech: "Vp", tbcl: "過程動詞（表示狀態變化）", example: { zh: "天氣變冷了。", pinyin: "Tiānqì biàn lěng le.", en: "The weather has gotten cold." } },
-  { traditional: "其實", simplified: "其实", pinyin: "qíshí", english: "actually", partOfSpeech: "Adv", tbcl: "副詞（語氣副詞）", example: { zh: "其實我很緊張。", pinyin: "Qíshí wǒ hěn jǐnzhāng.", en: "Actually I'm very nervous." } },
-  { traditional: "愛上", simplified: "爱上", pinyin: "ài shàng", english: "to fall in love with", partOfSpeech: "Vst", tbcl: "及物狀態動詞（心理動詞）+ 補語「上」", example: { zh: "他第一次見到她就愛上她了。", pinyin: "Tā dì yī cì jiàn dào tā jiù ài shàng tā le.", en: "He fell in love with her the first time he saw her." } },
-  { traditional: "見到", simplified: "见到", pinyin: "jiàn dào", english: "to see / to meet", partOfSpeech: "V", tbcl: "動作動詞 + 結果補語「到」", example: { zh: "我希望能再見到你。", pinyin: "Wǒ xīwàng néng zài jiàn dào nǐ.", en: "I hope to see you again." } },
-  { traditional: "願意", simplified: "愿意", pinyin: "yuànyì", english: "to be willing to", partOfSpeech: "Vaux", tbcl: "助動詞（能願動詞）", example: { zh: "你願意當我的朋友嗎？", pinyin: "Nǐ yuànyì dāng wǒ de péngyǒu ma?", en: "Are you willing to be my friend?" } },
-  { traditional: "當", simplified: "当", pinyin: "dāng", english: "to be / to act as", partOfSpeech: "V", tbcl: "動作動詞（及物）", example: { zh: "我想當你的好朋友。", pinyin: "Wǒ xiǎng dāng nǐ de hǎo péngyǒu.", en: "I want to be your good friend." } },
-  { traditional: "好朋友", simplified: "好朋友", pinyin: "hǎo péngyǒu", english: "good friend", partOfSpeech: "N", tbcl: "名詞（複合名詞）", example: { zh: "我們是好朋友。", pinyin: "Wǒmen shì hǎo péngyǒu.", en: "We are good friends." } },
-  { traditional: "機會", simplified: "机会", pinyin: "jīhuì", english: "opportunity / chance", partOfSpeech: "N", tbcl: "名詞", example: { zh: "謝謝你給我這個機會。", pinyin: "Xièxiè nǐ gěi wǒ zhège jīhuì.", en: "Thank you for giving me this opportunity." } },
-  { traditional: "這樣", simplified: "这样", pinyin: "zhèyàng", english: "like this / in this way", partOfSpeech: "Adv / Det", tbcl: "指示副詞（如「這樣做」）或限定詞（如「這樣的人」）", example: { zh: "這樣做比較好。", pinyin: "Zhèyàng zuò bǐjiào hǎo.", en: "It's better to do it this way." } },
-  { traditional: "認為", simplified: "认为", pinyin: "rènwéi", english: "to think / to consider", partOfSpeech: "Vst", tbcl: "及物狀態動詞（認知類）", example: { zh: "我認為你說得對。", pinyin: "Wǒ rènwéi nǐ shuō de duì.", en: "I think you're right." } },
+  { traditional: "後來", simplified: "后来", pinyin: "hòulái", english: "later / afterwards", partOfSpeech: "N / Adv", tbcl: "2", example: { zh: "後來，他們常常一起出去。", pinyin: "Hòulái, tāmen chángcháng yīqǐ chūqù.", en: "Later, they often went out together." } },
+  { traditional: "約好", simplified: "约好", pinyin: "yuē hǎo", english: "to make an appointment", partOfSpeech: "V (短語)", tbcl: "X", example: { zh: "他們約好週末一起爬山。", pinyin: "Tāmen yuē hǎo zhōumò yīqǐ pá shān.", en: "They made plans to go hiking together on the weekend." } },
+  { traditional: "爬山", simplified: "爬山", pinyin: "pá shān", english: "to go hiking", partOfSpeech: "V-sep", tbcl: "3", example: { zh: "週末我們去爬山吧。", pinyin: "Zhōumò wǒmen qù pá shān ba.", en: "Let's go hiking this weekend." } },
+  { traditional: "象山", simplified: "象山", pinyin: "Xiàngshān", english: "Elephant Mountain", partOfSpeech: "PN", tbcl: "X", example: { zh: "他們一起去爬象山。", pinyin: "Tāmen yīqǐ qù pá Xiàngshān.", en: "They went to climb Elephant Mountain together." } },
+  { traditional: "山頂", simplified: "山顶", pinyin: "shān dǐng", english: "mountaintop", partOfSpeech: "N", tbcl: "X", example: { zh: "他們走到山頂，看風景。", pinyin: "Tāmen zǒu dào shān dǐng, kàn fēngjǐng.", en: "They walked to the mountaintop and looked at the scenery." } },
+  { traditional: "風景", simplified: "风景", pinyin: "fēngjǐng", english: "scenery / view", partOfSpeech: "N", tbcl: "2*", example: { zh: "山頂的風景很漂亮。", pinyin: "Shān dǐng de fēngjǐng hěn piàoliang.", en: "The scenery at the mountaintop is very beautiful." } },
+  { traditional: "臉", simplified: "脸", pinyin: "liǎn", english: "face", partOfSpeech: "N", tbcl: "2", example: { zh: "她的臉有一點紅。", pinyin: "Tā de liǎn yǒu yīdiǎn hóng.", en: "Her face is a little red." } },
+  { traditional: "紅", simplified: "红", pinyin: "hóng", english: "red", partOfSpeech: "Vs", tbcl: "1*", example: { zh: "她的臉紅了。", pinyin: "Tā de liǎn hóng le.", en: "Her face turned red." } },
+  { traditional: "變", simplified: "变", pinyin: "biàn", english: "to become", partOfSpeech: "Vp", tbcl: "2", example: { zh: "她的臉變紅了。", pinyin: "Tā de liǎn biàn hóng le.", en: "Her face turned red." }, languageTip: { zh: "🌱 Language Tip｜變 + 形容詞\n變 用來表示「狀態的改變」。\n例如：\n她的臉紅了。\n她的臉變紅了。\n「變 + 形容詞」表示從一個狀態，變成另一個狀態。", en: "🌱 Language Tip | 變 + Adjective\n變 is used to express \"a change of state.\"\nFor example:\nHer face is red.\nHer face turned red.\n\"變 + adjective\" indicates a change from one state to another." } },
+  { traditional: "其實", simplified: "其实", pinyin: "qíshí", english: "actually", partOfSpeech: "Adv", tbcl: "3*", example: { zh: "其實，我有一點緊張。", pinyin: "Qíshí, wǒ yǒu yīdiǎn jǐnzhāng.", en: "Actually, I'm a little nervous." } },
+  { traditional: "愛上", simplified: "爱上", pinyin: "ài shàng", english: "to fall in love with", partOfSpeech: "Vst", tbcl: "X", example: { zh: "他慢慢愛上了她。", pinyin: "Tā mànmàn ài shàng le tā.", en: "He gradually fell in love with her." } },
+  { traditional: "見到", simplified: "见到", pinyin: "jiàn dào", english: "to see / to meet", partOfSpeech: "V", tbcl: "4", example: { zh: "每次見到她，他都很開心。", pinyin: "Měi cì jiàn dào tā, tā dōu hěn kāixīn.", en: "Every time he sees her, he's very happy." } },
+  { traditional: "願意", simplified: "愿意", pinyin: "yuànyì", english: "to be willing to", partOfSpeech: "Vaux", tbcl: "2", example: { zh: "我願意跟你一起去。", pinyin: "Wǒ yuànyì gēn nǐ yīqǐ qù.", en: "I'm willing to go with you." } },
+  { traditional: "當", simplified: "当", pinyin: "dāng", english: "to be / to act as", partOfSpeech: "V", tbcl: "2", example: { zh: "我想先當你的朋友。", pinyin: "Wǒ xiǎng xiān dāng nǐ de péngyǒu.", en: "I want to be your friend first." } },
+  { traditional: "好朋友", simplified: "好朋友", pinyin: "hǎo péngyǒu", english: "good friend", partOfSpeech: "N", tbcl: "X", example: { zh: "他們現在是好朋友。", pinyin: "Tāmen xiànzài shì hǎo péngyǒu.", en: "They are good friends now." } },
+  { traditional: "機會", simplified: "机会", pinyin: "jīhuì", english: "opportunity / chance", partOfSpeech: "N", tbcl: "2", example: { zh: "這是一個很好的機會。", pinyin: "Zhè shì yī gè hěn hǎo de jīhuì.", en: "This is a very good opportunity." } },
+  { traditional: "這樣", simplified: "这样", pinyin: "zhèyàng", english: "like this / in this way", partOfSpeech: "Adv / Det", tbcl: "3", example: { zh: "這樣說比較清楚。", pinyin: "Zhèyàng shuō bǐjiào qīngchu.", en: "It's clearer to say it this way." } },
+  { traditional: "認為", simplified: "认为", pinyin: "rènwéi", english: "to think / to consider", partOfSpeech: "Vst", tbcl: "2", example: { zh: "我認為他是一個好人。", pinyin: "Wǒ rènwéi tā shì yī gè hǎo rén.", en: "I think he is a good person." } },
 ];
 
 export default function Chapter3() {
@@ -667,10 +752,18 @@ export default function Chapter3() {
   const [summitMessageStates, setSummitMessageStates] = useState<MessageState>({});
   const [summitChatLang, setSummitChatLang] = useState<Language>("zh");
   const [endingVideoLang, setEndingVideoLang] = useState<Language>("zh");
+  const [endingVideoLangGreen, setEndingVideoLangGreen] = useState<Language>("zh");
   // Vocabulary list states for bar
   const [barVocabStates, setBarVocabStates] = useState<{ [key: number]: boolean }>({});
   // Vocabulary list states for summit/ending
   const [summitVocabStates, setSummitVocabStates] = useState<{ [key: number]: boolean }>({});
+  // Language Tip 顯示語言（依生詞列 index）；不分成兩區塊，用按鈕切換
+  const [summitTipLangByIndex, setSummitTipLangByIndex] = useState<Record<number, "zh" | "en">>({});
+  // 請跟著唸（一⋯⋯就⋯⋯）：語音辨識成功後切換圖片
+  const [yiJiuSpeakSuccess, setYiJiuSpeakSuccess] = useState(false);
+  const [yiJiuListening, setYiJiuListening] = useState(false);
+  const [yiJiuTranscript, setYiJiuTranscript] = useState("");
+  const [yiJiuError, setYiJiuError] = useState<string | null>(null);
   
   // Bar chat state
   const [barChatState, setBarChatState] = useState<{ messages: BarMessage[] }>(() => {
@@ -717,15 +810,13 @@ export default function Chapter3() {
     }
   }, [appScenario]);
   
-  // Save affinity to localStorage when it changes；切回普通時重置影片區塊「未揭露」狀態
+  // Save affinity to localStorage when it changes（切換狀態時不重置 endingVideoRevealed，避免影片區塊消失）
   useEffect(() => {
     localStorage.setItem("affinity_state", affinity);
-    if (affinity === "green") setEndingVideoRevealed(false);
   }, [affinity]);
 
-  // 滑到影片區塊時才慢慢顯示（捲動觸發）
+  // 滑到影片區塊時才慢慢顯示（捲動觸發；普通／加速兩種結局皆觸發）
   useEffect(() => {
-    if (affinity !== "red") return;
     const el = endingVideoRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -736,7 +827,41 @@ export default function Chapter3() {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [affinity]);
+  }, []);
+
+  // 請跟著唸「他一吃飯就想喝水」— 語音辨識
+  useEffect(() => {
+    if (!yiJiuListening) return;
+    let recognition: any = null;
+    if ("webkitSpeechRecognition" in window) {
+      recognition = new (window as any).webkitSpeechRecognition();
+    } else if ("SpeechRecognition" in window) {
+      recognition = new (window as any).SpeechRecognition();
+    } else {
+      setYiJiuError("您的瀏覽器不支援語音辨識。");
+      setYiJiuListening(false);
+      return;
+    }
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "zh-TW";
+    recognition.onresult = (event: any) => {
+      let t = "";
+      for (let i = 0; i < event.results.length; ++i) t += event.results[i][0].transcript;
+      setYiJiuTranscript(t);
+      const target = "他一吃飯就想喝水";
+      if (t.includes(target) || (t.includes("一吃飯") && t.includes("想喝水"))) {
+        setYiJiuSpeakSuccess(true);
+        setYiJiuListening(false);
+      }
+    };
+    recognition.onerror = () => setYiJiuListening(false);
+    recognition.onend = () => setYiJiuListening(false);
+    recognition.start();
+    return () => {
+      try { recognition?.stop(); } catch {}
+    };
+  }, [yiJiuListening]);
 
   // Save bar chat state to localStorage when it changes
   useEffect(() => {
@@ -958,7 +1083,7 @@ export default function Chapter3() {
                               }}
                               className="text-2xl"
                             >
-                              💬
+                              💭
                             </motion.div>
                           ) : (
                             <motion.div
@@ -1279,7 +1404,7 @@ export default function Chapter3() {
               <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">⛰️</span>
+                    <span className="text-2xl">💞</span>
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
@@ -1300,7 +1425,9 @@ export default function Chapter3() {
               </div>
 
               <div className="overflow-visible p-8 space-y-6 bg-slate-100/50 dark:bg-slate-950/50 relative">
-                {[...SUMMIT_MESSAGES_COMMON, ...(affinity === "red" ? SUMMIT_MESSAGES_RED : SUMMIT_MESSAGES_GREEN)].map((msg) => (
+                {[...SUMMIT_MESSAGES_COMMON, ...(affinity === "red" ? SUMMIT_MESSAGES_RED : SUMMIT_MESSAGES_GREEN)].map((msg) => {
+                  const summitBtnLight = [103, 104, 203, 204].includes(msg.id);
+                  return (
                   <div key={msg.id}>
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
@@ -1309,7 +1436,7 @@ export default function Chapter3() {
                     >
                       {msg.sender === "narrator" ? (
                         <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 shadow-md border-2 border-slate-300 bg-slate-50">
-                          <span className="text-2xl">🌸</span>
+                          <span className="text-2xl">🤭</span>
                         </div>
                       ) : (
                         <div
@@ -1352,7 +1479,11 @@ export default function Chapter3() {
                             variant="ghost"
                             size="sm"
                             className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
-                              summitMessageStates[msg.id]?.showEn ? "bg-primary/10 text-primary hover:bg-primary/20" : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                              summitBtnLight
+                                ? "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-white/20"
+                                : summitMessageStates[msg.id]?.showEn
+                                  ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                  : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
                             }`}
                             onClick={() => toggleSummitMessageEn(msg.id)}
                           >
@@ -1364,7 +1495,11 @@ export default function Chapter3() {
                             variant="ghost"
                             size="sm"
                             className={`h-7 px-2 rounded-full gap-1 text-xs font-medium transition-colors ${
-                              summitMessageStates[msg.id]?.showPinyin ? "bg-primary/10 text-primary hover:bg-primary/20" : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                              summitBtnLight
+                                ? "text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-white/20"
+                                : summitMessageStates[msg.id]?.showPinyin
+                                  ? "bg-primary/10 text-primary hover:bg-primary/20"
+                                  : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
                             }`}
                             onClick={() => toggleSummitMessagePinyin(msg.id)}
                           >
@@ -1377,7 +1512,7 @@ export default function Chapter3() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                                className={summitBtnLight ? "h-7 px-2 rounded-full gap-1 text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-white/20 transition-colors" : "h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"}
                                 onClick={() => playBarAudio(msg.text)}
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
@@ -1389,73 +1524,133 @@ export default function Chapter3() {
                       </div>
                     </motion.div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </Card>
           </div>
 
-          {/* 心跳結局影片 — 第二個對話框（象山山頂）下方；影片一律載入，僅在 affinity === "red" 時顯示區塊，滑到才慢慢浮現 */}
+          {/* 結局影片區 — 第二個對話框下方；依 floating 小雨心跳顯示不同影片，滑到才慢慢浮現；僅渲染當前狀態的影片以利手機播放 */}
           <div
             ref={endingVideoRef}
-            className={
-              affinity === "red"
-                ? "mb-16 max-w-3xl mx-auto min-h-[200px]"
-                : "absolute -z-10 opacity-0 pointer-events-none overflow-hidden left-[-9999px] w-px min-w-0 h-px min-h-0"
-            }
-            aria-hidden={affinity !== "red"}
+            className="mb-16 max-w-3xl mx-auto min-h-[200px]"
+            aria-hidden={false}
           >
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{
-                opacity: affinity === "red" && endingVideoRevealed ? 1 : 0,
-                y: affinity === "red" && endingVideoRevealed ? 0 : 28,
-              }}
-              transition={{ duration: 1.4, ease: "easeOut" }}
-              className="w-full"
-            >
-              <div className="relative rounded-2xl overflow-hidden border-2 border-red-400/60 dark:border-red-500/50 bg-gradient-to-b from-red-50/80 to-pink-50/80 dark:from-red-950/40 dark:to-pink-950/30 shadow-2xl shadow-red-500/15 dark:shadow-red-500/10">
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-red-200/20 via-transparent to-pink-200/20 rounded-2xl" />
-                <div className="relative z-10 p-6 sm:p-8">
-                  <div className="absolute top-4 right-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-100 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-950/50 rounded-full border border-red-200/60 dark:border-red-800/60"
-                      onClick={() => setEndingVideoLang((prev) => (prev === "zh" ? "en" : "zh"))}
-                      aria-label={endingVideoLang === "zh" ? "Switch to English" : "切換至中文"}
-                    >
-                      <Languages className="w-4 h-4" />
-                      <span className="text-xs font-medium">{endingVideoLang === "zh" ? "EN" : "中文"}</span>
-                    </Button>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
-                    <Badge className="bg-red-500/90 text-white border-red-400/50 shadow-md px-3 py-1 text-sm font-serif-chinese">
-                      {chapterContent[endingVideoLang].endingVideo.badge}
-                    </Badge>
-                    <span className="flex items-center gap-1.5 text-red-600 dark:text-red-400">
-                      <Heart className="w-4 h-4 fill-current" />
-                      <span className="text-sm font-medium">{chapterContent[endingVideoLang].endingVideo.heartbeatLabel}</span>
-                    </span>
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold font-serif-chinese text-center text-red-800 dark:text-red-200 mb-6">
-                    {chapterContent[endingVideoLang].endingVideo.title}
-                  </h3>
-                  <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-red-300/30 dark:ring-red-600/30 aspect-video max-h-[60vh]">
-                    <video
-                      className="w-full h-full object-contain"
-                      src="/chapter3_ending.mp4"
-                      controls
-                      playsInline
-                      preload="auto"
-                      aria-label={chapterContent[endingVideoLang].endingVideo.title}
-                    >
-                      <track kind="captions" />
-                      您的瀏覽器不支援影片播放。
-                    </video>
+            {affinity === "green" ? (
+              <motion.div
+                key="ending-green"
+                initial={{ opacity: 0, y: 28 }}
+                animate={{
+                  opacity: endingVideoRevealed ? 1 : 0,
+                  y: endingVideoRevealed ? 0 : 28,
+                }}
+                transition={{ duration: 1.4, ease: "easeOut" }}
+                className="w-full"
+              >
+                <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-400/60 dark:border-emerald-500/50 bg-gradient-to-b from-emerald-50/80 to-teal-50/80 dark:from-emerald-950/40 dark:to-teal-950/30 shadow-2xl shadow-emerald-500/15 dark:shadow-emerald-500/10">
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-emerald-200/20 via-transparent to-teal-200/20 rounded-2xl" />
+                  <div className="relative z-10 p-6 sm:p-8">
+                    <div className="absolute top-4 right-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="gap-2 rounded-full border border-[#ffebeb] bg-[#fffafa]/90 hover:bg-[#ffebeb]/50 text-red-600 hover:text-red-700 dark:border-red-200/60 dark:bg-red-950/20 dark:text-red-400 dark:hover:text-red-300"
+                        onClick={() => setEndingVideoLangGreen((prev) => (prev === "zh" ? "en" : "zh"))}
+                        aria-label={endingVideoLangGreen === "zh" ? "Switch to English" : "切換至中文"}
+                      >
+                        <Languages className="w-4 h-4" />
+                        <span className="text-xs font-medium">{endingVideoLangGreen === "zh" ? "EN" : "中文"}</span>
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
+                      <Badge className="bg-emerald-500/90 text-white border-emerald-400/50 shadow-md px-3 py-1 text-sm font-serif-chinese">
+                        {chapterContent[endingVideoLangGreen].endingVideoGreen.badge}
+                      </Badge>
+                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                        <Heart className="w-4 h-4 fill-current" />
+                        <span className="text-sm font-medium">{chapterContent[endingVideoLangGreen].endingVideoGreen.heartbeatLabel}</span>
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold font-serif-chinese text-center text-emerald-800 dark:text-emerald-200 mb-6">
+                      {chapterContent[endingVideoLangGreen].endingVideoGreen.title}
+                    </h3>
+                    <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-emerald-300/30 dark:ring-emerald-600/30 aspect-video max-h-[60vh] min-h-[200px]">
+                      <video
+                        className="w-full h-full object-contain"
+                        src="/chapter3_ending2.mp4"
+                        controls
+                        playsInline
+                        preload="auto"
+                        disablePictureInPicture
+                        disableRemotePlayback
+                        aria-label={chapterContent[endingVideoLangGreen].endingVideoGreen.title}
+                        {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as React.VideoHTMLAttributes<HTMLVideoElement>)}
+                      >
+                        <track kind="captions" />
+                        您的瀏覽器不支援影片播放。
+                      </video>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="ending-red"
+                initial={{ opacity: 0, y: 28 }}
+                animate={{
+                  opacity: endingVideoRevealed ? 1 : 0,
+                  y: endingVideoRevealed ? 0 : 28,
+                }}
+                transition={{ duration: 1.4, ease: "easeOut" }}
+                className="w-full"
+              >
+                <div className="relative rounded-2xl overflow-hidden border-2 border-red-400/60 dark:border-red-500/50 bg-gradient-to-b from-red-50/80 to-pink-50/80 dark:from-red-950/40 dark:to-pink-950/30 shadow-2xl shadow-red-500/15 dark:shadow-red-500/10">
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-red-200/20 via-transparent to-pink-200/20 rounded-2xl" />
+                  <div className="relative z-10 p-6 sm:p-8">
+                    <div className="absolute top-4 right-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="gap-2 rounded-full border border-[#ffebeb] bg-[#fffafa]/90 hover:bg-[#ffebeb]/50 text-red-600 hover:text-red-700 dark:border-red-200/60 dark:bg-red-950/20 dark:text-red-400 dark:hover:text-red-300"
+                        onClick={() => setEndingVideoLang((prev) => (prev === "zh" ? "en" : "zh"))}
+                        aria-label={endingVideoLang === "zh" ? "Switch to English" : "切換至中文"}
+                      >
+                        <Languages className="w-4 h-4" />
+                        <span className="text-xs font-medium">{endingVideoLang === "zh" ? "EN" : "中文"}</span>
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
+                      <Badge className="bg-red-500/90 text-white border-red-400/50 shadow-md px-3 py-1 text-sm font-serif-chinese">
+                        {chapterContent[endingVideoLang].endingVideo.badge}
+                      </Badge>
+                      <span className="flex items-center gap-1.5 text-red-600 dark:text-red-400">
+                        <Heart className="w-4 h-4 fill-current" />
+                        <span className="text-sm font-medium">{chapterContent[endingVideoLang].endingVideo.heartbeatLabel}</span>
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold font-serif-chinese text-center text-red-800 dark:text-red-200 mb-6">
+                      {chapterContent[endingVideoLang].endingVideo.title}
+                    </h3>
+                    <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-red-300/30 dark:ring-red-600/30 aspect-video max-h-[60vh] min-h-[200px]">
+                      <video
+                        className="w-full h-full object-contain"
+                        src="/chapter3_ending.mp4"
+                        controls
+                        playsInline
+                        preload="auto"
+                        disablePictureInPicture
+                        disableRemotePlayback
+                        aria-label={chapterContent[endingVideoLang].endingVideo.title}
+                        {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as React.VideoHTMLAttributes<HTMLVideoElement>)}
+                      >
+                        <track kind="captions" />
+                        您的瀏覽器不支援影片播放。
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* 象山／結局生詞列表 — 格式同上區塊 */}
@@ -1552,8 +1747,10 @@ export default function Chapter3() {
                               {word.partOfSpeech}
                             </Badge>
                           </td>
-                          <td className="p-4 text-center text-xs text-slate-600 leading-relaxed max-w-[280px]">
-                            {word.tbcl}
+                          <td className="p-4 text-center">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-xs font-bold text-slate-600">
+                              {word.tbcl}
+                            </span>
                           </td>
                         </tr>
                         <AnimatePresence>
@@ -1591,6 +1788,28 @@ export default function Chapter3() {
                                       </span>
                                     </div>
                                   </div>
+                                  {word.languageTip && (
+                                    <div className="mt-3 p-4 rounded-lg border border-emerald-200/60 bg-emerald-50/50 dark:border-emerald-800/50 dark:bg-emerald-950/30 text-sm relative">
+                                      <div className="absolute top-3 right-3">
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="h-7 px-2 rounded-full gap-1.5 text-xs font-medium text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 dark:text-emerald-400 dark:hover:bg-emerald-900/50 border border-emerald-200/60 dark:border-emerald-700/50"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSummitTipLangByIndex((prev) => ({ ...prev, [index]: (prev[index] ?? "zh") === "zh" ? "en" : "zh" }));
+                                          }}
+                                          aria-label={summitTipLangByIndex[index] === "en" ? "切換至中文" : "Switch to English"}
+                                        >
+                                          <Languages className="w-3.5 h-3.5" />
+                                          <span>{summitTipLangByIndex[index] === "en" ? "中文" : "EN"}</span>
+                                        </Button>
+                                      </div>
+                                      <p className={`pr-24 font-serif-chinese whitespace-pre-line leading-relaxed ${summitTipLangByIndex[index] === "en" ? "text-slate-600 dark:text-slate-400 text-sm" : "text-slate-800 dark:text-slate-200"}`}>
+                                        {summitTipLangByIndex[index] === "en" ? word.languageTip.en : word.languageTip.zh}
+                                      </p>
+                                    </div>
+                                  )}
                                 </motion.div>
                               </td>
                             </tr>
@@ -1600,6 +1819,105 @@ export default function Chapter3() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </Card>
+          </div>
+
+          {/* 語法點（最下面區塊）— 第二個生詞列表下方 */}
+          <div className="mb-12">
+            <div className="mb-6">
+              <Badge className="mb-2 bg-primary/10 text-primary border-primary/20">
+                <BookOpen className="w-3 h-3 mr-1" />
+                {content.grammar.title}
+              </Badge>
+              <h2 className="text-3xl font-bold font-serif-chinese">
+                {content.grammar.subtitle}
+              </h2>
+            </div>
+            <div className="space-y-6">
+              {CHAPTER3_GRAMMAR_POINTS_BOTTOM.map((point) => (
+                <GrammarPointCard key={point.id} point={point} playAudio={playBarAudio} />
+              ))}
+            </div>
+
+            {/* 請跟著唸：他一吃飯就想喝水 — 語音辨識成功後切換為「吃飯+喝水」圖 */}
+            <Card className="mt-6 overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
+              <div className="p-6">
+                <div className="mt-6 pt-6 border-t border-dashed border-border/50">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-sm text-muted-foreground">請跟著唸：</span>
+                    <span className="text-sm font-bold font-serif-chinese">他一吃飯就想喝水</span>
+                  </div>
+                  <div className="grid grid-cols-1 max-w-md mx-auto gap-4 mb-4 relative">
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="w-full relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={yiJiuSpeakSuccess ? "eating-drinking" : "eating"}
+                            src={yiJiuSpeakSuccess ? personEatingDrinkingImg : personEatingImg}
+                            alt={yiJiuSpeakSuccess ? "他吃飯喝水" : "他吃飯"}
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="w-full h-full object-contain p-2"
+                          />
+                        </AnimatePresence>
+                        <div className="absolute bottom-2 left-0 right-0 text-center">
+                          <span
+                            className={`text-xs font-bold px-2 py-1 rounded-full ${yiJiuSpeakSuccess ? "bg-primary text-primary-foreground" : "bg-slate-200 text-slate-500"}`}
+                          >
+                            {yiJiuSpeakSuccess ? "吃飯＋喝水" : "吃飯"}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <span className="font-bold text-lg font-serif-chinese">他</span>
+                        <span className="text-sm text-muted-foreground">He</span>
+                      </div>
+                    </div>
+                  </div>
+                  {yiJiuTranscript && (
+                    <p className="text-center text-sm text-muted-foreground mb-3 font-serif-chinese">
+                      偵測到：{yiJiuTranscript}
+                    </p>
+                  )}
+                  {yiJiuError && (
+                    <p className="text-center text-sm text-destructive mb-3">{yiJiuError}</p>
+                  )}
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        size="lg"
+                        className={`rounded-full px-8 transition-all duration-300 ${yiJiuListening ? "bg-primary/80" : "bg-primary hover:bg-primary/90"}`}
+                        onClick={() => {
+                          if (yiJiuListening) return;
+                          setYiJiuTranscript("");
+                          setYiJiuError(null);
+                          setYiJiuListening(true);
+                        }}
+                        disabled={yiJiuSpeakSuccess}
+                      >
+                        <Mic className="w-5 h-5 mr-2" aria-hidden />
+                        開始 Start
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="rounded-full px-6 gap-2"
+                        onClick={() => {
+                          setYiJiuSpeakSuccess(false);
+                          setYiJiuListening(false);
+                          setYiJiuTranscript("");
+                          setYiJiuError(null);
+                        }}
+                      >
+                        <RotateCcw className="w-5 h-5" aria-hidden />
+                        重新 Reset
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Card>
           </div>
