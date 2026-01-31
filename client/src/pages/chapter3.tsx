@@ -865,7 +865,7 @@ const LISTENING_PRACTICE = [
   {
     id: 1,
     title: "聽力練習 1",
-    audioSrc: "/c1l1.mp3",
+    audioSrc: "/c3l1.mp3",
     questions: [
       { id: 1, question: "說話的人在哪裡？", options: ["教室", "圖書館", "咖啡店", "電影院"], answer: 1 },
       { id: 2, question: "大部分人在做什麼", options: ["聊天", "看電影", "看書或用電腦學習", "睡覺"], answer: 2 },
@@ -910,25 +910,27 @@ const READING_PRACTICE = [
 ];
 
 const SPEAKING_SENTENCES = [
-  { id: 1, text: "我喜歡跟朋友出去吃飯。", pinyin: "Wǒ xǐhuān gēn péngyǒu chūqù chīfàn." },
-  { id: 2, text: "明天下午六點怎麼樣？", pinyin: "Míngtiān xiàwǔ liù diǎn zěnmeyàng?" },
-  { id: 3, text: "我們在捷運站見面。", pinyin: "Wǒmen zài jiéyùn zhàn jiànmiàn." },
-  { id: 4, text: "你平常喜歡做什麼？", pinyin: "Nǐ píngcháng xǐhuān zuò shénme?" },
-  { id: 5, text: "這部電影很好看。", pinyin: "Zhè bù diànyǐng hěn hǎokàn." },
+  // 取材自第三章兩個對話（酒吧情境 + 象山山頂）
+  { id: 1, text: "小雨，你想不想一起喝酒？", pinyin: "Xiǎoyǔ, nǐ xiǎng bù xiǎng yìqǐ hējiǔ?" },
+  { id: 2, text: "好啊，我們去喝酒吧，台北101附近有很多酒吧。", pinyin: "Hǎo a, wǒmen qù hējiǔ ba, Táiběi 101 fùjìn yǒu hěn duō jiǔbā." },
+  { id: 3, text: "不一定，但認識你比喝酒更重要。", pinyin: "Bù yīdìng, dàn rènshí nǐ bǐ hējiǔ gèng zhòngyào." },
+  { id: 4, text: "我們一邊喝酒，一邊聊天，乾杯。", pinyin: "Wǒmen yìbiān hējiǔ, yìbiān liáotiān, gānbēi." },
+  { id: 5, text: "我很喜歡，但我更喜歡的是你。", pinyin: "Wǒ hěn xǐhuān, dàn wǒ gèng xǐhuān de shì nǐ." },
+  { id: 6, text: "其實我第一次看到你，就愛上你了。", pinyin: "Qíshí wǒ dì yī cì kàndào nǐ, jiù àishàng nǐ le." },
 ];
 
 const GRAMMAR_PRACTICE = [
   {
     id: 1,
     title: "練習 1｜第一次",
-    scenario: "你第一次跟新朋友出去，會喝酒嗎？",
-    answer: "不一定，要看跟誰。\n我第一次跟新朋友出去，就會聊天。",
+    scenario: "你跟新朋友第一次見面喜歡做什麼?",
+    answer: "我第一次跟新朋友出去，就會聊天。",
   },
   {
     id: 2,
     title: "練習 2｜比",
     scenario: "你覺得聊天重要，還是喝酒重要？",
-    answer: "我覺得聊天比喝酒重要。\n認識朋友比喝酒重要。",
+    answer: "我覺得聊天比喝酒重要。",
   },
   {
     id: 3,
@@ -940,19 +942,19 @@ const GRAMMAR_PRACTICE = [
     id: 4,
     title: "練習 4｜更",
     scenario: "你喜歡台北的風景嗎？",
-    answer: "我很喜歡，但我更喜歡的是你。\n我喜歡風景，但更喜歡聊天。",
+    answer: "我喜歡風景，但更喜歡聊天。",
   },
   {
     id: 5,
     title: "練習 5｜跟⋯⋯一樣",
     scenario: "我很喜歡爬山，你呢？",
-    answer: "我也跟你一樣。\n我跟你一樣，很喜歡爬山。",
+    answer: "我跟你一樣，很喜歡爬山。",
   },
   {
     id: 6,
-    title: "練習 6｜跟⋯⋯一樣",
+    title: "練習 6｜一⋯⋯就⋯⋯",
     scenario: "你第一次看到喜歡的人，會怎麼樣？",
-    answer: "我一看到你，就很開心。\n我一見到你，就很喜歡你。",
+    answer: "我一看到她，就很開心。",
   },
 ];
 
