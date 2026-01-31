@@ -47,12 +47,12 @@ import movieChatBackground from "@/assets/generated_images/chapter2_movie_chat_b
 const chapterContent = {
   zh: {
     title: "第二章",
-    subtitle: "第一次約會 First Date",
+    subtitle: "第一次約會｜First Date",
     description: "兩個人一起吃飯或是看電影",
     backToHome: "返回首頁",
     chat: {
       title: "第二次聊天",
-      subtitle: "有些回答，可能會讓小雨心跳加快",
+      subtitle: "有些回答，會影響小雨的想法",
       randy: "瑞迪",
       xiaoyu: "小雨",
       affinity: "",
@@ -90,7 +90,7 @@ const chapterContent = {
     backToHome: "Back to Home",
     chat: {
       title: "Second Chat",
-      subtitle: "Some of your replies might make Xiaoyu's heart beat faster",
+      subtitle: "Some answers may influence what Xiaoyu thinks",
       randy: "Randy",
       xiaoyu: "Xiao Yu",
       affinity: "Xiao Yu's Affinity",

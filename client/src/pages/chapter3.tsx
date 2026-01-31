@@ -36,19 +36,19 @@ import barChatBackground from "@/assets/generated_images/chapter3_bar_chat_bg.pn
 // @ts-ignore
 import summitChatBackground from "@/assets/generated_images/chapter3_summit_chat_bg.png";
 // @ts-ignore
-import personEatingImg from "@/assets/generated_images/chapter3_person_eating.png";
+import personEatingImg from "@/assets/generated_images/chapter3_person_eating_drinking.jpg";
 // @ts-ignore
-import personEatingDrinkingImg from "@/assets/generated_images/chapter3_person_eating_drinking.png";
+import personEatingDrinkingImg from "@/assets/generated_images/chapter3_person_eating.jpg";
 
 const chapterContent = {
   zh: {
     title: "第三章",
-    subtitle: "第三次見面 Third Meeting",
+    subtitle: "第三次見面：感覺與選擇｜Third Meeting: Feelings & Choices",
     description: "內容即將推出",
     backToHome: "返回首頁",
     chat: {
       title: "第三次聊天",
-      subtitle: "有些回答，可能會讓小雨心跳加快",
+      subtitle: "有些選擇，會改變故事的發展",
       randy: "瑞迪",
       xiaoyu: "小雨",
       affinity: "",
@@ -86,7 +86,7 @@ const chapterContent = {
     backToHome: "Back to Home",
     chat: {
       title: "Third Chat",
-      subtitle: "Some of your replies might make Xiaoyu's heart beat faster",
+      subtitle: "Some choices will change how the story develops",
       randy: "Randy",
       xiaoyu: "Xiao Yu",
       affinity: "Xiao Yu's Affinity",
@@ -280,6 +280,11 @@ function GrammarPointCard({
   const [exampleStates, setExampleStates] = useState<{
     [key: number]: { showPinyin: boolean; showEn: boolean };
   }>({});
+  // 語音辨識練習（用在第 6 個文法點的第 3 個例句下）
+  const [oneJiuSpeakSuccess, setOneJiuSpeakSuccess] = useState(false);
+  const [oneJiuListening, setOneJiuListening] = useState(false);
+  const [oneJiuTranscript, setOneJiuTranscript] = useState("");
+  const [oneJiuError, setOneJiuError] = useState<string | null>(null);
 
   const toggleExample = (index: number, type: "pinyin" | "en") => {
     setExampleStates((prev) => ({
@@ -291,6 +296,40 @@ function GrammarPointCard({
       },
     }));
   };
+
+  // 請跟著唸「他一吃飯就想喝水」— 語音辨識成功後切換圖片
+  useEffect(() => {
+    if (!oneJiuListening) return;
+    let recognition: any = null;
+    if ("webkitSpeechRecognition" in window) {
+      recognition = new (window as any).webkitSpeechRecognition();
+    } else if ("SpeechRecognition" in window) {
+      recognition = new (window as any).SpeechRecognition();
+    } else {
+      setOneJiuError("您的瀏覽器不支援語音辨識。");
+      setOneJiuListening(false);
+      return;
+    }
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "zh-TW";
+    recognition.onresult = (event: any) => {
+      let t = "";
+      for (let i = 0; i < event.results.length; ++i) t += event.results[i][0].transcript;
+      setOneJiuTranscript(t);
+      const target = "他一吃飯就想喝水";
+      if (t.includes(target) || (t.includes("一吃飯") && t.includes("想喝水"))) {
+        setOneJiuSpeakSuccess(true);
+        setOneJiuListening(false);
+      }
+    };
+    recognition.onerror = () => setOneJiuListening(false);
+    recognition.onend = () => setOneJiuListening(false);
+    recognition.start();
+    return () => {
+      try { recognition?.stop(); } catch {}
+    };
+  }, [oneJiuListening]);
 
   return (
     <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900 mb-6">
@@ -390,6 +429,75 @@ function GrammarPointCard({
                     朗讀
                   </Button>
                 </div>
+                {point.id === 6 && idx === 2 && (
+                  <div className="mt-4 pt-4 border-t border-border/50">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-sm text-muted-foreground">請跟著唸：</span>
+                      <span className="text-sm font-bold font-serif-chinese">他一吃飯就想喝水</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 max-w-sm mx-auto gap-4 mb-4 relative">
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="w-full relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
+                          <AnimatePresence mode="wait">
+                            <motion.img
+                              key={oneJiuSpeakSuccess ? "kid2" : "kid1"}
+                              src={oneJiuSpeakSuccess ? personEatingDrinkingImg : personEatingImg}
+                              alt={oneJiuSpeakSuccess ? "他吃飯喝水" : "他吃飯"}
+                              initial={{ opacity: 0, scale: 0.98 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.35 }}
+                              className="w-full h-full object-contain p-2"
+                            />
+                          </AnimatePresence>
+                        </div>
+                      </div>
+                    </div>
+
+                    {oneJiuTranscript && (
+                      <p className="text-center text-sm text-muted-foreground mb-3 font-serif-chinese">
+                        偵測到：{oneJiuTranscript}
+                      </p>
+                    )}
+                    {oneJiuError && (
+                      <p className="text-center text-sm text-destructive mb-3">{oneJiuError}</p>
+                    )}
+
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="flex items-center justify-center gap-2">
+                        <Button
+                          size="lg"
+                          className={`rounded-full px-8 transition-all duration-300 ${oneJiuListening ? "bg-primary/80" : "bg-primary hover:bg-primary/90"}`}
+                          onClick={() => {
+                            if (oneJiuListening) return;
+                            setOneJiuTranscript("");
+                            setOneJiuError(null);
+                            setOneJiuListening(true);
+                          }}
+                          disabled={oneJiuSpeakSuccess}
+                        >
+                          <Mic className="w-5 h-5 mr-2" aria-hidden />
+                          開始 Start
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          className="rounded-full px-6 gap-2"
+                          onClick={() => {
+                            setOneJiuSpeakSuccess(false);
+                            setOneJiuListening(false);
+                            setOneJiuTranscript("");
+                            setOneJiuError(null);
+                          }}
+                        >
+                          <RotateCcw className="w-5 h-5" aria-hidden />
+                          重新 Reset
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -764,11 +872,6 @@ export default function Chapter3() {
   const [summitVocabStates, setSummitVocabStates] = useState<{ [key: number]: boolean }>({});
   // Language Tip 顯示語言（依生詞列 index）；不分成兩區塊，用按鈕切換
   const [summitTipLangByIndex, setSummitTipLangByIndex] = useState<Record<number, "zh" | "en">>({});
-  // 請跟著唸（一⋯⋯就⋯⋯）：語音辨識成功後切換圖片
-  const [yiJiuSpeakSuccess, setYiJiuSpeakSuccess] = useState(false);
-  const [yiJiuListening, setYiJiuListening] = useState(false);
-  const [yiJiuTranscript, setYiJiuTranscript] = useState("");
-  const [yiJiuError, setYiJiuError] = useState<string | null>(null);
   
   // Bar chat state
   const [barChatState, setBarChatState] = useState<{ messages: BarMessage[] }>(() => {
@@ -833,40 +936,6 @@ export default function Chapter3() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
-
-  // 請跟著唸「他一吃飯就想喝水」— 語音辨識
-  useEffect(() => {
-    if (!yiJiuListening) return;
-    let recognition: any = null;
-    if ("webkitSpeechRecognition" in window) {
-      recognition = new (window as any).webkitSpeechRecognition();
-    } else if ("SpeechRecognition" in window) {
-      recognition = new (window as any).SpeechRecognition();
-    } else {
-      setYiJiuError("您的瀏覽器不支援語音辨識。");
-      setYiJiuListening(false);
-      return;
-    }
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = "zh-TW";
-    recognition.onresult = (event: any) => {
-      let t = "";
-      for (let i = 0; i < event.results.length; ++i) t += event.results[i][0].transcript;
-      setYiJiuTranscript(t);
-      const target = "他一吃飯就想喝水";
-      if (t.includes(target) || (t.includes("一吃飯") && t.includes("想喝水"))) {
-        setYiJiuSpeakSuccess(true);
-        setYiJiuListening(false);
-      }
-    };
-    recognition.onerror = () => setYiJiuListening(false);
-    recognition.onend = () => setYiJiuListening(false);
-    recognition.start();
-    return () => {
-      try { recognition?.stop(); } catch {}
-    };
-  }, [yiJiuListening]);
 
   // Save bar chat state to localStorage when it changes
   useEffect(() => {
@@ -1557,17 +1626,7 @@ export default function Chapter3() {
                               >
                                 {showLoveChoiceTranslation ? "💔 Just be friends" : "💔 當朋友就好"}
                               </Button>
-                              <Button
-                                size="sm"
-                                className="rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/15 shadow-sm hover:shadow-md transition-all duration-150 active:scale-[0.97] active:translate-y-[1px] dark:border-slate-700/60 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800/90"
-                                onClick={() => {
-                                  setXiaoyuThoughtToastAffinity(affinity);
-                                  setXiaoyuThoughtToastShowEn(false);
-                                  setXiaoyuThoughtToastOpen(true);
-                                }}
-                              >
-                                {showLoveChoiceTranslation ? "🔮 See what Xiaoyu thinks" : "🔮看小雨的想法"}
-                              </Button>
+                              {/* 🔮看小雨的想法（暫時隱藏） */}
                             </div>
                           </div>
                         )}
@@ -1889,87 +1948,6 @@ export default function Chapter3() {
                 <GrammarPointCard key={point.id} point={point} playAudio={playBarAudio} />
               ))}
             </div>
-
-            {/* 請跟著唸：他一吃飯就想喝水 — 語音辨識成功後切換為「吃飯+喝水」圖 */}
-            <Card className="mt-6 overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900">
-              <div className="p-6">
-                <div className="mt-6 pt-6 border-t border-dashed border-border/50">
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-sm text-muted-foreground">請跟著唸：</span>
-                    <span className="text-sm font-bold font-serif-chinese">他一吃飯就想喝水</span>
-                  </div>
-                  <div className="grid grid-cols-1 max-w-md mx-auto gap-4 mb-4 relative">
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-full relative aspect-square bg-slate-50 rounded-xl overflow-hidden border border-border/50 transition-all duration-500">
-                        <AnimatePresence mode="wait">
-                          <motion.img
-                            key={yiJiuSpeakSuccess ? "eating-drinking" : "eating"}
-                            src={yiJiuSpeakSuccess ? personEatingDrinkingImg : personEatingImg}
-                            alt={yiJiuSpeakSuccess ? "他吃飯喝水" : "他吃飯"}
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="w-full h-full object-contain p-2"
-                          />
-                        </AnimatePresence>
-                        <div className="absolute bottom-2 left-0 right-0 text-center">
-                          <span
-                            className={`text-xs font-bold px-2 py-1 rounded-full ${yiJiuSpeakSuccess ? "bg-primary text-primary-foreground" : "bg-slate-200 text-slate-500"}`}
-                          >
-                            {yiJiuSpeakSuccess ? "吃飯＋喝水" : "吃飯"}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <span className="font-bold text-lg font-serif-chinese">他</span>
-                        <span className="text-sm text-muted-foreground">He</span>
-                      </div>
-                    </div>
-                  </div>
-                  {yiJiuTranscript && (
-                    <p className="text-center text-sm text-muted-foreground mb-3 font-serif-chinese">
-                      偵測到：{yiJiuTranscript}
-                    </p>
-                  )}
-                  {yiJiuError && (
-                    <p className="text-center text-sm text-destructive mb-3">{yiJiuError}</p>
-                  )}
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="flex items-center justify-center gap-2">
-                      <Button
-                        size="lg"
-                        className={`rounded-full px-8 transition-all duration-300 ${yiJiuListening ? "bg-primary/80" : "bg-primary hover:bg-primary/90"}`}
-                        onClick={() => {
-                          if (yiJiuListening) return;
-                          setYiJiuTranscript("");
-                          setYiJiuError(null);
-                          setYiJiuListening(true);
-                        }}
-                        disabled={yiJiuSpeakSuccess}
-                      >
-                        <Mic className="w-5 h-5 mr-2" aria-hidden />
-                        開始 Start
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="rounded-full px-6 gap-2"
-                        onClick={() => {
-                          setYiJiuSpeakSuccess(false);
-                          setYiJiuListening(false);
-                          setYiJiuTranscript("");
-                          setYiJiuError(null);
-                        }}
-                      >
-                        <RotateCcw className="w-5 h-5" aria-hidden />
-                        重新 Reset
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
           </div>
         </motion.div>
       </main>

@@ -51,7 +51,7 @@ import chatBackground from "@/assets/generated_images/chat_background_no_clouds.
 const chapterContent = {
   zh: {
     title: "第一章",
-    subtitle: "第一次聊天 First Chat",
+    subtitle: "第一次聊天｜First Chat",
     description: "兩個人互相介紹自己，聊興趣，最後約時間見面。",
     backToHome: "返回首頁",
     sections: [
@@ -64,7 +64,7 @@ const chapterContent = {
     comingSoonDesc: "我們正在努力準備精彩的學習內容，敬請期待！",
     chat: {
       title: "第一次聊天",
-      subtitle: "有些回答，可能會讓小與心跳加快",
+      subtitle: "有些回答，可能會讓小雨心跳加快",
       randy: "瑞迪",
       xiaoyu: "小雨",
       affinity: "",
@@ -2384,10 +2384,10 @@ export default function Chapter1() {
                         </div>                          
                           <div>
                             <h3 className="font-bold text-lg font-serif-chinese">
-                              {lang === "zh" ? "APP 約時間見面" : "APP: Schedule a Meeting"}
+                              {lang === "zh" ? "APP 約時間見面" : "Making Plans on an APP"}
                             </h3>
                             <p className="text-sm text-muted-foreground">
-                              {lang === "zh" ? "有些回答，會讓之後故事不一樣" : "Some answers will change the story later"}
+                              {lang === "zh" ? "有些回答，可能會讓小雨心跳加快" : "Some of your replies might make Xiaoyu’s heart beat faster"}
                             </p>
                           </div>
                         </div>
@@ -2804,50 +2804,47 @@ export default function Chapter1() {
                     className="p-6 border-2 border-border/50"
                   >
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                        <Headphones className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-lg">{practice.title}</h4>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="h-8 gap-2 text-primary"
-                            onClick={() => {
-                              if (practice.id === 1) {
-                                // Play actual audio file for listening practice 1
-                                const audio = new Audio("/c1l1.mp3");
-                                audio.play().catch((err) => {
-                                  console.error("Error playing audio:", err);
-                                  playAudio(
-                                    "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
-                                    false,
-                                  );
-                                });
-                              } else if (practice.id === 2) {
-                                // Play actual audio file for listening practice 2
-                                const audio = new Audio("/c1l2.mp3");
-                                audio.play().catch((err) => {
-                                  console.error("Error playing audio:", err);
-                                  playAudio(
-                                    "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
-                                    false,
-                                  );
-                                });
-                              } else {
-                                // Mock audio play for other practices
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+                          {practice.id}
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-8 gap-2 text-primary"
+                          onClick={() => {
+                            if (practice.id === 1) {
+                              // Play actual audio file for listening practice 1
+                              const audio = new Audio("/c1l1.mp3");
+                              audio.play().catch((err) => {
+                                console.error("Error playing audio:", err);
                                 playAudio(
                                   "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
                                   false,
                                 );
-                              }
-                            }}
-                          >
-                            <Play className="w-3 h-3" />
-                            播放音檔
-                          </Button>
-                        </div>
+                              });
+                            } else if (practice.id === 2) {
+                              // Play actual audio file for listening practice 2
+                              const audio = new Audio("/c1l2.mp3");
+                              audio.play().catch((err) => {
+                                console.error("Error playing audio:", err);
+                                playAudio(
+                                  "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
+                                  false,
+                                );
+                              });
+                            } else {
+                              // Mock audio play for other practices
+                              playAudio(
+                                "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
+                                false,
+                              );
+                            }
+                          }}
+                        >
+                          <Play className="w-3 h-3" />
+                          播放音檔
+                        </Button>
                       </div>
                     </div>
 
@@ -2923,13 +2920,14 @@ export default function Chapter1() {
                     className="p-6 border-2 border-border/50"
                   >
                     <div className="flex items-start gap-4 mb-6">
-                      <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 shrink-0">
-                        <BookOpenText className="w-5 h-5" />
-                      </div>
-                      <div className="space-y-4 w-full">
-                        <h4 className="font-bold text-lg">{practice.title}</h4>
-                        <div className="p-6 bg-orange-50/50 rounded-xl border border-orange-100 text-lg leading-relaxed font-serif-chinese text-slate-800">
-                          {practice.content}
+                      <div className="w-full">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">
+                            {practice.id}
+                          </div>
+                          <div className="flex-1 p-6 bg-orange-50/50 rounded-xl border border-orange-100 text-lg leading-relaxed font-serif-chinese text-slate-800">
+                            {practice.content}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -2997,16 +2995,14 @@ export default function Chapter1() {
                   </div>
                 </Card>
 
-                <Card className="p-6 border-2 border-border/50">
-                  <div className="grid gap-6">
-                    {SPEAKING_SENTENCES.map((sentence) => (
-                      <SpeakingPracticeItem
-                        key={sentence.id}
-                        sentence={sentence}
-                      />
-                    ))}
-                  </div>
-                </Card>
+                <div className="grid gap-6">
+                  {SPEAKING_SENTENCES.map((sentence) => (
+                    <SpeakingPracticeItem
+                      key={sentence.id}
+                      sentence={sentence}
+                    />
+                  ))}
+                </div>
               </TabsContent>
 
               {/* Grammar Tab */}
