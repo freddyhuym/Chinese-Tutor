@@ -148,23 +148,23 @@ type GrammarPoint = {
 const CHAPTER3_GRAMMAR_POINTS: GrammarPoint[] = [
   {
     id: 1,
-    title: "第一次",
+    title: "又",
     function: {
-      zh: "表示某件事情是第一次發生。",
-      en: "Used to say that something happens for the first time.",
+      zh: "表示某個動作或情況再次發生，相當於「again」。",
+      en: "Used to indicate something happens again.",
     },
     structure: {
-      zh: "主語 + 第一次 + 動詞",
-      en: "Subject + 第一次 + Verb",
+      zh: "主語 + 又 + 動詞／形容詞",
+      en: "Subject + 又 + Verb/Adjective",
     },
     explanation: {
-      zh: "用來說明某個行為或經驗是第一次。",
-      en: "Used to talk about doing something for the first time.",
+      zh: "「又」是副詞，放在動詞或形容詞前面，表示「再一次、又一次」。常用來說明同一件事再次發生或狀態再次出現。",
+      en: "\"又\" is an adverb placed before a verb or adjective to express \"again\"—that something happens once more.",
     },
     examples: [
-      { zh: "這是我第一次來台北。", pinyin: "Zhè shì wǒ dì yī cì lái Táiběi.", en: "This is my first time coming to Taipei." },
-      { zh: "他第一次跟朋友一起出去吃飯。", pinyin: "Tā dì yī cì gēn péngyǒu yìqǐ chūqù chī fàn.", en: "It's his first time going out to eat with friends." },
-      { zh: "我第一次跟新朋友聊天，有一點緊張。", pinyin: "Wǒ dì yī cì gēn xīn péngyǒu liáotiān, yǒu yìdiǎn jǐnzhāng.", en: "It's my first time chatting with a new friend, so I'm a bit nervous." },
+      { zh: "吃完飯以後，他們又開始聊天了。", pinyin: "Chī wán fàn yǐhòu, tāmen yòu kāishǐ liáotiān le.", en: "After finishing the meal, they started chatting again." },
+      { zh: "我又忘記帶錢包了。", pinyin: "Wǒ yòu wàngjì dài qiánbāo le.", en: "I forgot to bring my wallet again." },
+      { zh: "今天又下雨了。", pinyin: "Jīntiān yòu xià yǔ le.", en: "It's raining again today." },
     ],
   },
   {
@@ -675,15 +675,6 @@ const BAR_VOCABULARY_LIST: VocabWord[] = [
     example: { zh: "看完電影以後，我們走到酒吧。", pinyin: "Kàn wán diànyǐng yǐhòu, wǒmen zǒu dào jiǔbā.", en: "After watching the movie, we walked to the bar." },
   },
   {
-    traditional: "喝",
-    simplified: "喝",
-    pinyin: "hē",
-    english: "to drink",
-    partOfSpeech: "V",
-    tbcl: "1",
-    example: { zh: "我們一起喝酒吧。", pinyin: "Wǒmen yīqǐ hējiǔ ba.", en: "Let's drink together." },
-  },
-  {
     traditional: "酒",
     simplified: "酒",
     pinyin: "jiǔ",
@@ -718,15 +709,6 @@ const BAR_VOCABULARY_LIST: VocabWord[] = [
     partOfSpeech: "N",
     tbcl: "4*",
     example: { zh: "我們晚上去酒吧聊天。", pinyin: "Wǒmen wǎnshàng qù jiǔbā liáotiān.", en: "We go to the bar to chat at night." },
-  },
-  {
-    traditional: "聊天",
-    simplified: "聊天",
-    pinyin: "liáotiān",
-    english: "to chat",
-    partOfSpeech: "V-sep",
-    tbcl: "2",
-    example: { zh: "他們一邊喝酒，一邊聊天。", pinyin: "Tāmen yībiān hējiǔ, yībiān liáotiān.", en: "They drink and chat at the same time." },
   },
   {
     traditional: "進入",
@@ -774,15 +756,6 @@ const BAR_VOCABULARY_LIST: VocabWord[] = [
     example: { zh: "第一次見面，不一定要喝酒。", pinyin: "Dì yī cì jiànmiàn, bù yídìng yào hējiǔ.", en: "The first time meeting, you don't necessarily have to drink." },
   },
   {
-    traditional: "但",
-    simplified: "但",
-    pinyin: "dàn",
-    english: "but",
-    partOfSpeech: "Conj",
-    tbcl: "2",
-    example: { zh: "我想喝酒，但不想喝太多。", pinyin: "Wǒ xiǎng hējiǔ, dàn bù xiǎng hē tài duō.", en: "I want to drink, but I don't want to drink too much." },
-  },
-  {
     traditional: "想要",
     simplified: "想要",
     pinyin: "xiǎngyào",
@@ -790,24 +763,6 @@ const BAR_VOCABULARY_LIST: VocabWord[] = [
     partOfSpeech: "Vaux",
     tbcl: "2",
     example: { zh: "我想要跟你聊天。", pinyin: "Wǒ xiǎngyào gēn nǐ liáotiān.", en: "I want to chat with you." },
-  },
-  {
-    traditional: "聊",
-    simplified: "聊",
-    pinyin: "liáo",
-    english: "to chat",
-    partOfSpeech: "V",
-    tbcl: "2",
-    example: { zh: "我想再跟你聊一聊。", pinyin: "Wǒ xiǎng zài gēn nǐ liáo yī liáo.", en: "I want to chat with you a bit more." },
-  },
-  {
-    traditional: "認識",
-    simplified: "认识",
-    pinyin: "rènshí",
-    english: "to get to know",
-    partOfSpeech: "Vst",
-    tbcl: "2",
-    example: { zh: "我想多認識你一點。", pinyin: "Wǒ xiǎng duō rènshí nǐ yīdiǎn.", en: "I want to get to know you a bit more." },
   },
   {
     traditional: "更",
@@ -922,9 +877,9 @@ const SPEAKING_SENTENCES = [
 const GRAMMAR_PRACTICE = [
   {
     id: 1,
-    title: "練習 1｜第一次",
-    scenario: "你跟新朋友第一次見面喜歡做什麼?",
-    answer: "我第一次跟新朋友出去，就會聊天。",
+    title: "練習 1｜又",
+    scenario: "你想用「又」說：吃完飯以後，他們開始聊天了（再一次）。你會怎麼說？",
+    answer: "吃完飯以後，他們又開始聊天了。",
   },
   {
     id: 2,

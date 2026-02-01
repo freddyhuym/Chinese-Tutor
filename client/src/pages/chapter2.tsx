@@ -636,7 +636,7 @@ const MOVIE_VOCABULARY_LIST: VocabWord[] = [
     },
   },
   {
-    traditional: "請客",
+    traditional: "雖然",
     simplified: "虽然",
     pinyin: "Suīrán",
     english: "Although",
