@@ -101,7 +101,7 @@ const chapterContent = {
     comingSoonDesc:
       "We are working hard to prepare exciting learning content. Stay tuned!",
     chat: {
-      title: "First Chat",
+      title: "First Chat on an APP",
       subtitle: "Some of your replies might make Xiaoyu’s heart beat faster",
       randy: "Randy",
       xiaoyu: "Xiao Yu",
