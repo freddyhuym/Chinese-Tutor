@@ -63,7 +63,7 @@ const chapterContent = {
     comingSoon: "內容即將推出",
     comingSoonDesc: "我們正在努力準備精彩的學習內容，敬請期待！",
     chat: {
-      title: "第一次聊天",
+      title: "APP 第一次聊天",
       subtitle: "有些回答，可能會讓小雨心跳加快",
       randy: "瑞迪",
       xiaoyu: "小雨",

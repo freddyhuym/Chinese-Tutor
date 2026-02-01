@@ -456,9 +456,9 @@ const MOVIE_MESSAGES: MovieMessage[] = [
   {
     id: 4,
     sender: "randy",
-    text: "浪漫電影和動作電影我都喜歡，但我覺得你想看浪漫的。",
-    en: "I like both romantic movies and action movies, but I think you want to watch a romantic one.",
-    pinyin: "Làngmàn diànyǐng hé dòngzuò diànyǐng wǒ dōu xǐhuān, dàn wǒ juéde nǐ xiǎng kàn làngmàn de.",
+    text: "雖然浪漫電影和動作電影我都喜歡，但我覺得你想看浪漫的。",
+    en: "Although I like both romantic movies and action movies, I think you want to watch a romantic one.",
+    pinyin: "Suīrán làngmàn diànyǐng hé dòngzuò diànyǐng wǒ dōu xǐhuān, dàn wǒ juéde nǐ xiǎng kàn làngmàn de.",
   },
   {
     id: 5,
@@ -477,9 +477,9 @@ const MOVIE_MESSAGES: MovieMessage[] = [
   {
     id: 7,
     sender: "xiaoyu",
-    text: "今天我請客。",
-    en: "Today I'm treating.",
-    pinyin: "Jīntiān wǒ qǐngkè.",
+    text: "今天我付錢。",
+    en: "I’ll pay today.",
+    pinyin: "Jīntiān wǒ fù qián.",
   },
 ];
 
@@ -637,15 +637,15 @@ const MOVIE_VOCABULARY_LIST: VocabWord[] = [
   },
   {
     traditional: "請客",
-    simplified: "请客",
-    pinyin: "qǐngkè",
-    english: "to treat / to pay for someone",
-    partOfSpeech: "V-sep",
-    tbcl: "5",
+    simplified: "虽然",
+    pinyin: "Suīrán",
+    english: "Although",
+    partOfSpeech: "Conj",
+    tbcl: "2",
     example: {
-      zh: "今天我請客。",
-      pinyin: "Jīntiān wǒ qǐngkè.",
-      en: "Today I'm treating.",
+      zh: "雖然今天很忙，我還是想去爬山。",
+      pinyin: "Suīrán jīntiān hěn máng，wǒ háishì xiǎng qù pá shān。",
+      en: "Although I am busy today, I still want to go hiking.",
     },
   },
 ];
