@@ -1894,7 +1894,7 @@ export default function Chapter3() {
                     <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-emerald-300/30 dark:ring-emerald-600/30 aspect-video max-h-[60vh] min-h-[200px]">
                       <video
                         className="w-full h-full object-contain"
-                        src="/chapter3_ending2.mp4"
+                        src="/chapter3_endingf.mp4"
                         controls
                         playsInline
                         preload="auto"
@@ -1951,7 +1951,7 @@ export default function Chapter3() {
                     <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-red-300/30 dark:ring-red-600/30 aspect-video max-h-[60vh] min-h-[200px]">
                       <video
                         className="w-full h-full object-contain"
-                        src="/chapter3_ending.mp4"
+                        src="/chapter3_endings.mp4"
                         controls
                         playsInline
                         preload="auto"
