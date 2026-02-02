@@ -52,7 +52,7 @@ const chapterContent = {
     title: "第二章",
     subtitle: "第一次約會｜First Date",
     description: "兩個人一起吃飯或是看電影",
-    backToHome: "返回第一章",
+    backToHome: "返回第一章 Back to Unit 1",
     chat: {
       title: "第二次聊天",
       subtitle: "有些回答，會影響小雨的想法",

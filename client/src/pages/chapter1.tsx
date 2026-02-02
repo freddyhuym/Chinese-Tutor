@@ -54,7 +54,7 @@ const chapterContent = {
     title: "第一章",
     subtitle: "第一次聊天｜First Chat",
     description: "兩個人互相介紹自己，聊興趣，最後約時間見面。",
-    backToHome: "返回首頁",
+    backToHome: "返回首頁 Back to Home",
     sections: [
       { title: "課程介紹", duration: "5 分鐘", completed: false },
       { title: "基本發音", duration: "10 分鐘", completed: false },

@@ -56,7 +56,7 @@ const chapterContent = {
     title: "第三章",
     subtitle: "第三次見面：感覺與選擇｜Third Meeting: Feelings & Choices",
     description: "兩個人一起喝酒，兩個月後瑞迪準備跟小雨說一些話",
-    backToHome: "返回第二章",
+    backToHome: "返回第二章 Back to Unit 2",
     chat: {
       title: "第三次聊天",
       subtitle: "有些選擇，會改變故事的發展",
