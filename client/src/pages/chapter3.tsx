@@ -55,8 +55,8 @@ const chapterContent = {
   zh: {
     title: "第三章",
     subtitle: "第三次見面：感覺與選擇｜Third Meeting: Feelings & Choices",
-    description: "內容即將推出",
-    backToHome: "返回首頁",
+    description: "兩個人一起喝酒，兩個月後瑞迪準備跟小雨說一些話",
+    backToHome: "返回第二章",
     chat: {
       title: "第三次聊天",
       subtitle: "有些選擇，會改變故事的發展",
@@ -94,7 +94,7 @@ const chapterContent = {
     title: "Chapter 3",
     subtitle: "Third Meeting",
     description: "Content coming soon",
-    backToHome: "Back to Home",
+    backToHome: "Back to Chapter 2",
     chat: {
       title: "Third Chat",
       subtitle: "Some choices will change how the story develops",
@@ -345,11 +345,11 @@ function GrammarPointCard({
   return (
     <Card className="overflow-hidden border-2 border-border/50 shadow-sm bg-white dark:bg-slate-900 mb-6">
       <div className="bg-primary/5 p-4 border-b border-border/50 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 min-w-0">
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">
             {point.id}
           </div>
-          <h3 className="font-bold text-xl font-serif-chinese text-primary">
+          <h3 className="flex-1 min-w-0 font-bold text-lg sm:text-xl font-serif-chinese text-primary break-words leading-snug">
             {point.title}
           </h3>
         </div>
@@ -384,7 +384,7 @@ function GrammarPointCard({
               English
             </Button>
           </div>
-          <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 font-mono text-base whitespace-pre-line text-slate-700">
+          <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 font-mono text-base whitespace-pre-line break-words max-w-full text-slate-700">
             {point.structure.zh}
           </div>
           {showStructureEn && (
@@ -1220,11 +1220,91 @@ export default function Chapter3() {
     }));
   };
 
+  // 練習區塊音檔播放鎖定：播放中不可重複按（避免多段音檔疊加）
+  const [practiceAudioPlaying, setPracticeAudioPlaying] = useState(false);
+  const practiceAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playPracticeAudioFile = async (src: string) => {
+    if (practiceAudioPlaying) return;
+    setPracticeAudioPlaying(true);
+
+    try {
+      if (practiceAudioRef.current) {
+        practiceAudioRef.current.pause();
+        practiceAudioRef.current.currentTime = 0;
+        practiceAudioRef.current = null;
+      }
+
+      const audio = new Audio(src);
+      practiceAudioRef.current = audio;
+
+      const unlock = () => {
+        if (practiceAudioRef.current === audio) practiceAudioRef.current = null;
+        setPracticeAudioPlaying(false);
+      };
+
+      audio.addEventListener("ended", unlock, { once: true });
+      audio.addEventListener("error", unlock, { once: true });
+
+      await audio.play();
+    } catch (err) {
+      setPracticeAudioPlaying(false);
+      throw err;
+    }
+  };
+
   const playBarAudio = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "zh-TW";
     utterance.rate = 0.8;
     window.speechSynthesis.speak(utterance);
+  };
+
+  // 朗讀（對話框專用）：比照 chapter2，使用 OpenAI TTS（/api/tts/cached）
+  const playChatAudio = async (text: string, isMale: boolean) => {
+    try {
+      // Stop any currently playing audio
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+
+      const response = await fetch("/api/tts/cached", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, isMale }),
+      });
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const textResponse = await response.text();
+        console.error("Non-JSON response received:", textResponse.substring(0, 200));
+        throw new Error(`API returned non-JSON response: ${response.status} ${response.statusText}`);
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: response.statusText }));
+        throw new Error(`TTS API error: ${errorData.error || response.statusText}`);
+      }
+
+      const data = await response.json();
+      if (!data.audio) throw new Error("No audio data in response");
+
+      const audio = new Audio(data.audio);
+      audio.play().catch((err) => console.error("Error playing audio:", err));
+    } catch (error) {
+      console.error("Error in playChatAudio:", error);
+      // Fallback to browser speech synthesis if API fails
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "zh-TW";
+        utterance.rate = 0.8;
+        utterance.pitch = isMale ? 0.8 : 1.2;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
   };
 
   return (
@@ -1237,7 +1317,7 @@ export default function Chapter3() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Link href="/">
+          <Link href="/chapter2">
             <Button
               variant="ghost"
               className="gap-2 mb-6"
@@ -1324,10 +1404,10 @@ export default function Chapter3() {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title} - {barChatLang === "zh" ? "酒吧情境" : "Bar"}
+                      {chapterContent[barChatLang].chat.title} - {barChatLang === "zh" ? "酒吧情境" : "Bar"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {content.chat.subtitle}
+                      {chapterContent[barChatLang].chat.subtitle}
                     </p>
                   </div>
                 </div>
@@ -1455,13 +1535,7 @@ export default function Chapter3() {
                                 variant="ghost"
                                 size="sm"
                                 className="h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
-                                onClick={() => {
-                                  // Mock audio play
-                                  const utterance = new SpeechSynthesisUtterance(msg.text);
-                                  utterance.lang = "zh-TW";
-                                  utterance.rate = 0.8;
-                                  window.speechSynthesis.speak(utterance);
-                                }}
+                                onClick={() => playChatAudio(msg.text, msg.sender === "randy")}
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
                                 <span>朗讀</span>
@@ -1690,10 +1764,10 @@ export default function Chapter3() {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg font-serif-chinese">
-                      {content.chat.title} - {summitChatLang === "zh" ? "象山情境" : "Elephant Mountain"}
+                      {chapterContent[summitChatLang].chat.title} - {summitChatLang === "zh" ? "象山情境" : "Elephant Mountain"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {content.chat.subtitle}
+                      {chapterContent[summitChatLang].chat.subtitle}
                     </p>
                   </div>
                 </div>
@@ -1795,7 +1869,7 @@ export default function Chapter3() {
                                 variant="ghost"
                                 size="sm"
                                 className={summitBtnLight ? "h-7 px-2 rounded-full gap-1 text-xs font-medium text-[#FAFAFA] hover:text-[#FAFAFA] hover:bg-white/20 transition-colors" : "h-7 px-2 rounded-full gap-1 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"}
-                                onClick={() => playBarAudio(msg.text)}
+                                onClick={() => playChatAudio(msg.text, msg.sender === "randy")}
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
                                 <span>朗讀</span>
@@ -1850,16 +1924,15 @@ export default function Chapter3() {
           {/* 結局影片區 — 第二個對話框下方；依 floating 小雨心跳顯示不同影片，滑到才慢慢浮現；僅渲染當前狀態的影片以利手機播放 */}
           <div
             ref={endingVideoRef}
-            className="mb-16 max-w-3xl mx-auto min-h-[200px]"
+            className="mb-16 w-full max-w-3xl mx-auto min-h-[200px] overflow-x-hidden"
             aria-hidden={false}
           >
             {affinity === "green" ? (
               <motion.div
                 key="ending-green"
-                initial={{ opacity: 0, y: 28 }}
+                initial={{ opacity: 0 }}
                 animate={{
                   opacity: endingVideoRevealed ? 1 : 0,
-                  y: endingVideoRevealed ? 0 : 28,
                 }}
                 transition={{ duration: 1.4, ease: "easeOut" }}
                 className="w-full"
@@ -1891,7 +1964,7 @@ export default function Chapter3() {
                     <h3 className="text-xl sm:text-2xl font-bold font-serif-chinese text-center text-emerald-800 dark:text-emerald-200 mb-6">
                       {chapterContent[endingVideoLangGreen].endingVideoGreen.title}
                     </h3>
-                    <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-emerald-300/30 dark:ring-emerald-600/30 aspect-video max-h-[60vh] min-h-[200px]">
+                    <div className="relative w-full rounded-xl overflow-hidden bg-black/20 ring-2 ring-emerald-300/30 dark:ring-emerald-600/30 aspect-video max-h-[60vh] min-h-[160px] sm:min-h-[200px]">
                       <video
                         className="w-full h-full object-contain"
                         src="/chapter3_endingf.mp4"
@@ -1913,10 +1986,9 @@ export default function Chapter3() {
             ) : (
               <motion.div
                 key="ending-red"
-                initial={{ opacity: 0, y: 28 }}
+                initial={{ opacity: 0 }}
                 animate={{
                   opacity: endingVideoRevealed ? 1 : 0,
-                  y: endingVideoRevealed ? 0 : 28,
                 }}
                 transition={{ duration: 1.4, ease: "easeOut" }}
                 className="w-full"
@@ -1948,7 +2020,7 @@ export default function Chapter3() {
                     <h3 className="text-xl sm:text-2xl font-bold font-serif-chinese text-center text-red-800 dark:text-red-200 mb-6">
                       {chapterContent[endingVideoLang].endingVideo.title}
                     </h3>
-                    <div className="relative rounded-xl overflow-hidden bg-black/20 ring-2 ring-red-300/30 dark:ring-red-600/30 aspect-video max-h-[60vh] min-h-[200px]">
+                    <div className="relative w-full rounded-xl overflow-hidden bg-black/20 ring-2 ring-red-300/30 dark:ring-red-600/30 aspect-video max-h-[60vh] min-h-[160px] sm:min-h-[200px]">
                       <video
                         className="w-full h-full object-contain"
                         src="/chapter3_endings.mp4"
@@ -2226,13 +2298,14 @@ export default function Chapter3() {
                           size="sm"
                           variant="outline"
                           className="h-8 gap-2 text-primary"
-                          onClick={() => {
-                            const audio = new Audio(practice.audioSrc);
-                            audio.play().catch((err) => {
+                          disabled={practiceAudioPlaying}
+                          onClick={async () => {
+                            try {
+                              await playPracticeAudioFile(practice.audioSrc);
+                            } catch (err) {
                               console.error("Error playing audio:", err);
-                              // fallback: TTS
                               playBarAudio("播放音檔失敗，請稍後再試。");
-                            });
+                            }
                           }}
                         >
                           <Play className="w-3 h-3" />

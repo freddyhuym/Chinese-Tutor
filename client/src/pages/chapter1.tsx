@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
+  ChevronRight,
   ChevronDown,
   Languages,
   BookOpen,
@@ -87,9 +88,9 @@ const chapterContent = {
   },
   en: {
     title: "Chapter 1",
-    subtitle: "Getting Started",
+    subtitle: "First Chat",
     description:
-      "Welcome to Chapter 1! Here you will learn the basics of Chinese.",
+      "Two people introduce themselves to each other, talk about their interests, and finally make an appointment to meet.",
     backToHome: "Back to Home",
     sections: [
       { title: "Course Introduction", duration: "5 min", completed: false },
@@ -1802,6 +1803,40 @@ export default function Chapter1() {
     }));
   };
 
+  // 練習區塊音檔播放鎖定：播放中不可重複按（避免多段音檔疊加）
+  const [practiceAudioPlaying, setPracticeAudioPlaying] = useState(false);
+  const practiceAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playPracticeAudioFile = async (src: string) => {
+    if (practiceAudioPlaying) return;
+    setPracticeAudioPlaying(true);
+
+    try {
+      // Stop previous practice audio (if any)
+      if (practiceAudioRef.current) {
+        practiceAudioRef.current.pause();
+        practiceAudioRef.current.currentTime = 0;
+        practiceAudioRef.current = null;
+      }
+
+      const audio = new Audio(src);
+      practiceAudioRef.current = audio;
+
+      const unlock = () => {
+        if (practiceAudioRef.current === audio) practiceAudioRef.current = null;
+        setPracticeAudioPlaying(false);
+      };
+
+      audio.addEventListener("ended", unlock, { once: true });
+      audio.addEventListener("error", unlock, { once: true });
+
+      await audio.play();
+    } catch (err) {
+      setPracticeAudioPlaying(false);
+      throw err;
+    }
+  };
+
   const playAudio = async (text: string, isMale: boolean) => {
     try {
       // Stop any currently playing audio
@@ -2812,29 +2847,27 @@ export default function Chapter1() {
                           size="sm"
                           variant="outline"
                           className="h-8 gap-2 text-primary"
-                          onClick={() => {
-                            if (practice.id === 1) {
-                              // Play actual audio file for listening practice 1
-                              const audio = new Audio("/c1l1.mp3");
-                              audio.play().catch((err) => {
-                                console.error("Error playing audio:", err);
-                                playAudio(
-                                  "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
-                                  false,
-                                );
-                              });
-                            } else if (practice.id === 2) {
-                              // Play actual audio file for listening practice 2
-                              const audio = new Audio("/c1l2.mp3");
-                              audio.play().catch((err) => {
-                                console.error("Error playing audio:", err);
-                                playAudio(
-                                  "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
-                                  false,
-                                );
-                              });
-                            } else {
-                              // Mock audio play for other practices
+                          disabled={practiceAudioPlaying}
+                          onClick={async () => {
+                            const src =
+                              practice.id === 1
+                                ? "/c1l1.mp3"
+                                : practice.id === 2
+                                  ? "/c1l2.mp3"
+                                  : null;
+
+                            if (!src) {
+                              playAudio(
+                                "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
+                                false,
+                              );
+                              return;
+                            }
+
+                            try {
+                              await playPracticeAudioFile(src);
+                            } catch (err) {
+                              console.error("Error playing audio:", err);
                               playAudio(
                                 "This is a placeholder for audio content. In a real app, this would play the actual listening exercise audio.",
                                 false,
@@ -3095,6 +3128,28 @@ export default function Chapter1() {
                 </div>
               </TabsContent>
             </Tabs>
+          </div>
+
+          {/* Next Chapter */}
+          <div className="mb-12">
+            <Card className="p-6 border-2 border-border/50 bg-card/50">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-center sm:text-left">
+                  <h4 className="font-bold text-lg font-serif-chinese text-slate-800 dark:text-slate-200">
+                    下一章 Next Chapter
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    前往第二章繼續學習
+                  </p>
+                </div>
+                <Link href="/chapter2">
+                  <Button className="gap-2 w-full sm:w-auto">
+                    下一章 Next Chapter
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+            </Card>
           </div>
         </motion.div>
       </main>
